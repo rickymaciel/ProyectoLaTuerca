@@ -10,6 +10,7 @@ using LaTuerca.Models;
 
 namespace LaTuerca.Controllers
 {
+
     public class ProveedorsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
