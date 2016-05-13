@@ -148,6 +148,38 @@ namespace LaTuerca.Migrations
                   Description = "Clientes",
                   Action = "Index",
                   Controller = "Clientes"
+              },
+              new Models.Menu
+              {
+                  ParentId = 0,
+                  Name = "Stock",
+                  Description = "Stock",
+                  Action = "Index",
+                  Controller = "Stock"
+              },
+              new Models.Menu
+              {
+                  ParentId = 0,
+                  Name = "Caja",
+                  Description = "Caja",
+                  Action = "Index",
+                  Controller = "Cajas"
+              },
+              new Models.Menu
+              {
+                  ParentId = 0,
+                  Name = "Bancos",
+                  Description = "Bancos",
+                  Action = "Index",
+                  Controller = "Bancos"
+              },
+              new Models.Menu
+              {
+                  ParentId = 0,
+                  Name = "Configuración",
+                  Description = "Configuraciones del sistema",
+                  Action = "Index",
+                  Controller = "Configuraciones"
               }
             );
         }
