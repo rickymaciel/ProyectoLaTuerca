@@ -77,6 +77,7 @@ namespace LaTuerca.Controllers
         {
             if (id == null)
             {
+
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Proveedor proveedor = db.Proveedors.Find(id);
