@@ -154,32 +154,32 @@ namespace LaTuerca.Migrations
                   ParentId = 0,
                   Name = "Stock",
                   Description = "Stock",
-                  Action = "Index",
-                  Controller = "Stock"
+                  Action = "",
+                  Controller = ""
               },
               new Models.Menu
               {
                   ParentId = 0,
                   Name = "Caja",
                   Description = "Caja",
-                  Action = "Index",
-                  Controller = "Cajas"
+                  Action = "",
+                  Controller = ""
               },
               new Models.Menu
               {
                   ParentId = 0,
                   Name = "Bancos",
                   Description = "Bancos",
-                  Action = "Index",
-                  Controller = "Bancos"
+                  Action = "",
+                  Controller = ""
               },
               new Models.Menu
               {
                   ParentId = 0,
                   Name = "Configuración",
                   Description = "Configuraciones del sistema",
-                  Action = "Index",
-                  Controller = "Configuraciones"
+                  Action = "",
+                  Controller = ""
               }
             );
         }
