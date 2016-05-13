@@ -1,0 +1,61 @@
+﻿@model  IEnumerable<LaTuerca.Models.Menu>
+
+@{
+    Layout = null;
+}
+
+    @foreach (var item in Model)
+    {
+        if (item.Action != null && item.Controller != null && item.Action != "" && item.Controller != "" && item.ParentId == 0)
+        {
+            <li class="treeview">
+            <a href="#">
+                <i class="fa fa-chevron-right"></i> <span>@Html.ActionLink(item.Name, item.Action, item.Controller)</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            </li>
+            }
+            else
+            {
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-chevron-right"></i> <span>@Html.DisplayFor(model => item.Name) </span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    @foreach (var subitem in item.Children())
+                    {
+                        var nodes = subitem.Children();
+                        if (nodes.Count() > 0) {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-chevron-circle-right"></i> @Html.DisplayFor(model => subitem.Name)
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                @foreach (var node in nodes)
+                                {
+                                    <li>
+                                        <a href="@Url.Action(node.Action, node.Controller)" class="text-warning">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            @Html.DisplayName(node.Name)
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        }
+                        else
+                        {
+                            <li class="treeview">
+                                <a href="@Url.Action(subitem.Action, subitem.Controller)" class="text-warning">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                    @Html.DisplayName(subitem.Name)
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+    }
+    }

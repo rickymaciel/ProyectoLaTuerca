@@ -1,0 +1,85 @@
+﻿@using LaTuerca.Models
+@model RegisterViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Registrar nuevo usuario";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LA TUERCA</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="http://localhost:53172/" class="logo">
+                <i class="fa-adjust fa-wrench"></i>
+                <span class="logo-lg"><b>LA</b>TUERCA</span>
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">@ViewBag.Title</p>
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group has-feedback">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                                <input type="checkbox"> Acepto los <a href="#">términos</a>
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-flat"><i class="br-user"></i> Crear</button>
+                    </div><!-- /.col -->
+                </div>
+                <div class="social-auth-links text-center">
+                    <p></p>
+                    @Html.ActionLink("Iniciar Sesión", "Login", null, new { @class = "btn btn-default btn-block btn-flat" })
+                </div><!-- /.social-auth-links -->
+
+            }
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    
+
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
+</body>
+</html>

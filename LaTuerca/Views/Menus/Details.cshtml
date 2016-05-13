@@ -1,0 +1,95 @@
+﻿@model LaTuerca.Models.Menu
+
+@{
+    ViewBag.Title = "Detalles";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Submenú</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="@Url.Action("Create", "Menus")">
+                                <i class="im-plus"></i> Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Menus")">
+                                <i class="im-menu2"></i> Ver todo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Edit", "Menus", new { id = Model.Id })">
+                                <i class="im-pencil2"></i> Modificar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- left column -->
+        <div class="col-lg-10">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="im-menu"></i> @ViewBag.Title
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ParentId)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.ParentId)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Action)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Action)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Controller)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Controller)
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

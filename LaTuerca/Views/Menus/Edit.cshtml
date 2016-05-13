@@ -1,0 +1,102 @@
+﻿@model LaTuerca.Models.Menu
+
+@{
+    ViewBag.Title = "Modificar";
+}
+
+<section class="content">
+    <div class="row">
+        
+        
+
+        @if (!Html.ViewData.ModelState.IsValid)
+    {
+        <div class="col-lg-12" id="mensaje">
+            <div class="callout callout-success">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+    }
+        <div class="col-lg-2">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Submenú</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="@Url.Action("Create", "Menus")">
+                                <i class="im-plus"></i> Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Menus")">
+                                <i class="im-menu2"></i> Ver todo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- left column -->
+        <div class="col-lg-10">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="im-menu"></i> @ViewBag.Title
+                    </h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <form role="form" class="form-horizontal">
+                        <div class="box-body">
+                            @Html.HiddenFor(model => model.Id)
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.ParentId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Action, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Action, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Action, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Controller, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Controller, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Controller, "", new { @class = "text-danger" })
+                            </div>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-social btn-success pull-right">
+                                <i class="im-checkbox-checked"></i> Guardar
+                            </button>
+                        </div>
+                    </form>
+                }
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

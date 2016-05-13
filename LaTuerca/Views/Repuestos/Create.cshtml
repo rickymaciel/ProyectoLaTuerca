@@ -1,0 +1,151 @@
+﻿@model LaTuerca.ViewModels.RepuestoViewModel
+
+
+@{
+    ViewBag.Title = "Crear nuevo repuesto";
+}
+
+
+<section class="content-header">
+    <h1>
+        <i class="im-menu"></i> @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        @if (!Html.ViewData.ModelState.IsValid)
+        {
+            <div class="col-lg-12" id="mensaje">
+                <div class="callout callout-success">
+                    @Html.ValidationSummary()
+                </div>
+            </div>
+        }
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <a href="@Url.Action("Index", "Repuestos")" class="btn btn-primary">
+                            <i class="im-menu"></i> Ver todo
+                        </a>
+                    </h3>
+                </div>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <form role="form" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.Nombre, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del producto" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.Nombre, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.PrecioCosto, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.PrecioCosto, new { htmlAttributes = new { @class = "form-control", placeholder = "Precio de coste" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioCosto, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.Repuesto.Marca, htmlAttributes: new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearMarca">
+                                            <i class="im-plus"></i>
+                                        </button>
+                                    </div>
+                                    @Html.DropDownList("Marca", new SelectList(Model.Marcas, "Id", "Nombre"), new { @class = "form-control", placeholder = "Marca" })
+                                    @Html.ValidationMessageFor(model => model.Marcas, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.Stock, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.Stock, new { htmlAttributes = new { @class = "form-control", placeholder = "Stock" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.Stock, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.StockMinimo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.Repuesto.StockMinimo, new { htmlAttributes = new { @class = "form-control", placeholder = "Stock mínimo" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.StockMinimo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.Repuesto.Categoria, htmlAttributes: new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCategoria">
+                                            <i class="im-plus"></i>
+                                        </button>
+                                    </div>
+                                    @Html.DropDownList("Categoria", new SelectList(Model.Categorias, "Id", "Nombre"), new { @class = "form-control", placeholder = "Categoría" })
+                                    @Html.ValidationMessageFor(model => model.Categorias, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.StockMaximo, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.StockMaximo, new { htmlAttributes = new { @class = "form-control", placeholder = "Stock máximo" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.StockMaximo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.PrecioVenta1, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.PrecioVenta1, new { htmlAttributes = new { @class = "form-control", placeholder = "Precio de venta 1" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta1, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.Repuesto.Modelo, htmlAttributes: new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModelo">
+                                            <i class="im-plus"></i>
+                                        </button>
+                                    </div>
+                                    @Html.DropDownList("Modelo", new SelectList(Model.Modelos, "Id", "NombreModelo"), new { @class = "form-control", placeholder = "Modelo" })
+                                    @Html.ValidationMessageFor(model => model.Modelos, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.PrecioVenta2, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.PrecioVenta2, new { htmlAttributes = new { @class = "form-control", placeholder = "Precio de venta2" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta2, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Repuesto.PrecioVenta3, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Repuesto.PrecioVenta3, new { htmlAttributes = new { @class = "form-control", placeholder = "Precio de venta3" } })
+                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta3, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.Repuesto.Proveedor, htmlAttributes: new { @class = "control-label" })
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearProveedor">
+                                            <i class="im-plus"></i>
+                                        </button>
+                                    </div>
+                                    @Html.DropDownList("Proveedor", new SelectList(Model.Proveedores, "Id", "RazonSocial"), new { @class = "form-control", placeholder = "Proveedor" })
+                                    @Html.ValidationMessageFor(model => model.Proveedores, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-social btn-danger">
+                                    <i class="im-checkbox-checked"></i> Guardar
+                                </button>
+                            </div>
+                            <button type="reset" class="btn btn-social btn-default">
+                                <i class="im-remove"></i> Cancelar
+                            </button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@Html.Partial("_create_marca", Model.Marca)
+@Html.Partial("_create_modelo", Model.Modelo)
+@Html.Partial("_create_categoria", Model.Categoria)
+@Html.Partial("_create_proveedor", Model.Proveedor)

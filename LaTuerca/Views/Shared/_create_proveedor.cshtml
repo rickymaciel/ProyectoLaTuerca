@@ -1,0 +1,74 @@
+﻿@model LaTuerca.Models.Proveedor
+<div class="modal modal-primary" id="crearProveedor" tabindex="-1" role="dialog">
+    @using (Ajax.BeginForm("AjaxCreate", "Proveedors", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "Proveedor"
+
+        }))
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Crear Proveedor</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+                    @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RazonSocial, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control", placeholder="Razón social" } })
+                                @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ruc, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control", placeholder = "R.U.C" } })
+                                @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", placeholder = "Dirección" } })
+                                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "Teléfono" } })
+                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control", placeholder = "Celular" } })
+                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-outline"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    }
+</div><!-- /.modal -->

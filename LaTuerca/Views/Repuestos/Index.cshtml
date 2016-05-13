@@ -1,0 +1,139 @@
+﻿@model IEnumerable<LaTuerca.Models.Repuesto>
+
+@{
+    ViewBag.Title = "Repuestos";
+}
+
+<section class="content-header">
+    <h1>
+        <i class="im-menu"></i> @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        @if (!Html.ViewData.ModelState.IsValid)
+        {
+            <div class="col-lg-12" id="mensaje">
+                <div class="callout callout-success">
+                    @Html.ValidationSummary()
+                </div>
+            </div>
+        }
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <a href="@Url.Action("Create", "Repuestos")" class="btn btn-primary">
+                            <i class="im-plus"></i> Nuevo
+                        </a>
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-condensed table-hover table-striped" id="tablaMenu">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Nombre)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Proveedor)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Marca)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Modelo)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Categoria)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Stock)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.StockMinimo)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.PrecioCosto)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.PrecioVenta1)
+                                            </th>
+                                            <th class="col-lg-1"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Marca.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Modelo.NombreModelo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Stock)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.StockMinimo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PrecioCosto)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PrecioVenta1)
+                                                </td>
+                                                <td class="col-lg-1">
+                                                    <div class="btn-group btn-group-justified">
+                                                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "ion-edit btn btn-warning btn-xs", @data_original_title = "Editar" })
+                                                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "ion-eye btn btn-primary btn-xs", @data_original_title = "Ver" })
+                                                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "ion-android-delete btn btn-danger btn-xs", @data_original_title = "Eliminar" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div>
+</section>
