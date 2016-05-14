@@ -8,8 +8,9 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
-                     @Html.ActionLink(Nick, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-toggle text-uppercase", @data_toggle = "dropdown" })
-                        
+                    <a class="dropdown-toggle text-uppercase" data-toggle="dropdown" href="@Url.Action("Index", "Manage")" title="Manage" aria-expanded="true">
+                        <i class="im-user2"></i> @Nick
+                    </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
