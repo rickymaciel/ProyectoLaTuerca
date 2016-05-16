@@ -104,6 +104,19 @@ namespace LaTuerca.Controllers
             return View(proveedor);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Proveedor proveedor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Proveedors.Add(proveedor);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Create", "Repuestos");
+        }
+
+
         // POST: Proveedores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
