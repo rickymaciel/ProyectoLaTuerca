@@ -24,6 +24,7 @@ namespace LaTuerca
                       "~/Scripts/jquery.dataTables.min.js",
                       "~/Scripts/dataTables.bootstrap4.min.js",
                       "~/Scripts/app.js",
+                      "~/Scripts/selectize.js",
                       "~/Scripts/icheck.min.js",
                       "~/Scripts/respond.js"));
 
@@ -35,6 +36,7 @@ namespace LaTuerca
                       "~/Content/skins/skin-blue.min.css",
                       "~/Content/icons.css",
                       "~/Content/blue.css",
+                      "~/Content/selectize.bootstrap2.css",
                       "~/Content/ionicons.min.css",
                       "~/Content/font-awesome.min.css"));
         }

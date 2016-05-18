@@ -54,7 +54,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Repuesto repuesto, int Marca, int Modelo,int Categoria,int Proveedor)
+        public ActionResult Create(Repuesto repuesto, int Marca, int Modelo, int Categoria, int Proveedor)
         {
             if (ModelState.IsValid)
             {
@@ -62,16 +62,33 @@ namespace LaTuerca.Controllers
                 var proveedor = db.Proveedors.Single(p => p.Id == Proveedor);
                 var modelo = db.Modeloes.Single(p => p.Id == Modelo);
                 var categoria = db.Categorias.Single(p => p.Id == Categoria);
-                repuesto.MarcaId = marca.Id;
-                repuesto.ModeloId = modelo.Id;
-                repuesto.ProveedorId = proveedor.Id;
-                repuesto.CategoriaId = categoria.Id;
-                db.Repuestoes.Add(repuesto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+                if (repuesto != null && marca != null && modelo != null && categoria != null && proveedor != null)
+                {
+                    repuesto.MarcaId = marca.Id;
+                    repuesto.ModeloId = modelo.Id;
+                    repuesto.ProveedorId = proveedor.Id;
+                    repuesto.CategoriaId = categoria.Id;
+                    db.Repuestoes.Add(repuesto);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Intento de acceso no válido.");
+                    return RedirectToAction("Create", "Repuestos");
+                }
+
+
+            }
+            else
+            {
+                ModelState.AddModelError("", "Intento de acceso nou válido.");
+                return RedirectToAction("Create", "Repuestos");
+
             }
 
-            return View(repuesto);
         }
 
         // GET: Repuestos/Edit/5
@@ -86,7 +103,7 @@ namespace LaTuerca.Controllers
             var modelos = db.Modeloes.ToList();
             var proveedores = db.Proveedors.ToList();
             var categorias = db.Categorias.ToList();
-            var repuestoModelView = new RepuestoViewModel(repuesto, marcas, modelos,categorias, proveedores);
+            var repuestoModelView = new RepuestoViewModel(repuesto, marcas, modelos, categorias, proveedores);
             if (repuesto == null)
             {
                 return HttpNotFound();
@@ -99,7 +116,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Repuesto repuesto, int Marca, int Proveedor, int Modelo,int Categoria)
+        public ActionResult Edit(Repuesto repuesto, int Marca, int Proveedor, int Modelo, int Categoria)
         {
             if (ModelState.IsValid)
             {

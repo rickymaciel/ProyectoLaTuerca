@@ -116,5 +116,101 @@
             $(".tipL").tooltip({ placement: 'left' });
         });
     </script>
+    <script>
+        $('#select-marca').selectize({
+            labelField: 'model',
+            valueField: 'id',
+            optgroupField: 'make',
+            optgroupLabelField: 'name',
+            optgroupValueField: 'id',
+            lockOptgroupOrder: true,
+            searchField: ['model'],
+            plugins: ['optgroup_columns'],
+            openOnFocus: true
+        });
+        $('#select-modelo').selectize({
+            labelField: 'model',
+            valueField: 'id',
+            optgroupField: 'make',
+            optgroupLabelField: 'name',
+            optgroupValueField: 'id',
+            lockOptgroupOrder: true,
+            searchField: ['model'],
+            plugins: ['optgroup_columns'],
+            openOnFocus: true
+        });
+        $('#select-categoria').selectize({
+            labelField: 'model',
+            valueField: 'id',
+            optgroupField: 'make',
+            optgroupLabelField: 'name',
+            optgroupValueField: 'id',
+            lockOptgroupOrder: true,
+            searchField: ['model'],
+            plugins: ['optgroup_columns'],
+            openOnFocus: true
+        });
+        $('#select-proveedor').selectize({
+            labelField: 'model',
+            valueField: 'id',
+            optgroupField: 'make',
+            optgroupLabelField: 'name',
+            optgroupValueField: 'id',
+            lockOptgroupOrder: true,
+            searchField: ['model'],
+            plugins: ['optgroup_columns'],
+            openOnFocus: true
+        });
+        $(document).ready(function () {
+            cargarSelectize();
+            $("#guardar").click(function(){
+                var nombre = $('#nombre').val();
+                var modelo = $('#select-modelo').val();
+                var marca = $('#select-marca').val();
+                var categoria = $('#select-categoria').val();
+                var proveedor = $('#select-proveedor').val();
+                if (nombre == "") {
+                    $("#nombre").focus();
+                    $("#div-nombre").addClass('has-warning');
+                } else {
+                    $("#div-nombre").removeClass('has-warning');
+                };
+                if (modelo == "") {
+                    //$("#select-modelo").focus();
+                    $("#div-select-modelo").addClass('has-warning');
+                } else {
+                    $("#div-select-modelo").removeClass('has-warning');
+                };
+                if (marca == "") {
+                    //$("#select-marca").focus();
+                    $("#div-select-marca").addClass('has-warning');
+                } else {
+                    $("#div-select-marca").removeClass('has-warning');
+                };
+                if (categoria == "") {
+                    //$("#select-categoria").focus();
+                    $("#div-select-categoria").addClass('has-warning');
+                } else {
+                    $("#div-select-categoria").removeClass('has-warning');
+                };
+                if (proveedor == "") {
+                    //$("#select-proveedor").focus();
+                    $("#div-select-proveedor").addClass('has-warning');
+                } else {
+                    $("#div-select-proveedor").removeClass('has-warning');
+                };
+            });
+            function cargarSelect() {
+                var option = "";
+                option += "<option value=''>Seleccionar un proveedorr</option>";
+                $('#select-proveedor').html(option);
+            };
+            function cargarSelectize() {
+                var option = "";
+                option += "<div data-value='' data-selectable='' class='option active'>Seleccionar</div>";
+                $('div.selectize-dropdown-content').html(option);
+            };
+        });
+    </script>
 </body>
 </html>
