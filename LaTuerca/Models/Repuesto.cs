@@ -16,11 +16,18 @@ namespace LaTuerca.Models
         [Required(ErrorMessage = "Debe ingresar el nombre")]
         [StringLength(60, MinimumLength = 3)]
         public string Nombre { get; set; }
-        
 
+
+        [Required(ErrorMessage = "Debe ingresar un proveedor")]
         public int ProveedorId { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar una marca")]
         public int MarcaId { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar un modelo")]
         public int ModeloId { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar una categoria")]
         public int CategoriaId { get; set; }
 
         [ForeignKey("ProveedorId")]
@@ -37,8 +44,15 @@ namespace LaTuerca.Models
 
 
         public int Stock { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar el stock minimo")]
         public int StockMinimo { get; set; }
+
+
+        [Required(ErrorMessage = "Debe ingresar el stock maximo")]
         public int StockMaximo { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar el precio de costo")]
         public float PrecioCosto { get; set; }
         public float PrecioVenta1 { get; set; }
         public float PrecioVenta2 { get; set; }

@@ -72,11 +72,14 @@ namespace LaTuerca.Controllers
                     repuesto.CategoriaId = categoria.Id;
                     db.Repuestoes.Add(repuesto);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    //string url = Url.Action("Index", "Repuestos", new { m = "ok" });
+                    //return Json(new { success = true, url = url });
+                    TempData["notice"] = "El producto ha sido guardado!";
+                    return RedirectToAction("Create", "Repuestos");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Intento de acceso no válido.");
+                    TempData["notice"] = "Ocurrio un error!";
                     return RedirectToAction("Create", "Repuestos");
                 }
 
@@ -84,9 +87,8 @@ namespace LaTuerca.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Intento de acceso nou válido.");
+                TempData["notice"] = "Ocurrio un error!";
                 return RedirectToAction("Create", "Repuestos");
-
             }
 
         }
