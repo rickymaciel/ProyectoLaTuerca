@@ -162,7 +162,6 @@
             openOnFocus: true
         });
         $(document).ready(function () {
-            cargarSelectize();
             $("#guardar").click(function(){
                 var nombre = $('#nombre').val();
                 var modelo = $('#select-modelo').val();
@@ -171,33 +170,35 @@
                 var proveedor = $('#select-proveedor').val();
                 if (nombre == "") {
                     $("#nombre").focus();
-                    $("#div-nombre").addClass('has-warning');
+                    $("#div-nombre").addClass('has-error');
                 } else {
-                    $("#div-nombre").removeClass('has-warning');
+                    $("#div-nombre").removeClass('has-error');
                 };
                 if (modelo == "") {
                     //$("#select-modelo").focus();
-                    $("#div-select-modelo").addClass('has-warning');
+                    $("#icon3").addClass('label label-primary');
+                    $("#div-select-modelo").addClass('has-error');
                 } else {
-                    $("#div-select-modelo").removeClass('has-warning');
+                    $("#div-select-modelo").removeClass('has-error');
+                    $("#icon3").removeClass('label label-primary');
                 };
                 if (marca == "") {
                     //$("#select-marca").focus();
-                    $("#div-select-marca").addClass('has-warning');
+                    $("#div-select-marca").addClass('has-error');
                 } else {
-                    $("#div-select-marca").removeClass('has-warning');
+                    $("#div-select-marca").removeClass('has-error');
                 };
                 if (categoria == "") {
                     //$("#select-categoria").focus();
-                    $("#div-select-categoria").addClass('has-warning');
+                    $("#div-select-categoria").addClass('has-error');
                 } else {
-                    $("#div-select-categoria").removeClass('has-warning');
+                    $("#div-select-categoria").removeClass('has-error');
                 };
                 if (proveedor == "") {
                     //$("#select-proveedor").focus();
-                    $("#div-select-proveedor").addClass('has-warning');
+                    $("#div-select-proveedor").addClass('has-error');
                 } else {
-                    $("#div-select-proveedor").removeClass('has-warning');
+                    $("#div-select-proveedor").removeClass('has-error');
                 };
             });
             function cargarSelect() {
