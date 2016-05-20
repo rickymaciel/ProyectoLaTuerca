@@ -26,6 +26,7 @@ namespace LaTuerca
                       "~/Scripts/app.js",
                       "~/Scripts/selectize.js",
                       "~/Scripts/icheck.min.js",
+                      "~/Scripts/sweetalert2.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -37,6 +38,7 @@ namespace LaTuerca
                       "~/Content/icons.css",
                       "~/Content/blue.css",
                       "~/Content/selectize.bootstrap2.css",
+                      "~/Content/sweetalert2.css",
                       "~/Content/ionicons.min.css",
                       "~/Content/font-awesome.min.css"));
         }

@@ -79,7 +79,7 @@ namespace LaTuerca.Controllers
                 }
                 else
                 {
-                    TempData["notice"] = "Ocurrio un error!";
+                    TempData["notice"] = "Ocurrio un error1!";
                     return RedirectToAction("Create", "Repuestos");
                 }
 
@@ -87,7 +87,7 @@ namespace LaTuerca.Controllers
             }
             else
             {
-                TempData["notice"] = "Ocurrio un error!";
+                TempData["notice"] = "Ocurrio un error2!";
                 return RedirectToAction("Create", "Repuestos");
             }
 

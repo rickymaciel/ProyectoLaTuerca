@@ -13,6 +13,7 @@ namespace LaTuerca.Models
         [HiddenInput(DisplayValue = true)]
         public int Id { get; set; }
 
+        [Index("Index_Nombre", IsUnique = true)]
         [Required(ErrorMessage = "Debe ingresar el nombre")]
         [StringLength(60, MinimumLength = 3)]
         public string Nombre { get; set; }
@@ -53,9 +54,19 @@ namespace LaTuerca.Models
         public int StockMaximo { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar el precio de costo")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio no puede tener valor negativo")]
         public float PrecioCosto { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar el precio de venta 1")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio no puede tener valor negativo")]
         public float PrecioVenta1 { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar el precio de venta 2")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio no puede tener valor negativo")]
         public float PrecioVenta2 { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar el precio de venta 3")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio no puede tener valor negativo")]
         public float PrecioVenta3 { get; set; }
 
     }

@@ -107,7 +107,7 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
-            $('#mensaje').delay(3200).fadeOut(300);
+            $('#mensaje').delay(8000).fadeOut(1000);
 
             $("[data-toggle=tooltip]").tooltip();
             $(".tip").tooltip({ placement: 'top' });
@@ -162,70 +162,96 @@
             openOnFocus: true
         });
         $(document).ready(function () {
+            $('#preciocosto').val('');
+            $("#nombre").removeClass('has-warning');
             $("#guardar").click(function () {
-                var mensaje ="";
                 var nombre = $('#nombre').val();
                 var modelo = $('#select-modelo').val();
                 var marca = $('#select-marca').val();
                 var categoria = $('#select-categoria').val();
                 var proveedor = $('#select-proveedor').val();
-                if (nombre == "") {
-                    $("#nombre").focus();
-                    $("#div-nombre").addClass('has-error');
-                    $("#mensaje").html('<div class="col-lg-12"><div class="callout callout-success"> El nombre del producto es requerido</div></div>');
-
+                var preciocoste = parseInt($('#preciocosto').val());
+                if (preciocoste < 1) {
+                    //$("#mensaje").html('<div class="label label-warning">Debe ingresar el precio de costo</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>Debe ingresar el precio de costo<strong>.',
+                        type: "warning",
+                    });
+                    $("#preciocoste").addClass('has-warning');
                 } else {
-                    $("#div-nombre").removeClass('has-error');
-                    $("#mensaje").html('');
+                    $("#preciocosto").removeClass('has-warning');
+                };
+                if (proveedor == "") {
+                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un proveedor</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>Debe seleccionar un proveedor<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-select-proveedor").addClass('has-warning');
+                } else {
+                    $("#div-select-proveedor").removeClass('has-warning');
+                };
+                if (categoria == "") {
+                    $("#mensaje").html('<div class="label label-warning">Debe seleccionar una categoria</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>Debe seleccionar una categoria<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-select-categoria").addClass('has-warning');
+                } else {
+                    $("#div-select-categoria").removeClass('has-warning');
+                };
+                if (modelo == "") {
+                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un modelo</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>Debe seleccionar una modelo<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-select-modelo").addClass('has-warning');
+                } else {
+                    $("#div-select-modelo").removeClass('has-warning');
+                };
+                if (marca == "") {
+                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar una marca</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>Debe seleccionar una marca<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-select-marca").addClass('has-warning');
+                } else {
+                    $("#div-select-marca").removeClass('has-warning');
                 };
                 if (nombre.length < 3) {
                     $("#nombre").focus();
-                    $("#div-nombre").addClass('has-error');
-                    $("#mensaje").html('<div class="col-lg-12"><div class="callout callout-success"> El nombre debe tener al menos 3 caracteres</div></div>');
-
-                } else {
-                    $("#div-nombre").removeClass('has-error');
-                    $("#mensaje").html('');
+                    //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-nombre").addClass('has-warning');
                 };
-                if (modelo == "") {
-                    //$("#select-modelo").focus();
-                    $("#icon3").addClass('label label-primary');
-                    $("#div-select-modelo").addClass('has-error');
-                } else {
-                    $("#div-select-modelo").removeClass('has-error');
-                    $("#icon3").removeClass('label label-primary');
+                if (nombre == "") {
+                    $("#nombre").focus();
+                    //$("#mensaje").html('<div class="label label-warning">El nombre es requerido</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>El nombre es requerido<strong>.',
+                        type: "warning",
+                    });
                 };
-                if (marca == "") {
-                    //$("#select-marca").focus();
-                    $("#div-select-marca").addClass('has-error');
-                } else {
-                    $("#div-select-marca").removeClass('has-error');
-                };
-                if (categoria == "") {
-                    //$("#select-categoria").focus();
-                    $("#div-select-categoria").addClass('has-error');
-                } else {
-                    $("#div-select-categoria").removeClass('has-error');
-                };
-                if (proveedor == "") {
-                    //$("#select-proveedor").focus();
-                    $("#div-select-proveedor").addClass('has-error');
-                } else {
-                    $("#div-select-proveedor").removeClass('has-error');
+                if (nombre != "" && nombre.length > 3) {
+                    $("#nombre").removeClass('has-warning');
                 };
             });
-            function cargarSelect() {
-                var option = "";
-                option += "<option value=''>Seleccionar un proveedorr</option>";
-                $('#select-proveedor').html(option);
-            };
-            function cargarSelectize() {
-                var option = "";
-                option += "<div data-value='' data-selectable='' class='option active'>Seleccionar</div>";
-                $('div.selectize-dropdown-content').html(option);
-            };
         });
     </script>
+
     <script>
         function calcularPrecios() {
             var incremento1 = 10 / 100;
