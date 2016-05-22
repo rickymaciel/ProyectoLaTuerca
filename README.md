@@ -6,5 +6,5 @@ Ricardo Maciel
 
 # Migrations
 descargar el proyecto:
-- ejecutar add migration InitialCreate
--update database
+- ejecutar add migration InitialCreate.
+- update database.
