@@ -13,7 +13,6 @@ namespace LaTuerca.Models
         [HiddenInput(DisplayValue = true)]
         public int Id { get; set; }
 
-        [Index("Index_Nombre", IsUnique = true)]
         [Required(ErrorMessage = "Debe ingresar el nombre")]
         [StringLength(60, MinimumLength = 3)]
         public string Nombre { get; set; }
