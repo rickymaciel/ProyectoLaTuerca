@@ -18,39 +18,31 @@
                     <h3 class="box-title">
                         <span class="btn-group">
                             <a href="@Url.Action("Index", "Repuestos")" class="btn btn-default btn-flat">
-                                <i class="im-menu"></i> Ver todo
+                                <i class="fa-circle-arrow-left"></i> Ver todo
                             </a>
                         </span>
                         <span id="mensaje"></span>
                     </h3>
                     <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
                         <div class="btn-group">
-                            <a class="btn btn-block btn-social btn-default dropdown-toggle" data-toggle="dropdown">
-                                <i class="im-cogs"></i> Crear Nuevo <span class="caret"></span>
-                            </a>
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="" class="" data-toggle="modal" data-target="#crearModelo">
-                                        <i class="im-plus"></i> Nuevo Modelo
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="" data-toggle="modal" data-target="#crearMarca">
-                                        <i class="im-plus"></i> Nuevo Marca
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="" data-toggle="modal" data-target="#crearCategoria">
-                                        <i class="im-plus"></i> Nuevo Categoria
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="" data-toggle="modal" data-target="#crearProveedor">
-                                        <i class="im-plus"></i> Nuevo Proveedor
-                                    </a>
-                                </li>
+                                <li><a href="#" class="" data-toggle="modal" data-target="#crearMarca"><i class="im-plus"></i> Crear Marca</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" class="" data-toggle="modal" data-target="#crearModelo"><i class="im-plus"></i> Crear Modelo</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" class="" data-toggle="modal" data-target="#crearCategoria"><i class="im-plus"></i> Crear Categoria</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#" class="" data-toggle="modal" data-target="#crearProveedor"><i class="im-plus"></i> Crear Proveedor</a></li>
+                                <li class="divider"></li>
                             </ul>
                         </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 @using (Html.BeginForm())
@@ -72,7 +64,7 @@
                                 @Html.ValidationMessageFor(model => model.Repuesto.Nombre, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group col-lg-3" id="div-select-marca">
-                                <a href="@Url.Action("Index", "Marcas")" data-toggle="modal" data-target="#crearMarca" class="tip" title="Ir a Marca">
+                                <a href="@Url.Action("Index", "Marcas")" class="tip" title="Ir a Marca">
                                     @Html.LabelFor(model => model.Repuesto.Marca, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearMarca" title="Crear Marca">
@@ -82,7 +74,7 @@
                                 @Html.ValidationMessageFor(model => model.Repuesto.Marca, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group col-lg-3" id="div-select-modelo">
-                                <a href="@Url.Action("Index", "Modelos")" data-toggle="modal" data-target="#crearModelo" class="tip" title="Ir a Modelo">
+                                <a href="@Url.Action("Index", "Modelos")" class="tip" title="Ir a Modelo">
                                     @Html.LabelFor(model => model.Repuesto.Modelo, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearModelo" title="Crear Modelo">
@@ -92,7 +84,7 @@
                                 @Html.ValidationMessageFor(model => model.Repuesto.Modelo, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group col-lg-3" id="div-select-categoria">
-                                <a href="@Url.Action("Index", "Categorias")" data-toggle="modal" data-target="#crearCategoria" class="tip" title="Ir a Categoria">
+                                <a href="@Url.Action("Index", "Categorias")" class="tip" title="Ir a Categoria">
                                     @Html.LabelFor(model => model.Repuesto.Categoria, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearCategoria" title="Crear Categoria">
@@ -102,7 +94,7 @@
                                 @Html.ValidationMessageFor(model => model.Categorias, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group col-lg-3" id="div-select-proveedor">
-                                <a href="@Url.Action("Index", "Proveedores")" data-toggle="modal" data-target="#crearProveedor" class="tip" title="Ir a Proveedor">
+                                <a href="@Url.Action("Index", "Proveedores")" class="tip" title="Ir a Proveedor">
                                     @Html.LabelFor(model => model.Repuesto.Proveedor, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearProveedor" title="Crear Proveedor">

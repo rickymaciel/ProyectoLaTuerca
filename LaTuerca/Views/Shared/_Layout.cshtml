@@ -236,7 +236,9 @@
                     });
                     $("#div-nombre").addClass('has-warning');
                 };
-                if (nombre == "") {
+                if (nombre != "") {
+                    $("#nombre").removeClass('has-warning');
+                } else {
                     $("#nombre").focus();
                     //$("#mensaje").html('<div class="label label-warning">El nombre es requerido</div>');
                     swal({
@@ -244,9 +246,17 @@
                         text: '<strong>El nombre es requerido<strong>.',
                         type: "warning",
                     });
-                };
-                if (nombre != "" && nombre.length > 3) {
-                    $("#nombre").removeClass('has-warning');
+
+                    if (nombre.length < 3) {
+                        $("#nombre").focus();
+                        //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
+                        swal({
+                            title: "Requerido <small>(*)</small>",
+                            text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
+                            type: "warning",
+                        });
+                        $("#div-nombre").addClass('has-warning');
+                    };
                 };
             });
         });
