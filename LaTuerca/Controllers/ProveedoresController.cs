@@ -58,6 +58,19 @@ namespace LaTuerca.Controllers
             return View(proveedor);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Proveedor proveedor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Proveedors.Add(proveedor);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Create", "Repuestos");
+        }
+
+
         // GET: Proveedores/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -102,18 +115,6 @@ namespace LaTuerca.Controllers
                 return HttpNotFound();
             }
             return View(proveedor);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AjaxCreate(Proveedor proveedor)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Proveedors.Add(proveedor);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Create", "Repuestos");
         }
 
 
