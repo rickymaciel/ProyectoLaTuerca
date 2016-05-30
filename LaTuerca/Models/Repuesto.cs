@@ -21,9 +21,6 @@ namespace LaTuerca.Models
         [Required(ErrorMessage = "Debe ingresar un proveedor")]
         public int ProveedorId { get; set; }
 
-        [Required(ErrorMessage = "Debe ingresar una marca")]
-        public int MarcaId { get; set; }
-
         [Required(ErrorMessage = "Debe ingresar un modelo")]
         public int ModeloId { get; set; }
 
@@ -32,9 +29,6 @@ namespace LaTuerca.Models
 
         [ForeignKey("ProveedorId")]
         public virtual Proveedor Proveedor { get; set; }
-
-        [ForeignKey("MarcaId")]
-        public virtual Marca Marca { get; set; }
 
         [ForeignKey("ModeloId")]
         public virtual Modelo Modelo { get; set; }
@@ -47,7 +41,6 @@ namespace LaTuerca.Models
 
         [Required(ErrorMessage = "Debe ingresar el stock minimo")]
         public int StockMinimo { get; set; }
-
 
         [Required(ErrorMessage = "Debe ingresar el stock maximo")]
         public int StockMaximo { get; set; }

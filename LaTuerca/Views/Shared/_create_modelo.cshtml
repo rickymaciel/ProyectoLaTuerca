@@ -32,42 +32,10 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Fabricante, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.MarcaId, "MarcaId", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.Fabricante, new { htmlAttributes = new { @class = "form-control", placeholder = "Fabricante" } })
-                                @Html.ValidationMessageFor(model => model.Fabricante, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Anho, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Anho, new { htmlAttributes = new { @class = "form-control", placeholder = "Año" } })
-                                @Html.ValidationMessageFor(model => model.Anho, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Cilindros, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Cilindros, new { htmlAttributes = new { @class = "form-control", placeholder = "Cilindros" } })
-                                @Html.ValidationMessageFor(model => model.Cilindros, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Potencia, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Potencia, new { htmlAttributes = new { @class = "form-control", placeholder = "Potencia del motor (cv)" } })
-                                @Html.ValidationMessageFor(model => model.Potencia, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Tipo_Cambio, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Tipo_Cambio, new { htmlAttributes = new { @class = "form-control", placeholder = "Tipo de cambio" } })
-                                @Html.ValidationMessageFor(model => model.Tipo_Cambio, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.MarcaId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MarcaId, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

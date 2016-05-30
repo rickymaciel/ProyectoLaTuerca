@@ -17,7 +17,8 @@ namespace LaTuerca.Controllers
         // GET: Modelos
         public ActionResult Index()
         {
-            return View(db.Modeloes.ToList());
+            var modeloes = db.Modeloes.Include(m => m.Marca);
+            return View(modeloes.ToList());
         }
 
         // GET: Modelos/Details/5
@@ -38,6 +39,7 @@ namespace LaTuerca.Controllers
         // GET: Modelos/Create
         public ActionResult Create()
         {
+            ViewBag.MarcaId = new SelectList(db.Marcas, "Id", "Nombre");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,NombreModelo,Fabricante,Anho,Tipo,Cilindros,Potencia,Tipo_Cambio,Estado")] Modelo modelo)
+        public ActionResult Create([Bind(Include = "Id,NombreModelo,MarcaId,Estado")] Modelo modelo)
         {
             if (ModelState.IsValid)
             {
@@ -55,21 +57,9 @@ namespace LaTuerca.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.MarcaId = new SelectList(db.Marcas, "Id", "Nombre", modelo.MarcaId);
             return View(modelo);
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AjaxCreate(Modelo modelo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Modeloes.Add(modelo);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Create", "Repuestos");
-        }
-
 
         // GET: Modelos/Edit/5
         public ActionResult Edit(int? id)
@@ -83,6 +73,7 @@ namespace LaTuerca.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MarcaId = new SelectList(db.Marcas, "Id", "Nombre", modelo.MarcaId);
             return View(modelo);
         }
 
@@ -91,7 +82,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,NombreModelo,Fabricante,Anho,Tipo,Cilindros,Potencia,Tipo_Cambio,Estado")] Modelo modelo)
+        public ActionResult Edit([Bind(Include = "Id,NombreModelo,MarcaId,Estado")] Modelo modelo)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +90,7 @@ namespace LaTuerca.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.MarcaId = new SelectList(db.Marcas, "Id", "Nombre", modelo.MarcaId);
             return View(modelo);
         }
 

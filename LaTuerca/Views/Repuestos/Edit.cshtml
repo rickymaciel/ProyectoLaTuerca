@@ -23,17 +23,6 @@
                 @Html.ValidationMessageFor(model => model.Repuesto.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Repuesto.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Marca", new SelectList(Model.Marcas, "Id", "Nombre"), new { @class = "form-control" })
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearMarca">
-                    +
-                </button>
-                @Html.ValidationMessageFor(model => model.Marcas, "", new { @class = "text-danger" })
-            </div>
-        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Repuesto.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -68,4 +57,4 @@
 </div>
 
 @Html.Partial("_create_proveedor", Model.Proveedor)
-@Html.Partial("_create_marca", Model.Marca)
+@Html.Partial("_create_modelo", Model.Modelo)

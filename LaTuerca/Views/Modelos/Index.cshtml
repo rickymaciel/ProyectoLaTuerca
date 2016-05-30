@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Modelos";
 }
+
 <section class="content-header">
     <h1>
         <i class="im-menu"></i> @ViewBag.Title
@@ -57,51 +58,26 @@
                                     <thead>
                                         <tr>
                                             <th>
+                                                @Html.DisplayNameFor(model => model.Marca.Nombre)
+                                            </th>
+                                            <th>
                                                 @Html.DisplayNameFor(model => model.NombreModelo)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Fabricante)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Anho)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Cilindros)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Potencia)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Tipo_Cambio)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Estado)
                                             </th>
-                                            <th class="col-lg-1"></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @foreach (var item in Model)
                                         {
                                             <tr>
                                                 <td>
+                                                    @Html.DisplayFor(modelItem => item.Marca.Nombre)
+                                                </td>
+                                                <td>
                                                     @Html.DisplayFor(modelItem => item.NombreModelo)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Fabricante)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Anho)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Cilindros)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Potencia)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Tipo_Cambio)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Estado)
