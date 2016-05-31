@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -176,10 +177,16 @@
     <Compile Include="Migrations\201605302008464_InitialC.Designer.cs">
       <DependentUpon>201605302008464_InitialC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605312108303_Compra.cs" />
+    <Compile Include="Migrations\201605312108303_Compra.Designer.cs">
+      <DependentUpon>201605312108303_Compra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Compra.cs" />
+    <Compile Include="Models\CompraDetalle.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -190,6 +197,7 @@
     <Compile Include="Models\Repuesto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CompraViewModel.cs" />
     <Compile Include="ViewModels\RepuestoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +206,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\datepicker3.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icons.css" />
     <Content Include="Content\img\blue%402x.png" />
@@ -253,6 +263,7 @@
     <Content Include="fonts\steadysets.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\brocolidry.eot" />
@@ -301,6 +312,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\nueva_compra.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.js" />
@@ -385,6 +397,12 @@
     <Content Include="Views\Empresas\Details.cshtml" />
     <Content Include="Views\Empresas\Edit.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
+    <Content Include="Views\Compras\Create.cshtml" />
+    <Content Include="Views\Compras\Delete.cshtml" />
+    <Content Include="Views\Compras\Details.cshtml" />
+    <Content Include="Views\Compras\Edit.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Compras\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -399,6 +417,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605302008464_InitialC.resx">
       <DependentUpon>201605302008464_InitialC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605312108303_Compra.resx">
+      <DependentUpon>201605312108303_Compra.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

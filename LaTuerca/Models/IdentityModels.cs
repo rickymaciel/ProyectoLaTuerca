@@ -45,5 +45,7 @@ namespace LaTuerca.Models
         public System.Data.Entity.DbSet<LaTuerca.Models.Repuesto> Repuestoes { get; set; }
 
         public System.Data.Entity.DbSet<LATUERCA.Models.Empresa> Empresas { get; set; }
+
+        public System.Data.Entity.DbSet<LaTuerca.Models.Compra> Compras { get; set; }
     }
 }

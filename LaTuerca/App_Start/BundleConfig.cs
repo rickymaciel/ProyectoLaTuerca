@@ -21,11 +21,13 @@ namespace LaTuerca
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/jquery.dataTables.min.js",
                       "~/Scripts/dataTables.bootstrap4.min.js",
                       "~/Scripts/app.js",
                       "~/Scripts/selectize.js",
                       "~/Scripts/icheck.min.js",
+                      "~/Scripts/nueva_compra.js",
                       "~/Scripts/sweetalert2.min.js",
                       "~/Scripts/respond.js"));
 
@@ -34,6 +36,8 @@ namespace LaTuerca
                       "~/Content/dataTables.bootstrap4.min.css",
                       "~/Content/AdminLTE.min.css",
                       "~/Content/skins/_all-skins.min.css",
+                      "~/Content/datepicker.css",
+                      "~/Content/datepicker3.css",
                       "~/Content/skins/skin-blue.min.css",
                       "~/Content/icons.css",
                       "~/Content/blue.css",
