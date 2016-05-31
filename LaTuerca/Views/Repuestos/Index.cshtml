@@ -101,7 +101,18 @@
                                                     @Html.DisplayFor(modelItem => item.Categoria.Nombre)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Stock)
+                                                    @if (item.Stock > item.StockMinimo)
+                                                    {
+                                                        <span class="label label-success">@Html.DisplayFor(modelItem => item.Stock)</span>
+                                                    }
+                                                    @if (item.Stock < item.StockMinimo && item.Stock > 0)
+                                                    {
+                                                        <span class="label label-warning">@Html.DisplayFor(modelItem => item.Stock)</span>
+                                                    }
+                                                    @if (item.Stock == 0)
+                                                    {
+                                                        <span class="label label-danger">@Html.DisplayFor(modelItem => item.Stock)</span>
+                                                    }
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.StockMinimo)

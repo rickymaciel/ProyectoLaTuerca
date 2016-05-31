@@ -97,26 +97,18 @@
                         }
                     }
                 });
-            });
-        </script>
-
-    <script>
-        $(document).ready(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
-            $('#mensaje').delay(8000).fadeOut(1000);
+            $('#mensaje').delay(4000).fadeOut(1000);
 
             $("[data-toggle=tooltip]").tooltip();
             $(".tip").tooltip({ placement: 'top' });
             $(".tipR").tooltip({ placement: 'right'});
             $(".tipB").tooltip({ placement: 'bottom'});
             $(".tipL").tooltip({ placement: 'left' });
-        });
-    </script>
-    <script>
         $('#select-marca').selectize({
             labelField: 'model',
             valueField: 'id',
@@ -161,26 +153,25 @@
             plugins: ['optgroup_columns'],
             openOnFocus: true
         });
-        $(document).ready(function () {
             $('#preciocosto').val('');
-            $("#nombre").removeClass('has-warning');
+            $("#nombre").removeClass('has-error');
             $("#guardar").click(function () {
                 var nombre = $('#nombre').val();
                 var modelo = $('#select-modelo').val();
                 var marca = $('#select-marca').val();
                 var categoria = $('#select-categoria').val();
                 var proveedor = $('#select-proveedor').val();
-                var preciocoste = parseInt($('#preciocosto').val());
-                if (preciocoste < 1) {
+                var costo = parseInt($('#preciocosto').val());
+                if (costo < 1) {
                     //$("#mensaje").html('<div class="label label-warning">Debe ingresar el precio de costo</div>');
                     swal({
                         title: "Requerido <small>(*)</small>",
                         text: '<strong>Debe ingresar el precio de costo<strong>.',
                         type: "warning",
                     });
-                    $("#preciocoste").addClass('has-warning');
+                    $("#preciocoste").addClass('has-error');
                 } else {
-                    $("#preciocosto").removeClass('has-warning');
+                    $("#preciocoste").removeClass('has-error');
                 };
                 if (proveedor == "") {
                     //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un proveedor</div>');
@@ -189,9 +180,9 @@
                         text: '<strong>Debe seleccionar un proveedor<strong>.',
                         type: "warning",
                     });
-                    $("#div-select-proveedor").addClass('has-warning');
+                    $("#div-select-proveedor").addClass('has-error');
                 } else {
-                    $("#div-select-proveedor").removeClass('has-warning');
+                    $("#div-select-proveedor").removeClass('has-error');
                 };
                 if (categoria == "") {
                     //$("#mensaje").html('<div class="label label-warning">Debe seleccionar una categoria</div>');
@@ -200,9 +191,9 @@
                         text: '<strong>Debe seleccionar una categoria<strong>.',
                         type: "warning",
                     });
-                    $("#div-select-categoria").addClass('has-warning');
+                    $("#div-select-categoria").addClass('has-error');
                 } else {
-                    $("#div-select-categoria").removeClass('has-warning');
+                    $("#div-select-categoria").removeClass('has-error');
                 };
                 if (modelo == "") {
                     //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un modelo</div>');
@@ -211,9 +202,9 @@
                         text: '<strong>Debe seleccionar una modelo<strong>.',
                         type: "warning",
                     });
-                    $("#div-select-modelo").addClass('has-warning');
+                    $("#div-select-modelo").addClass('has-error');
                 } else {
-                    $("#div-select-modelo").removeClass('has-warning');
+                    $("#div-select-modelo").removeClass('has-error');
                 };
                 if (marca == "") {
                     //$("#mensaje").html('<div class="label label-warning">Debe seleccionar una marca</div>');
@@ -222,9 +213,9 @@
                         text: '<strong>Debe seleccionar una marca<strong>.',
                         type: "warning",
                     });
-                    $("#div-select-marca").addClass('has-warning');
+                    $("#div-select-marca").addClass('has-error');
                 } else {
-                    $("#div-select-marca").removeClass('has-warning');
+                    $("#div-select-marca").removeClass('has-error');
                 };
                 if (nombre.length < 3) {
                     $("#nombre").focus();
@@ -234,11 +225,9 @@
                         text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
                         type: "warning",
                     });
-                    $("#div-nombre").addClass('has-warning');
+                    $("#div-nombre").addClass('has-error');
                 };
-                if (nombre != "") {
-                    $("#nombre").removeClass('has-warning');
-                } else {
+                if (nombre == "") {
                     $("#nombre").focus();
                     //$("#mensaje").html('<div class="label label-warning">El nombre es requerido</div>');
                     swal({
@@ -246,23 +235,22 @@
                         text: '<strong>El nombre es requerido<strong>.',
                         type: "warning",
                     });
-
-                    if (nombre.length < 3) {
-                        $("#nombre").focus();
-                        //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
-                        swal({
-                            title: "Requerido <small>(*)</small>",
-                            text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
-                            type: "warning",
-                        });
-                        $("#div-nombre").addClass('has-warning');
-                    };
-                };
+                } else if (nombre.length < 3) {
+                    $("#nombre").focus();
+                    //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
+                    swal({
+                        title: "Requerido <small>(*)</small>",
+                        text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
+                        type: "warning",
+                    });
+                    $("#div-nombre").addClass('has-error');
+                }
+                
+                else if (nombre != "") {
+                    $("#div-nombre").removeClass('has-error');
+                    $("#div-nombre").addClass('has-success');
+                }
             });
-        });
-    </script>
-
-    <script>
         function calcularPrecios() {
             var incremento1 = 10 / 100;
             var incremento2 = 15 / 100;
@@ -272,14 +260,9 @@
             $('#precioventa2').val(preciocosto * incremento2 + preciocosto);
             $('#precioventa3').val(preciocosto * incremento3 + preciocosto);
         }
-    </script>
-    <script>
         $("#preciocosto").click(function () {
             $('#preciocosto').val('');
         });
-    </script>
-    <script>
-        $(document).ready(function () {
             $('#stockminimo').val(10);
             $('#stockmaximo').val(100);
             $("#preciocosto").keyup(function () {

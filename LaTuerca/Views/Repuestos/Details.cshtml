@@ -1,45 +1,121 @@
 ﻿@model LaTuerca.Models.Repuesto
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles";
 }
+<section class="content">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Submenú</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="@Url.Action("Create", "Repuestos")">
+                                <i class="im-plus"></i> Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Repuestos")">
+                                <i class="im-menu2"></i> Ver todo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Edit", "Repuestos", new { id = Model.Id })">
+                                <i class="im-pencil2"></i> Modificar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- left column -->
+        <div class="col-lg-10">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="im-menu"></i> @ViewBag.Title
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </dt>
 
-<h2>Details</h2>
+                        <dd>
+                            @Html.DisplayFor(model => model.Nombre)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Modelo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Modelo.NombreModelo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Modelo.Marca)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Modelo.Marca.Nombre)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Categoria)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Categoria.Nombre)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Proveedor)
+                        </dt>
 
-<div>
-    <h4>Repuesto</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Modelo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Modelo.NombreModelo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Categoria.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Stock)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.StockMinimo)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
-        </dd>
-    </dl>
-</div>
+                        <dd>
+                            @Html.DisplayFor(model => model.StockMinimo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PrecioCosto)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PrecioCosto)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PrecioVenta1)
+                        </dt>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                        <dd>
+                            @Html.DisplayFor(model => model.PrecioVenta1)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PrecioVenta2)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.PrecioVenta2)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

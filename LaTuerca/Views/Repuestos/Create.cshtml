@@ -21,7 +21,6 @@
                                 <i class="fa-circle-arrow-left"></i> Ver todo
                             </a>
                         </span>
-                        <span id="mensaje"></span>
                     </h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -58,12 +57,12 @@
                                     </div>
                                 </div>
                             }
-                            <div class="form-group col-lg-12" id="div-nombre">
+                            <div class="form-group has-feedback col-lg-3" id="div-nombre">
                                 @Html.LabelFor(model => model.Repuesto.Nombre, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.Repuesto.Nombre, new { htmlAttributes = new { @class = "form-control", @id = "nombre", length = "3", placeholder = "Nombre del producto", @required = "true", aria_required = "true" } })
                                 @Html.ValidationMessageFor(model => model.Repuesto.Nombre, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-4" id="div-select-modelo">
+                            <div class="form-group col-lg-3" id="div-select-modelo">
                                 <a href="@Url.Action("Index", "Modelos")" class="tip" title="Ir a Modelo">
                                     @Html.LabelFor(model => model.Repuesto.Modelo, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
@@ -73,7 +72,7 @@
                                 @Html.DropDownList("Modelo", new SelectList(Model.Modelos, "Id", "NombreModelo"), "Seleccione un modelo", new { @id = "select-modelo", @class = "demo-animals", placeholder = "Seleccione un Modelo", style = "width: 100%;", @required = "true" })
                                 @Html.ValidationMessageFor(model => model.Repuesto.Modelo, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-4" id="div-select-categoria">
+                            <div class="form-group col-lg-3" id="div-select-categoria">
                                 <a href="@Url.Action("Index", "Categorias")" class="tip" title="Ir a Categoria">
                                     @Html.LabelFor(model => model.Repuesto.Categoria, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
@@ -83,7 +82,7 @@
                                 @Html.DropDownList("Categoria", new SelectList(Model.Categorias, "Id", "Nombre"), "Seleccione una Categoria", new { @id = "select-categoria", @class = "demo-animals", placeholder = "Seleccione una Categoria", style = "width: 100%;", @required = "true" })
                                 @Html.ValidationMessageFor(model => model.Categorias, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-4" id="div-select-proveedor">
+                            <div class="form-group col-lg-3" id="div-select-proveedor">
                                 <a href="@Url.Action("Index", "Proveedores")" class="tip" title="Ir a Proveedor">
                                     @Html.LabelFor(model => model.Repuesto.Proveedor, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
