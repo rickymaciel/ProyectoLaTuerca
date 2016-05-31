@@ -58,6 +58,17 @@ namespace LaTuerca.Controllers
             return View(marca);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Marca marca)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Marcas.Add(marca);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Create", "Repuestos");
+        }
         // GET: Marcas/Edit/5
         public ActionResult Edit(int? id)
         {

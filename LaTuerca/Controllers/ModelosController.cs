@@ -61,6 +61,18 @@ namespace LaTuerca.Controllers
             return View(modelo);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Modelo modelo)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Modeloes.Add(modelo);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Create", "Repuestos");
+        }
+
         // GET: Modelos/Edit/5
         public ActionResult Edit(int? id)
         {
