@@ -1,0 +1,90 @@
+﻿@model LaTuerca.Models.Cheque
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cheque</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Banco.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banco.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NroCheque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NroCheque)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lugar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lugar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nroCuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nroCuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Serie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

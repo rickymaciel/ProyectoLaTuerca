@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BancosController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
+    <Compile Include="Controllers\ChequesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\Cheque.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\CompraDetalle.cs" />
@@ -410,6 +412,11 @@
     <Content Include="Views\Bancos\Details.cshtml" />
     <Content Include="Views\Bancos\Edit.cshtml" />
     <Content Include="Views\Bancos\Index.cshtml" />
+    <Content Include="Views\Cheques\Create.cshtml" />
+    <Content Include="Views\Cheques\Delete.cshtml" />
+    <Content Include="Views\Cheques\Details.cshtml" />
+    <Content Include="Views\Cheques\Edit.cshtml" />
+    <Content Include="Views\Cheques\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
