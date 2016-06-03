@@ -183,13 +183,13 @@
     <Compile Include="Migrations\201605312108303_Compra.Designer.cs">
       <DependentUpon>201605312108303_Compra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606030012292_Banco.cs" />
-    <Compile Include="Migrations\201606030012292_Banco.Designer.cs">
-      <DependentUpon>201606030012292_Banco.cs</DependentUpon>
+    <Compile Include="Migrations\201606031909136_Banco.cs" />
+    <Compile Include="Migrations\201606031909136_Banco.Designer.cs">
+      <DependentUpon>201606031909136_Banco.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606021846526_Cheque.cs" />
-    <Compile Include="Migrations\201606021846526_Cheque.Designer.cs">
-      <DependentUpon>201606021846526_Cheque.cs</DependentUpon>
+    <Compile Include="Migrations\201606031913199_Cheque.cs" />
+    <Compile Include="Migrations\201606031913199_Cheque.Designer.cs">
+      <DependentUpon>201606031913199_Cheque.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -443,11 +443,11 @@
     <EmbeddedResource Include="Migrations\201605312108303_Compra.resx">
       <DependentUpon>201605312108303_Compra.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606030012292_Banco.resx">
-      <DependentUpon>201606030012292_Banco.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606031909136_Banco.resx">
+      <DependentUpon>201606031909136_Banco.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021846526_Cheque.resx">
-      <DependentUpon>201606021846526_Cheque.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606031913199_Cheque.resx">
+      <DependentUpon>201606031913199_Cheque.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
