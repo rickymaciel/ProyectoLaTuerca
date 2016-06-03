@@ -29,23 +29,23 @@ namespace LaTuerca.Models
         public int Monto { get; set; }
 
         [Required(ErrorMessage = "El lugar es requerido")]
-        [Display(Name = "Lugar: ")]
+        [Display(Name = "Lugar ")]
         [StringLength(60, MinimumLength = 3)]
         public string Lugar { get; set; }
 
 
         [Required(ErrorMessage = "La fecha es requerido")]
-        [Display(Name = "Fecha: ")]
+        [Display(Name = "Fecha ")]
         [StringLength(60, MinimumLength = 3)]
         public string Fecha { get; set; }
 
         [Required(ErrorMessage = "El Numero de Cuenta es requerido")]
-        [Display(Name = "NroCuenta: ")]
+        [Display(Name = "NroCuenta ")]
         [StringLength(60, MinimumLength = 3)]
         public string nroCuenta { get; set; }
 
         [Required(ErrorMessage = "La serie es requerido")]
-        [Display(Name = "Serie: ")]
+        [Display(Name = "Serie ")]
         [StringLength(60, MinimumLength = 3)]
         public string Serie { get; set; }
 
