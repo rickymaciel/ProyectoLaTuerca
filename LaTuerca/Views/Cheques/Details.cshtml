@@ -4,87 +4,125 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<section class="content">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Submenú</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="@Url.Action("Create", "Menus")">
+                                <i class="im-plus"></i> Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Menus")">
+                                <i class="im-menu2"></i> Ver todo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Edit", "Menus", new { id = Model.Id })">
+                                <i class="im-pencil2"></i> Modificar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- left column -->
+        <div class="col-lg-10">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="im-menu"></i> @ViewBag.Title
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Banco.Nombre)
+                        </dt>
 
-<div>
-    <h4>Cheque</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Banco.Nombre)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Banco.Nombre)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Banco.Nombre)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.NroCheque)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NroCheque)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.NroCheque)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NroCheque)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Monto)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Monto)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Monto)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Monto)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Lugar)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Lugar)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Lugar)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Lugar)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Fecha)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Fecha)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.nroCuenta)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.nroCuenta)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.nroCuenta)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.nroCuenta)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Serie)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Serie)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Serie)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Serie)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Estado)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
