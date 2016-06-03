@@ -1,74 +1,112 @@
 ﻿@model LaTuerca.Models.Banco
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
-<h2>Details</h2>
+<section class="content">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Submenú</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="@Url.Action("Create", "Menus")">
+                                <i class="im-plus"></i> Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Menus")">
+                                <i class="im-menu2"></i> Ver todo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Edit", "Menus", new { id = Model.Id })">
+                                <i class="im-pencil2"></i> Modificar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- left column -->
+        <div class="col-lg-10">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="im-menu"></i> @ViewBag.Title
+                    </h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </dt>
 
-<div>
-    <h4>Banco</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Nombre)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Direccion)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Direccion)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Telefono)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Telefono)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Ruc)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Ruc)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Ruc)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Ruc)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CuentaCorriente)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CuentaCorriente)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CuentaCorriente)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CuentaCorriente)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Estado)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
