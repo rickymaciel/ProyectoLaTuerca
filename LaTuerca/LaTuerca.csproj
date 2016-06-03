@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201605312108303_Compra.Designer.cs">
       <DependentUpon>201605312108303_Compra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606030012292_Banco.cs" />
+    <Compile Include="Migrations\201606030012292_Banco.Designer.cs">
+      <DependentUpon>201606030012292_Banco.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -434,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605312108303_Compra.resx">
       <DependentUpon>201605312108303_Compra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606030012292_Banco.resx">
+      <DependentUpon>201606030012292_Banco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

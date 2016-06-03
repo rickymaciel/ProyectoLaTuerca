@@ -29,6 +29,7 @@ namespace LaTuerca.Models
         public string Ruc { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar una cuenta corriente")]
+        [Display(Name = "Cuenta Corriente")]
         [StringLength(60, MinimumLength = 3)]
         public string CuentaCorriente { get; set; }
 
