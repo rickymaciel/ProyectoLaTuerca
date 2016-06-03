@@ -175,6 +175,22 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
+                  ParentId = 18,
+                  Name = "Bancos",
+                  Description = "Bancos",
+                  Action = "Index",
+                  Controller = "Bancos"
+              },
+              new Models.Menu
+              {
+                  ParentId = 18,
+                  Name = "Cheques",
+                  Description = "Cheques",
+                  Action = "Index",
+                  Controller = "Cheques"
+              },
+              new Models.Menu
+              {
                   ParentId = 0,
                   Name = "Configuración",
                   Description = "Configuraciones del sistema",
