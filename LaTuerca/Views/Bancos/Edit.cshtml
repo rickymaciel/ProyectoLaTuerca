@@ -60,14 +60,14 @@
                     <form role="form" class="form-horizontal">
                         <div class="box-body">
                             @Html.HiddenFor(model => model.Nombre)
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.Nombre, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
 
                                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.Direccion, "Direccion", htmlAttributes: new { @class = "control-label col-md-2" })
 
                               
@@ -75,28 +75,28 @@
                                 @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.Telefono, "Telefono", htmlAttributes: new { @class = "control-label col-md-2" })
                               
                                 @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.Ruc, "R.U.C", htmlAttributes: new { @class = "control-label col-md-2" })
 
                                 @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.CuentaCorriente, "Cuenta Corriente", htmlAttributes: new { @class = "control-label col-md-2" })
 
                                 @Html.EditorFor(model => model.CuentaCorriente, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.CuentaCorriente, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
                                 @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
                               
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
