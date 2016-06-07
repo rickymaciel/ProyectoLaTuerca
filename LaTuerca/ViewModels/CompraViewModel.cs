@@ -8,13 +8,17 @@ namespace LaTuerca.ViewModels
 {
     public class CompraViewModel
     {
-          public Compra Compra { get; set; }
-          public List<CompraDetalle> CompraDetalle { get; set; }
+        public Compra Compra { get; set; }
+        public List<CompraDetalle> CompraDetalles { get; set; }
+        public List<Proveedor> Proveedores { get; set; }
+        public List<Repuesto> Repuestos { get; set; }
 
-          public CompraViewModel(Compra _compra, List<CompraDetalle> _compraDetalles)
-          {
+        public CompraViewModel(Compra _compra, List<CompraDetalle> _compraDetalles, List<Proveedor> _proveedores, List<Repuesto> _repuestos)
+        {
             Compra = _compra;
-            CompraDetalle = _compraDetalles;
-          }
+            CompraDetalles = _compraDetalles;
+            Proveedores = _proveedores;
+            Repuestos = _repuestos;
+        }
     }
 }

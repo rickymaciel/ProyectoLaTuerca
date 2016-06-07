@@ -21,6 +21,11 @@ namespace LaTuerca.Controllers
             return View(modeloes.ToList());
         }
 
+        public JsonResult getMarcas()
+        {
+            var query = from c in db.Marcas select new { c.Id, c.Nombre };
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
         // GET: Modelos/Details/5
         public ActionResult Details(int? id)
         {

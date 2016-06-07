@@ -61,7 +61,38 @@
 
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+                @RenderSection("scripts", required: false)
+                <script>
+                    $(document).ready(function () {
+                        load_marcas();
+                        function load_marcas() {
+                            var codigoArticulo = {
+                                url: "/Modelos/getMarcas",
+                                getValue: "Nombre",
+                                list: {
+                                    match: {
+                                        enabled: true
+                                    },
+                                    maxNumberOfElements: 8,
+                                    sort: {
+                                        enabled: true
+                                    },
+                                    onSelectItemEvent: function () {
+                                        var MarcaId = $(".Marca").getSelectedItemData().Id;
+                                        $("#MarcaId").val(MarcaId).trigger("change");
+                                    },
+                                },
+                                //theme: "plate-dark",
+                                theme: "square"
+                            };
+                            $("input.Marca").easyAutocomplete(codigoArticulo);
+                            $(".easy-autocomplete-container").addClass("text-danger");
+                             
+                        }
+                    });
+                </script>
+
+
 
         <script type="text/javascript" language="javascript" class="init">
             $(document).ready(function () {

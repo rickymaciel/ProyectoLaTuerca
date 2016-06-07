@@ -23,6 +23,59 @@ namespace LaTuerca.Controllers
             return View(compras.ToList());
         }
 
+
+        // GET: Compras/Transaction
+        public ActionResult Factura()
+        {
+            var compra = new Compra();
+            var detalles = new List<CompraDetalle>();
+            //var repuestos = new List<Repuesto>();
+            //var proveedores = new List<Proveedor>();
+            var repuestos = db.Repuestoes.ToList();
+            var proveedores = db.Proveedors.ToList();
+
+            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+            DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            compra.Fecha = Fecha;
+            //compra.FechaPago = DateTime.Now.AddDays(30); //30 days after today
+
+            if (!compra.Pagado == true)
+            {
+                //se genera el proximo numero de factura
+                var proximo = (from inv in db.Compras
+                               orderby inv.NumeroFactura descending
+                               select inv).FirstOrDefault();
+                if (proximo != null)
+                    compra.NumeroFactura = proximo.NumeroFactura + 1;
+            }
+
+            var compraModelView = new CompraViewModel(compra, detalles, proveedores, repuestos);
+            return View(compraModelView);
+        }
+
+        public ActionResult CargarRepuestos(int term)
+        {
+            var repuestoslist = new List<object>();
+            Repuesto repuesto = db.Repuestoes.Where(e => e.Id == term).FirstOrDefault();
+            if (repuesto == null)
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var data = new { repuesto.Id, repuesto.Nombre, repuesto.PrecioVenta1, repuesto.Stock };
+                repuestoslist.Add(data);
+                return Json(repuestoslist, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult getProveedores()
+        {
+            var query = from c in db.Proveedors select new { c.Id, c.RazonSocial, c.Ruc, c.Direccion };
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Compras/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,26 +91,35 @@ namespace LaTuerca.Controllers
             return View(compra);
         }
 
-        // GET: Invoices/CreateWithTransaction
+        // GET: Invoices/Transaction
         public ActionResult Transaction()
         {
-            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial");
             var compra = new Compra();
-            var detalles = new List<CompraDetalle>()
-            {
-                new CompraDetalle(),
-                new CompraDetalle(),
-                new CompraDetalle()
-            };
+            var detalles = new List<CompraDetalle>();
+            //var repuestos = new List<Repuesto>();
+            //var proveedores = new List<Proveedor>();
+            var repuestos = db.Repuestoes.ToList();
             var proveedores = db.Proveedors.ToList();
-            var compraModelView = new CompraViewModel(compra, detalles);
+
+            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+            DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            compra.Fecha = Fecha;
+            //compra.FechaPago = DateTime.Now.AddDays(30); //30 days after today
+
+            if (!compra.Pagado == true)
+            {
+                //se genera el proximo numero de factura
+                var proximo = (from inv in db.Compras
+                               orderby inv.NumeroFactura descending
+                               select inv).FirstOrDefault();
+                if (proximo != null)
+                    compra.NumeroFactura = proximo.NumeroFactura + 1;
+            }
+
+            var compraModelView = new CompraViewModel(compra, detalles, proveedores, repuestos);
             return View(compraModelView);
         }
 
-
-        // POST: Invoices/CreateWithTransaction
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Transaction(Compra compra)
@@ -69,6 +131,7 @@ namespace LaTuerca.Controllers
                     try
                     {
                         db.Compras.Add(compra);
+                        compra.CompraDetalles.Add(new CompraDetalle());
                         db.SaveChanges();
 
                         //commit transaction
@@ -79,6 +142,41 @@ namespace LaTuerca.Controllers
                         //Rollback transaction if exception occurs
                         dbTran.Rollback();
                         Console.WriteLine("\nMessage ---\n{0}", ex.Message);
+                        return RedirectToAction("Create");
+                    }
+
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", compra.ProveedorId);
+            return View(compra);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Factura(Compra compra)
+        {
+            if (ModelState.IsValid)
+            {
+                using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Compras.Add(compra);
+                        compra.CompraDetalles.Add(new CompraDetalle());
+                        db.SaveChanges();
+
+                        //commit transaction
+                        dbTran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        //Rollback transaction if exception occurs
+                        dbTran.Rollback();
+                        Console.WriteLine("\nMessage ---\n{0}", ex.Message);
+                        return RedirectToAction("Create");
                     }
 
                 }
