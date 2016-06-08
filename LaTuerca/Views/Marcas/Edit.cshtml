@@ -1,7 +1,7 @@
 ﻿@model LaTuerca.Models.Marca
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Modificar";
 }
 
 <section class="content">
@@ -28,12 +28,12 @@
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li>
-                            <a href="@Url.Action("Create", "Categorias")">
+                            <a href="@Url.Action("Create", "Marcas")">
                                 <i class="im-plus"></i> Nuevo
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index", "Categorias")">
+                            <a href="@Url.Action("Index", "Marcas")">
                                 <i class="im-menu2"></i> Ver todo
                             </a>
                         </li>
@@ -61,7 +61,7 @@
                         <div class="box-body">
                             @Html.HiddenFor(model => model.Id)
                             <div class="form-group col-lg-12">
-                                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
 
                                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })

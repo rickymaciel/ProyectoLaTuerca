@@ -1,7 +1,7 @@
 ﻿@model LaTuerca.Models.Cheque
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
 <section class="content">
@@ -17,17 +17,17 @@
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li>
-                            <a href="@Url.Action("Create", "Menus")">
+                            <a href="@Url.Action("Create", "Cheques")">
                                 <i class="im-plus"></i> Nuevo
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index", "Menus")">
+                            <a href="@Url.Action("Index", "Cheques")">
                                 <i class="im-menu2"></i> Ver todo
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Edit", "Menus", new { id = Model.Id })">
+                            <a href="@Url.Action("Edit", "Cheques", new { id = Model.Id })">
                                 <i class="im-pencil2"></i> Modificar
                             </a>
                         </li>

@@ -1,7 +1,7 @@
 ﻿@model LaTuerca.Models.Modelo
 
 @{
-    ViewBag.Title = "Crear nuevo modelo";
+    ViewBag.Title = "Nuevo Modelo";
 }
 
 <section class="content-header">
@@ -20,7 +20,7 @@
                     <h3 class="box-title">
                         <span class="btn-group">
                             <a href="@Url.Action("Index", "Modelos")" class="btn btn-default btn-flat">
-                                <i class="fa-circle-arrow-left"></i> Ver todo
+                                <i class="im-menu"></i> Ver todo
                             </a>
                         </span>
                         <span id="mensaje"></span>
@@ -60,27 +60,27 @@
                                     </div>
                                 </div>
                             }
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.NombreModelo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.NombreModelo, htmlAttributes: new { @class = "control-label" })
+                               
                                     @Html.EditorFor(model => model.NombreModelo, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.NombreModelo, "", new { @class = "text-danger" })
-                                </div>
+                               
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label" })
+                               
                                     <div class="checkbox">
                                         @Html.EditorFor(model => model.Estado)
                                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
+                                
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.MarcaId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     @Html.DropDownList("MarcaId", null, "Seleccione una marca", htmlAttributes: new { @id = "select-marca", @class = "", placeholder = "Seleccione una Marca", style = "width: 100%;", @required = "true" })
                                     @Html.ValidationMessageFor(model => model.MarcaId, "", new { @class = "text-danger" })
                                 </div>

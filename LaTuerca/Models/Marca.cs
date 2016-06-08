@@ -18,7 +18,7 @@ namespace LaTuerca.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar el nombre")]
-        [Display(Name = "Marca: ")]
+        [Display(Name = "Marca")]
         [StringLength(60, MinimumLength = 3)]
         public string Nombre { get; set; }
 

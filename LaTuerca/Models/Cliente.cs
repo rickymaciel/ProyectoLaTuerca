@@ -13,6 +13,7 @@ namespace LaTuerca.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar la razon social")]
+        [Display(Name = "Razon Social")]
         public string RazonSocial { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar el documento")]

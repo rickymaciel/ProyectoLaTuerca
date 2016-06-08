@@ -14,18 +14,18 @@ namespace LaTuerca.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]
-        [Display(Name = "Modelo: ")]
+        [Display(Name = "Modelo")]
         [StringLength(60, MinimumLength = 3)]
         public string NombreModelo { get; set; }
 
 
         [Required(ErrorMessage = "La marca es requerida")]
-        [Display(Name = "Marca: ")]
+        [Display(Name = "Marca")]
         public int MarcaId { get; set; }
         [ForeignKey("MarcaId")]
         public virtual Marca Marca { get; set; }
 
-        [Display(Name = "Estado: ")]
+        [Display(Name = "Estado")]
         public Boolean Estado { get; set; }
     }
 }

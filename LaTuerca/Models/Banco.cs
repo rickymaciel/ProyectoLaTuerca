@@ -25,7 +25,7 @@ namespace LaTuerca.Models
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Debe ingresar un Ruc")]
-        [Display(Name = "R.U.C")]
+        [Display(Name = "R.U.C.")]
         [StringLength(60, MinimumLength = 3)]
         public string Ruc { get; set; }
 

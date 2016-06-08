@@ -1,7 +1,7 @@
 ﻿@model LaTuerca.Models.Modelo
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Modificar";
 }
 
 
@@ -29,12 +29,12 @@
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li>
-                            <a href="@Url.Action("Create", "Clientes")">
+                            <a href="@Url.Action("Create", "Modelos")">
                                 <i class="im-plus"></i> Nuevo
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index", "Clientes")">
+                            <a href="@Url.Action("Index", "Modelos")">
                                 <i class="im-menu2"></i> Ver todo
                             </a>
                         </li>
@@ -84,12 +84,6 @@
                                         @Html.EditorFor(model => model.Estado)
                                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Save" class="btn btn-default" />
                                 </div>
                             </div>
 
