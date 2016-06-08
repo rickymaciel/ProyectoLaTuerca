@@ -3,7 +3,7 @@
     ViewBag.Title = "Factura Compra";
 }
 <section class="content-header">
-    <h1> @ViewBag.Title <small>#007612</small> </h1>
+    <h1><i class="en-credit-card"></i>  @ViewBag.Title <small></small> </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Factura</a></li>
         <li class="active">Compra</li>
@@ -22,47 +22,99 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken() <!-- title row -->
-        <div class="row">
-            <div class="col-xs-12 form-horizontal">
-                <h2 class="page-header"> <i class="fa fa-wrench"></i> Mundo Tuerca </h2>
-            </div>
-            <!-- /.col -->
-        </div>
     <!-- info row -->
         <div class="row invoice-info form-horizontal">
-            <div class="col-sm-4 invoice-col">
-                <div class="form-group input-daterange" data-provide="datepicker">
-                    @Html.LabelFor(model => model.Compra.Fecha, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9"> @Html.EditorFor(model => model.Compra.Fecha, new { htmlAttributes = new { @class = "form-control", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.Fecha, "", new { @class = "text-danger" }) </div>
+            <div class="col-md-2">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="col-sm-12">
+                            <img class="img-thumbnail" src="~/Content/img/mundo.jpeg" />
+                        </div><!-- /.box-body -->
+                    </div>
+                </div><!-- /.box -->
+            </div>
+            <div class="col-md-2">
+            </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="form-group" id="div-select-proveedor">
+                                <div class="col-lg-12">
+                                    @Html.DropDownList("Proveedor", new SelectList(Model.Proveedores, "Id", "RazonSocial"), "Seleccione un Proveedor", new { @id = "select-proveedor", placeholder = "Seleccione un Proveedor", @required = "true" })
+                                    @Html.ValidationMessageFor(model => model.Proveedores, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control input-sm" placeholder="RUC" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control input-sm" placeholder="Telefono" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control input-sm" placeholder="Direccion" />
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <div class="form-group input-daterange" data-provide="datepicker">
+                                    @Html.LabelFor(model => model.Compra.Fecha, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.Compra.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.Fecha, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Compra.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.Compra.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm", placeholder = "Nº de Factura", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.NumeroFactura, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Compra.Total, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9"> @Html.EditorFor(model => model.Compra.Total, new { htmlAttributes = new { @class = "form-control input-sm", placeholder = "Total", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.Total, "", new { @class = "text-danger" }) </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
                 </div>
             </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Compra.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9"> @Html.EditorFor(model => model.Compra.NumeroFactura, new { htmlAttributes = new { @class = "form-control", placeholder = "Nº de Factura", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.NumeroFactura, "", new { @class = "text-danger" }) </div>
-                </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Compra.Total, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9"> @Html.EditorFor(model => model.Compra.Total, new { htmlAttributes = new { @class = "form-control", placeholder = "Total", @required = "true", aria_required = "true" } }) @Html.ValidationMessageFor(model => model.Compra.Total, "", new { @class = "text-danger" }) </div>
-                </div>
-            </div>
-            <!-- /.col -->
-        </div>
     }
     <div class="row invoice-info">
         <div class="col-sm-12 invoice-col">
+            <table class="table table-striped table-condensed" id="">
+                <thead></thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <a href="#" id="addRowBtn" class="btn btn-primary btn-sm"><i class="im-cart3"></i> Agregar</a>
+                            <a href="" type="reset" id="" class="btn btn-danger btn-sm">
+                                <i class="im-reply"></i> Cancelar
+                            </a>
+                            <button id="saveInvoiceBtn" class="btn btn-success btn-sm" type="submit" name="saveInvoice" value="Guardar"> <i class="im-airplane"></i> Guardar</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
             <table class="table table-striped table-condensed" id="itemsTable">
                 <thead>
                     <tr>
-                        <th style="width: 5%"></th>
+                        <th style="width: 5%"><i class="im-remove"></i></th>
                         <th style="width: 15%">Item</th>
                         <th style="width: 30%">Description</th>
-                        <th style="width: 10%">Qty</th>
-                        <th style="width: 20%">Price</th>
+                        <th style="width: 10%">Cantidad</th>
+                        <th style="width: 20%">Precio Unit.</th>
                         <th style="width: 20%">Total</th>
                     </tr>
                 </thead>
@@ -77,7 +129,7 @@
                             <input type="text" name="Nombre[]" value="" class="form-control input-sm" placeholder="Descripcion" id="Nombre" readonly="readonly" />
                         </td>
                         <td>
-                            <input type="number" name="Cantidad[]" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required/>
+                            <input type="number" name="Cantidad[]" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
                         </td>
                         <td>
                             <div class="input-group">
@@ -91,48 +143,31 @@
                         </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2" class="text-right">
+                            <div class="input-group pull-right">
+                                <input placeholder="IVA" type="text" name="tax" id="tax" value="10" class="form-control input-sm" /><span class="input-group-addon">%</span>
+                            </div>
+                        </td>
+                        <td colspan="2" class="text-right" id="salesTax"><h4>Gs. </h4> </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2" class="text-right"><h4>Sub Total:</h4></td>
+                        <td colspan="2" class="text-right"><h4 id="subTotal"></h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-right"><h3>Total: </h3></td>
+                        <td colspan="2" class="text-right">
+                            <h4 id="grandTotal">
+                                Gs.
+                            </h4>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
-            <a href="#" id="addRowBtn" class="btn btn-success"><i class="im-cart3"></i> Agregar</a>
-            <input id="saveInvoiceBtn" class="btn btn-primary" type="submit" name="saveInvoice" value="Guardar">
-            <a href="" type="reset" id="" class="btn btn-danger pull-right">
-                <i class="glyphicon glyphicon-chevron-left"></i> Cancelar
-            </a>
-        </div>
-    </div>
-    <div class="row invoice-info">
-        <div class="col-sm-7 invoice-col">
-        </div>
-        <div class="col-sm-5 invoice-col text-right">
-            <div class="row">
-                <div class="col-md-6 text-right">
-                    <h5>Sub Total:</h5>
-                </div>
-                <div class="col-md-6 text-left">
-                    <h5 id="subTotal">$</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 text-right">
-                    <div class="input-group">
-                        <input placeholder="Sales Tax" type="text" name="tax" id="tax" value="" class="form-control input-sm" /><span class="input-group-addon">%</span>
-                    </div>
-                </div>
-                <div class="col-md-6 text-left" id="salesTax">
-                    <h5>
-                        Gs. 
-                    </h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 text-right">
-                    <h4>Grand Total:</h4>
-                </div>
-                <div class="col-md-6 text-left">
-                    <h4 id="grandTotal">
-                        Gs. 
-                    </h4>
-                </div>
-            </div>
         </div>
     </div>
 </section>

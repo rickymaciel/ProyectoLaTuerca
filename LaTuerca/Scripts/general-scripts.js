@@ -93,7 +93,7 @@ $(document).on('click', '#deleteRow', function () {
     mioInvoice.deleteRow(this);
 });
 
-$('#saveInvoiceBtn').on('click', function (e) {
+$('button#saveInvoiceBtn').on('click', function (e) {
 
     $(window).unbind("beforeunload");
 
@@ -119,7 +119,7 @@ $('#saveInvoiceBtn').on('click', function (e) {
  */
 $('body').on("focus", lookupSelector, function () {
     $(window).bind('beforeunload', function () {
-        return "Usted no ha guardado los datos. ¿Seguro que quieres salir de esta página sin guardar primero?";
+        return "Usted no ha guardado los datos. Seguro que quieres salir de esta pagina sin guardar primero?";
     });
 });
 
