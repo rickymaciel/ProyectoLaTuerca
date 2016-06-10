@@ -240,5 +240,11 @@ namespace LaTuerca.Controllers
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public enum Metodo
+        {
+            Contado,
+            Financiado
+        }
     }
 }

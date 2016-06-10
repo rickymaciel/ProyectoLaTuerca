@@ -119,7 +119,7 @@
                             var Telefono = $(".RazonSocialCliente").getSelectedItemData().Telefono;
                             var Direccion = $(".RazonSocialCliente").getSelectedItemData().Direccion;
 
-                            $("#ClienteId").val(ClienteId).trigger("change");
+                            $("#ClienteIdCliente").val(ClienteId).trigger("change");
                             $("#RazonSocialCliente").val(RazonSocial).trigger("change");
                             $("#DocumentoCliente").val(Documento).trigger("change");
                             $("#TelefonoCliente").val(Telefono).trigger("change");
@@ -299,7 +299,7 @@
                 increaseArea: '20%' // optional
             });
             $('#mensaje').delay(4000).fadeOut(1000);
-
+            $("#ClienteIdCliente").val('');
             $("[data-toggle=tooltip]").tooltip();
             $(".tip").tooltip({ placement: 'top' });
             $(".tipR").tooltip({ placement: 'right' });

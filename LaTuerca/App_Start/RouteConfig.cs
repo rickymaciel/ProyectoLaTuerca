@@ -16,7 +16,7 @@ namespace LaTuerca
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "FacturaClientes", action = "Factura", id = UrlParameter.Optional }
             );
         }
     }

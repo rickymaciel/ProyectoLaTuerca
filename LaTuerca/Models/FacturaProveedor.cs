@@ -25,7 +25,7 @@ namespace LaTuerca.Models
         [Column(TypeName = "Date")]
         public DateTime Fecha { get; set; }
 
-        [Display(Name = "Fecha de pago: ")]
+        [Display(Name = "Vence: ")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Column(TypeName = "Date")]
@@ -51,7 +51,7 @@ namespace LaTuerca.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal TotalPagado { get; set; }
 
-        [Display(Name = "Metodo de pagado: ")]
+        [Display(Name = "Metodo: ")]
         [Required(ErrorMessage = "Debe indicar un método de pago")]
         public string Metodo { get; set; }
 
