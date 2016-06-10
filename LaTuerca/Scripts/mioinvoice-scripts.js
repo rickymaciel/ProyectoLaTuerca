@@ -26,7 +26,7 @@ var mioInvoice = {
                 var $itemRow = $(this).closest('tr');
 
                 // Modify this information to match the information coming from assets/ajax-services/fetch-inventory.php
-                $itemRow.find('#Id').val(ui.item.Id); // Hidden input on form
+                //$itemRow.find('#Id').val(ui.item.Id); // Hidden input on form
                 $itemRow.find('#RepuestoId').val(ui.item.Id);
                 $itemRow.find('#Nombre').val(ui.item.Nombre);
                 $itemRow.find('#PrecioVenta1').val(ui.item.PrecioVenta1);
@@ -49,7 +49,7 @@ var mioInvoice = {
         // Calculate the price of the row.  Remove any $ so the calculation doesn't break
         var price = $itemRow.find('#PrecioVenta1').val().replace("Gs. ", "") * $itemRow.find('#Cantidad').val();
         price = this.roundNumber(price, 0);
-        isNaN(price) ? $itemRow.find('#Total').val("N/A") : $itemRow.find('#Total').val(price);
+        isNaN(price) ? $itemRow.find('#TotalLinea').val("N/A") : $itemRow.find('#TotalLinea').val(price);
         this.updateSalesTax();
         this.updateTotal();
     },
@@ -60,8 +60,8 @@ var mioInvoice = {
     updateTotal: function () {
 
         var total = 0;
-        $('input#Total').each(function (i) {
-            price = $(this).val().replace("Gs. ", "");
+        $('#TotalLinea').each(function (i) {
+            price = $(this).val();
             if (!isNaN(price)) total += Number(price);
         });
 
@@ -71,13 +71,15 @@ var mioInvoice = {
 
         grdTotal = this.roundNumber(grdTotal, 2);
         $('#grandTotalTop, #grandTotal').html("Gs. " + grdTotal);
+        $('#Total').val(grdTotal);
+        
 
     },
 
     updateSalesTax: function () {
         var total = 0;
 
-        $('input#Total').each(function (i) {
+        $('input#TotalLinea').each(function (i) {
             price = $(this).val().replace("Gs. ", "");
             if (!isNaN(price)) total += Number(price);
         });

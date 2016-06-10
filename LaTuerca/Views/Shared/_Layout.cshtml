@@ -13,21 +13,21 @@
 
 </head>
 <body class="sidebar-mini skin-blue">
-        <div class="wrapper">
-            <header class="main-header">
-                <!-- Logo -->
-                <a href="http://localhost:53172/" class="logo">
-                    <span class="logo-mini"><b>M</b>T</span>
-                    <span class="logo-lg"><b>MUNDO</b>TUERCA</span>
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="http://localhost:53172/" class="logo">
+                <span class="logo-mini"><b>M</b>T</span>
+                <span class="logo-lg"><b>MUNDO</b>TUERCA</span>
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
                 </a>
-                <nav class="navbar navbar-static-top" role="navigation">
-                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Toggle navigation</span>
-                    </a>
-                    @Html.Partial("_LoginPartial")
-                </nav>
-            </header>@if (Request.IsAuthenticated)
-            {
+                @Html.Partial("_LoginPartial")
+            </nav>
+        </header>@if (Request.IsAuthenticated)
+        {
             <aside class="main-sidebar">
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -46,88 +46,187 @@
                     </ul>
                 </section>
             </aside>
-    }
-            <div class="content-wrapper">
-                @RenderBody()
+        }
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.3.0
             </div>
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.3.0
-                </div>
-                <strong>Copyright &copy; @DateTime.Now.Year - La Tuerca.</strong> All rights reserved.
-            </footer>
-            <div class="control-sidebar-bg"></div>
-        </div><!-- ./wrapper -->
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-                @RenderSection("scripts", required: false)
-                <script>
-                    $(document).ready(function () {
-                        load_marcas();
-                        function load_marcas() {
-                            var codigoArticulo = {
-                                url: "/Modelos/getMarcas",
-                                getValue: "Nombre",
-                                list: {
-                                    match: {
-                                        enabled: true
-                                    },
-                                    maxNumberOfElements: 8,
-                                    sort: {
-                                        enabled: true
-                                    },
-                                    onSelectItemEvent: function () {
-                                        var MarcaId = $(".Marca").getSelectedItemData().Id;
-                                        $("#MarcaId").val(MarcaId).trigger("change");
-                                    },
-                                },
-                                //theme: "plate-dark",
-                                theme: "square"
-                            };
-                            $("input.Marca").easyAutocomplete(codigoArticulo);
-                            $(".easy-autocomplete-container").addClass("text-danger");
-                             
-                        }
-                    });
-                </script>
-
-
-
-        <script type="text/javascript" language="javascript" class="init">
-            $(document).ready(function () {
-                var oTable = $('#tablaMenu').DataTable({
-                    "bProcessing": true,
-                    "sPaginationType": "full_numbers",
-                    "paging": true,
-                    "iDisplayLength": 10,
-                    "bPaginate": true,
-                    "bSort": true,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sPrevious": "←",
-                            "sNext": "→",
-                            "sLast": "»",
-                            "sFirst": "«"
+            <strong>Copyright &copy; @DateTime.Now.Year - La Tuerca.</strong> All rights reserved.
+        </footer>
+        <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            load_marcas();
+            load_proveedores();
+            function load_proveedores() {
+                var RazonSocialProveedor = {
+                    url: "/Compras/getProveedores",
+                    getValue: "RazonSocial",
+                    list: {
+                        match: {
+                            enabled: true
                         },
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
+                        maxNumberOfElements: 8,
+                        sort: {
+                            enabled: true
+                        },
+                        onSelectItemEvent: function () {
+                            var ProveedorId = $(".RazonSocial").getSelectedItemData().Id;
+                            var RazonSocial = $(".RazonSocial").getSelectedItemData().RazonSocial;
+                            var Ruc = $(".RazonSocial").getSelectedItemData().Ruc;
+                            var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
+                            var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
+
+                            $("#ProveedorId").val(ProveedorId).trigger("change");
+                            $("#RazonSocial").val(RazonSocial).trigger("change");
+                            $("#Ruc").val(Ruc).trigger("change");
+                            $("#Telefono").val(Telefono).trigger("change");
+                            $("#Direccion").val(Direccion).trigger("change");
+                        },
+                    },
+                    theme: "plate-dark",
+                    //theme: "square"
+                };
+                $("input#RazonSocial").easyAutocomplete(RazonSocialProveedor);
+                $(".easy-autocomplete-container").addClass("text-danger");
+
+            }
+            function load_marcas() {
+                var codigoArticulo = {
+                    url: "/Modelos/getMarcas",
+                    getValue: "Nombre",
+                    list: {
+                        match: {
+                            enabled: true
+                        },
+                        maxNumberOfElements: 8,
+                        sort: {
+                            enabled: true
+                        },
+                        onSelectItemEvent: function () {
+                            var MarcaId = $(".Marca").getSelectedItemData().Id;
+                            $("#MarcaId").val(MarcaId).trigger("change");
+                        },
+                    },
+                    //theme: "plate-dark",
+                    theme: "square"
+                };
+                $("input.Marca").easyAutocomplete(codigoArticulo);
+                $(".easy-autocomplete-container").addClass("text-danger");
+
+            }
+
+            function load_pro() {
+                $('#RazonSocial').autocomplete({
+                    source: function (request, response) {
+                        $.post('/Compras/BusquedaProveedor', { term: request.term },
+                            function (data) {
+                                var json = [];
+                                if (data) {
+                                    $(data).each(function (i, item) {
+                                        json.push({
+                                            label: item.RazonSocial,
+                                            value: item.RazonSocial,
+                                            ProveedorId: item.Id,
+                                            Ruc: item.Ruc,
+                                            Telefono: item.Telefono,
+                                            Direccion: item.Direccion
+                                        });
+                                    });
+                                }
+                                return response(json);
+                            }, 'json');
+                    },
+                    delay: 100,
+                    minLength: 1,
+                    select: function (e, data) {
+                        $('#ProveedorId').val(data.item.ProveedorId);
+                        $('#Ruc').val(data.item.Ruc);
+                        $('#Telefono').val(data.item.Telefono);
+                        $('#Direccion').val(data.item.Direccion);
                     }
                 });
+            };
+        });
+    </script>
+
+
+
+
+
+    <script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function () {
+            var oTable = $('table.tabledata').DataTable({
+                "bProcessing": true,
+                "sPaginationType": "full_numbers",
+                "paging": true,
+                "iDisplayLength": 10,
+                "bPaginate": true,
+                "bSort": true,
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious": "←",
+                        "sNext": "→",
+                        "sLast": "»",
+                        "sFirst": "«"
+                    },
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+            var oTable = $('#tablaMenu').DataTable({
+                "bProcessing": true,
+                "sPaginationType": "full_numbers",
+                "paging": true,
+                "iDisplayLength": 10,
+                "bPaginate": true,
+                "bSort": true,
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious": "←",
+                        "sNext": "→",
+                        "sLast": "»",
+                        "sFirst": "«"
+                    },
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -137,53 +236,64 @@
 
             $("[data-toggle=tooltip]").tooltip();
             $(".tip").tooltip({ placement: 'top' });
-            $(".tipR").tooltip({ placement: 'right'});
-            $(".tipB").tooltip({ placement: 'bottom'});
+            $(".tipR").tooltip({ placement: 'right' });
+            $(".tipB").tooltip({ placement: 'bottom' });
             $(".tipL").tooltip({ placement: 'left' });
-        $('#select-marca').selectize({
-            labelField: 'model',
-            valueField: 'id',
-            optgroupField: 'make',
-            optgroupLabelField: 'name',
-            optgroupValueField: 'id',
-            lockOptgroupOrder: true,
-            searchField: ['model'],
-            plugins: ['optgroup_columns'],
-            openOnFocus: true
-        });
-        $('#select-modelo').selectize({
-            labelField: 'model',
-            valueField: 'id',
-            optgroupField: 'make',
-            optgroupLabelField: 'name',
-            optgroupValueField: 'id',
-            lockOptgroupOrder: true,
-            searchField: ['model'],
-            plugins: ['optgroup_columns'],
-            openOnFocus: true
-        });
-        $('#select-categoria').selectize({
-            labelField: 'model',
-            valueField: 'id',
-            optgroupField: 'make',
-            optgroupLabelField: 'name',
-            optgroupValueField: 'id',
-            lockOptgroupOrder: true,
-            searchField: ['model'],
-            plugins: ['optgroup_columns'],
-            openOnFocus: true
-        });
-        $('#select-proveedor').selectize({
-            labelField: 'model',
-            valueField: 'id',
-            optgroupField: 'make',
-            optgroupLabelField: 'name',
-            optgroupValueField: 'id',
-            lockOptgroupOrder: true,
-            searchField: ['model'],
-            plugins: ['optgroup_columns'],
-            openOnFocus: true
-        });
+            $('#ProveedorI').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-marca').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-modelo').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-categoria').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-proveedor').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
             $('#preciocosto').val('');
             $("#nombre").removeClass('has-error');
             $("#guardar").click(function () {
@@ -276,24 +386,24 @@
                     });
                     $("#div-nombre").addClass('has-error');
                 }
-                
+
                 else if (nombre != "") {
                     $("#div-nombre").removeClass('has-error');
                     $("#div-nombre").addClass('has-success');
                 }
             });
-        function calcularPrecios() {
-            var incremento1 = 10 / 100;
-            var incremento2 = 15 / 100;
-            var incremento3 = 20 / 100;
-            var preciocosto = parseInt($('#preciocosto').val());
-            $('#precioventa1').val(preciocosto * incremento1 + preciocosto);
-            $('#precioventa2').val(preciocosto * incremento2 + preciocosto);
-            $('#precioventa3').val(preciocosto * incremento3 + preciocosto);
-        }
-        $("#preciocosto").click(function () {
-            $('#preciocosto').val('');
-        });
+            function calcularPrecios() {
+                var incremento1 = 10 / 100;
+                var incremento2 = 15 / 100;
+                var incremento3 = 20 / 100;
+                var preciocosto = parseInt($('#preciocosto').val());
+                $('#precioventa1').val(preciocosto * incremento1 + preciocosto);
+                $('#precioventa2').val(preciocosto * incremento2 + preciocosto);
+                $('#precioventa3').val(preciocosto * incremento3 + preciocosto);
+            }
+            $("#preciocosto").click(function () {
+                $('#preciocosto').val('');
+            });
             $('#stockminimo').val(10);
             $('#stockmaximo').val(100);
             $("#preciocosto").keyup(function () {

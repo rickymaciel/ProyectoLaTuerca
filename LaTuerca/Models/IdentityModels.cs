@@ -51,5 +51,9 @@ namespace LaTuerca.Models
         public System.Data.Entity.DbSet<LaTuerca.Models.Banco> Bancoes { get; set; }
 
         public System.Data.Entity.DbSet<LaTuerca.Models.Cheque> Cheques { get; set; }
+
+        public System.Data.Entity.DbSet<LaTuerca.Models.FacturaProveedor> FacturaProveedors { get; set; }
+
+        public System.Data.Entity.DbSet<LaTuerca.Models.DetallesFacturaProveedor> DetallesFacturaProveedors { get; set; }
     }
 }

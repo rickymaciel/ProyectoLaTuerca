@@ -9,7 +9,7 @@ var filePath;
  First, set the path to fetch items from database
  Initialize the lookup for the first input on the page
  */
-mioInvoice.setPathValue('CargarRepuestos');
+mioInvoice.setPathValue('http://localhost:53172/Compras/CargarRepuestos');
 mioInvoice.fetchItems(lookupInput);
 
 /*
@@ -17,19 +17,24 @@ mioInvoice.fetchItems(lookupInput);
  You will also want to make sure that your inputs match what's in the html current row.
  Also, be sure you have the correct id's for each input.
  */
+
+
+var i = $('.item-row').length;
 var rowTemp = [
     '<tr class="item-row">',
     '<td><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
-    '<td><input id="Id" name="Id[]" type="hidden" value="" placeholder="Id. Repuesto" />' + // Hidden value to post to DB
-        '<input id="RepuestoId" name="RepuestoId[]" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" /> </td>',
-    '<td><input id="Nombre" name="Nombre[]" type="text" class="form-control input-sm" value="" placeholder="Descripcion" readonly="readonly" /></td>',
-    '<td><input id="Cantidad" name="Cantidad[]" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
+    '<td><input id="Id" type="hidden" value="" placeholder="" />' + // Hidden value to post to DB
+        '<input id="RepuestoId" name="CompraDetalles.[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" /> </td>',
+    '<td><input id="Nombre" name="CompraDetalles.[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" readonly="readonly" /></td>',
+    '<td><input id="Cantidad" name="CompraDetalles.[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
     '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="PrecioVenta1" name="PrecioVenta1[]" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
+        '<input id="PrecioVenta1" name="CompraDetalles.[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
     '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="Total" name="Total[]" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>',
+        '<input id="TotalLinea" name="CompraDetalles.[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>',
     '</tr>'
 ].join('');
+
+
 
 /*
  We are overriding the autocomplete UI menu styles to create our own.
@@ -61,8 +66,8 @@ $.ui.autocomplete.prototype._renderItem = function (ul, item) {
 
 $("#addRowBtn").on('click', function (e) {
     mioInvoice.addRow(lookupSelector);
+    i++;
     e.preventDefault();
-
 });
 
 /*
@@ -97,14 +102,14 @@ $('button#saveInvoiceBtn').on('click', function (e) {
 
     $(window).unbind("beforeunload");
 
-
+    
     /*  Use this to save the post data to the database using ajax */
 
 //    var postData = $("#invoiceForm").serialize();
 //
 //    alert(postData);
 //
-//    $.post("ajax-services/post-data.php", { data: postData })
+//    $.post("http://localhost:53172/Compras/AjaxCreate", { data: postData })
 //        .done(function (data) {
 //            alert("Post Data: " + data);
 //        });
