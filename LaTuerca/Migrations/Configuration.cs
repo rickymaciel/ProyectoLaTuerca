@@ -90,8 +90,8 @@ namespace LaTuerca.Migrations
                   ParentId = 2,
                   Name = "Factura Compras",
                   Description = "Facturacion Proveedor",
-                  Action = "Index",
-                  Controller = "Compras"
+                  Action = "Factura",
+                  Controller = "FacturaProveedors"
               },
               new Models.Menu
               {
@@ -138,8 +138,8 @@ namespace LaTuerca.Migrations
                   ParentId = 4,
                   Name = "Factura Ventas",
                   Description = "Facturacion Cliente",
-                  Action = "Index",
-                  Controller = "Ventas"
+                  Action = "Factura",
+                  Controller = "FacturaClientes"
               },
               new Models.Menu
               {

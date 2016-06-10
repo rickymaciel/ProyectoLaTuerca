@@ -64,10 +64,11 @@
     <script>
         $(document).ready(function () {
             load_marcas();
+            load_clientes();
             load_proveedores();
             function load_proveedores() {
                 var RazonSocialProveedor = {
-                    url: "/Compras/getProveedores",
+                    url: "/FacturaProveedors/getProveedores",
                     getValue: "RazonSocial",
                     list: {
                         match: {
@@ -98,6 +99,40 @@
                 $(".easy-autocomplete-container").addClass("text-danger");
 
             }
+
+            function load_clientes() {
+                var RazonSocialClientes = {
+                    url: "/FacturaClientes/getClientes",
+                    getValue: "RazonSocial",
+                    list: {
+                        match: {
+                            enabled: true
+                        },
+                        maxNumberOfElements: 8,
+                        sort: {
+                            enabled: true
+                        },
+                        onSelectItemEvent: function () {
+                            var ClienteId = $(".RazonSocialCliente").getSelectedItemData().Id;
+                            var RazonSocial = $(".RazonSocialCliente").getSelectedItemData().RazonSocial;
+                            var Documento = $(".RazonSocialCliente").getSelectedItemData().Documento;
+                            var Telefono = $(".RazonSocialCliente").getSelectedItemData().Telefono;
+                            var Direccion = $(".RazonSocialCliente").getSelectedItemData().Direccion;
+
+                            $("#ClienteId").val(ClienteId).trigger("change");
+                            $("#RazonSocialCliente").val(RazonSocial).trigger("change");
+                            $("#DocumentoCliente").val(Documento).trigger("change");
+                            $("#TelefonoCliente").val(Telefono).trigger("change");
+                            $("#DireccionCliente").val(Direccion).trigger("change");
+                        },
+                    },
+                    theme: "plate-dark",
+                    //theme: "square"
+                };
+                $("input#RazonSocialCliente").easyAutocomplete(RazonSocialClientes);
+                $(".easy-autocomplete-container").addClass("text-danger");
+
+            }
             function load_marcas() {
                 var codigoArticulo = {
                     url: "/Modelos/getMarcas",
@@ -123,10 +158,41 @@
 
             }
 
+            function load_cli() {
+                $('#RazonSocialCliente').autocomplete({
+                    source: function (request, response) {
+                        $.post('/FacturaClientes/BusquedaCliente', { term: request.term },
+                            function (data) {
+                                var json = [];
+                                if (data) {
+                                    $(data).each(function (i, item) {
+                                        json.push({
+                                            label: item.RazonSocial,
+                                            value: item.RazonSocial,
+                                            ProveedorId: item.Id,
+                                            Documento: item.Documento,
+                                            Telefono: item.Telefono,
+                                            Direccion: item.Direccion
+                                        });
+                                    });
+                                }
+                                return response(json);
+                            }, 'json');
+                    },
+                    delay: 100,
+                    minLength: 1,
+                    select: function (e, data) {
+                        $('#ClienteId').val(data.item.ClienteId);
+                        $('#Documento').val(data.item.Documento);
+                        $('#Telefono').val(data.item.Telefono);
+                        $('#Direccion').val(data.item.Direccion);
+                    }
+                });
+            };
             function load_pro() {
                 $('#RazonSocial').autocomplete({
                     source: function (request, response) {
-                        $.post('/Compras/BusquedaProveedor', { term: request.term },
+                        $.post('/FacturaProveedors/BusquedaProveedor', { term: request.term },
                             function (data) {
                                 var json = [];
                                 if (data) {

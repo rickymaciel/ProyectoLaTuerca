@@ -164,8 +164,10 @@
     <Compile Include="Controllers\ChequesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
+    <Compile Include="Controllers\DetallesFacturaClientesController.cs" />
     <Compile Include="Controllers\DetallesFacturaProveedorsController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
+    <Compile Include="Controllers\FacturaClientesController.cs" />
     <Compile Include="Controllers\FacturaProveedorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -197,6 +199,10 @@
     <Compile Include="Migrations\201606101639445_FacturaCompra.Designer.cs">
       <DependentUpon>201606101639445_FacturaCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606101858014_FacturaVenta.cs" />
+    <Compile Include="Migrations\201606101858014_FacturaVenta.Designer.cs">
+      <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -205,8 +211,10 @@
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\CompraDetalle.cs" />
+    <Compile Include="Models\DetallesFacturaCliente.cs" />
     <Compile Include="Models\DetallesFacturaProveedor.cs" />
     <Compile Include="Models\Empresa.cs" />
+    <Compile Include="Models\FacturaCliente.cs" />
     <Compile Include="Models\FacturaProveedor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -456,6 +464,17 @@
     <Content Include="Views\DetallesFacturaProveedors\Edit.cshtml" />
     <Content Include="Views\DetallesFacturaProveedors\Index.cshtml" />
     <Content Include="Views\FacturaProveedors\Factura.cshtml" />
+    <Content Include="Views\FacturaClientes\Create.cshtml" />
+    <Content Include="Views\FacturaClientes\Delete.cshtml" />
+    <Content Include="Views\FacturaClientes\Details.cshtml" />
+    <Content Include="Views\FacturaClientes\Edit.cshtml" />
+    <Content Include="Views\FacturaClientes\Index.cshtml" />
+    <Content Include="Views\DetallesFacturaClientes\Create.cshtml" />
+    <Content Include="Views\DetallesFacturaClientes\Delete.cshtml" />
+    <Content Include="Views\DetallesFacturaClientes\Details.cshtml" />
+    <Content Include="Views\DetallesFacturaClientes\Edit.cshtml" />
+    <Content Include="Views\DetallesFacturaClientes\Index.cshtml" />
+    <Content Include="Views\FacturaClientes\Factura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -482,6 +501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606101639445_FacturaCompra.resx">
       <DependentUpon>201606101639445_FacturaCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606101858014_FacturaVenta.resx">
+      <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

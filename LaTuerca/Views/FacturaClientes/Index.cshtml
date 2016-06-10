@@ -1,9 +1,8 @@
-﻿@model IEnumerable<LaTuerca.Models.FacturaProveedor>
+﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
 
 @{
     ViewBag.Title = "Facturas";
 }
-
 
 <section class="content-header">
     <h1>
@@ -59,7 +58,7 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+                                                @Html.DisplayNameFor(model => model.Cliente.RazonSocial)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Fecha)
@@ -70,6 +69,7 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.NumeroFactura)
                                             </th>
+
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Total)
                                             </th>
@@ -85,11 +85,12 @@
                                             <th class="col-lg-1"></th>
                                     </thead>
                                     <tbody>
+
                                         @foreach (var item in Model)
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
+                                                    @Html.DisplayFor(modelItem => item.Cliente.RazonSocial)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Fecha)
