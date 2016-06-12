@@ -69,9 +69,27 @@ namespace LaTuerca.Controllers
                     try
                     {
                         db.FacturaClientes.Add(facturaCliente);
-
                         db.SaveChanges();
+                        foreach (var item in facturaCliente.detallesFacturaCliente)
+                        {
+                            var detalles = new DetallesFacturaCliente{
+                                //FacturaClienteId = db.FacturaClientes.ToList().Select(e => e.Id).Max(),
+                                FacturaClienteId = 1,
+                                RepuestoId = item.RepuestoId,
+                                Cantidad = item.Cantidad,
+                                Precio = item.Precio,
+                            };
+                            if (detalles == null)
+                            {
+                                TempData["notice"] = "Detalle fail!";
+                            }
+                            else
+                            {
+                                TempData["notice"] = "Detalle ok!";
+                                db.DetallesFacturaClientes.Add(detalles);
 
+                            }
+                        }
                         //commit transaction
                         dbTran.Commit();
                         TempData["notice"] = "Factura guadada con exito!";
@@ -220,7 +238,13 @@ namespace LaTuerca.Controllers
             }
 
         }
-
+        
+        public JsonResult getIdMax1()
+        {
+            var i = db.FacturaClientes.ToList().Select(e => e.Id).Max();
+            //var query = from c in db.FacturaClientes select new { c.Id, c.RazonSocial, c.Documento, c.Direccion };
+            return Json(i, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult getClientes()
         {
             var query = from c in db.Clientes select new { c.Id, c.RazonSocial, c.Documento, c.Direccion };

@@ -12,7 +12,7 @@ namespace LaTuerca.Models
     {
         public FacturaCliente()
         {
-            FacturaClientes = new List<FacturaCliente>();
+            detallesFacturaCliente = new List<DetallesFacturaCliente>();
         }
 
         [HiddenInput(DisplayValue = true)]
@@ -58,6 +58,6 @@ namespace LaTuerca.Models
         [Display(Name = "Estado: ")]
         public bool Pagado { get; set; }
 
-        public virtual ICollection<FacturaCliente> FacturaClientes { get; set; }
+        public virtual ICollection<DetallesFacturaCliente> detallesFacturaCliente { get; set; }
     }
 }

@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201606101858014_FacturaVenta.Designer.cs">
       <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606110028010_FacturaCliente2.cs" />
+    <Compile Include="Migrations\201606110028010_FacturaCliente2.Designer.cs">
+      <DependentUpon>201606110028010_FacturaCliente2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -504,6 +508,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606101858014_FacturaVenta.resx">
       <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606110028010_FacturaCliente2.resx">
+      <DependentUpon>201606110028010_FacturaCliente2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

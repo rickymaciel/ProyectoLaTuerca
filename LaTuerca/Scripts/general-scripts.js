@@ -24,13 +24,13 @@ var rowTemp = [
     '<tr class="item-row">',
     '<td><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
     '<td><input id="Id" type="hidden" value="" placeholder="" />' + // Hidden value to post to DB
-        '<input id="RepuestoId" name="CompraDetalles.[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" /> </td>',
-    '<td><input id="Nombre" name="CompraDetalles.[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" readonly="readonly" /></td>',
-    '<td><input id="Cantidad" name="CompraDetalles.[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
+        '<input id="RepuestoId" name="detallesFacturaCliente[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" /> </td>',
+    '<td><input id="Nombre" name="detallesFacturaCliente[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" readonly="readonly" /></td>',
+    '<td><input id="Cantidad" name="detallesFacturaCliente[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
     '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="PrecioVenta1" name="CompraDetalles.[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
+        '<input id="PrecioVenta1" name="detallesFacturaCliente[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
     '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="TotalLinea" name="CompraDetalles.[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>',
+        '<input id="TotalLinea" name="detallesFacturaCliente[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>' + i++,
     '</tr>'
 ].join('');
 
@@ -147,6 +147,7 @@ var deleteConfirm = function (msg) {
 $(document).on("click", '#genPDFbtn', function () {
     $("#loader").show();
 });
+
 
 /*
  Destroy the modal content ** WE NEED THIS ** This prevents the modal from having the same information
