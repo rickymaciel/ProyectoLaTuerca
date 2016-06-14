@@ -12,7 +12,7 @@ namespace LaTuerca.Models
     {
         public FacturaProveedor()
         {
-            DetallesFacturaProveedores = new List<DetallesFacturaProveedor>();
+            detallesFacturaProveedor = new List<DetallesFacturaProveedor>();
         }
 
         [HiddenInput(DisplayValue = true)]
@@ -46,7 +46,6 @@ namespace LaTuerca.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal Total { get; set; }
 
-        [Range(1, double.MaxValue, ErrorMessage = "El monto es requerido")]
         [Display(Name = "Monto pagado: ")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal TotalPagado { get; set; }
@@ -58,6 +57,6 @@ namespace LaTuerca.Models
         [Display(Name = "Estado: ")]
         public bool Pagado { get; set; }
 
-        public virtual ICollection<DetallesFacturaProveedor> DetallesFacturaProveedores { get; set; }
+        public virtual ICollection<DetallesFacturaProveedor> detallesFacturaProveedor { get; set; }
     }
 }

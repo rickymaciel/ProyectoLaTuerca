@@ -238,7 +238,14 @@ namespace LaTuerca.Controllers
             }
 
         }
-        
+
+
+        public ActionResult Search(string term)
+        {
+            var routeList = db.Repuestoes.Where(r => r.Nombre.Contains(term)).Take(10)
+                    .Select(r => new { r.Id, r.Nombre, r.PrecioVenta1, r.Stock });
+            return Json(routeList, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult getIdMax1()
         {
             var i = db.FacturaClientes.ToList().Select(e => e.Id).Max();

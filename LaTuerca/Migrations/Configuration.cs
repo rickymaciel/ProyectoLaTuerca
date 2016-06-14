@@ -198,6 +198,134 @@ namespace LaTuerca.Migrations
                   Controller = ""
               }
             );
+
+            context.Marcas.AddOrUpdate(
+                p => p.Nombre,
+                new Models.Marca
+                {
+                    Nombre = "GENÉRICO"
+                },
+                new Models.Marca
+                {
+                    Nombre = "TOYOTA"
+                },
+                new Models.Marca
+                {
+                    Nombre = "MERCEDEZ BENZ"
+                },
+                new Models.Marca
+                {
+                    Nombre = "HONDA"
+                },
+                new Models.Marca
+                {
+                    Nombre = "CHEVROLET"
+                },
+                new Models.Marca
+                {
+                    Nombre = "SUZUKI"
+                }
+            );
+
+            context.Modeloes.AddOrUpdate(
+                p => p.NombreModelo,
+                new Models.Modelo
+                {
+                    NombreModelo = "GENÉRICO",
+                    MarcaId = 1,
+                    Estado = true
+                },
+                new Models.Modelo
+                {
+                    NombreModelo = "CAMRY",
+                    MarcaId = 2,
+                    Estado = true
+                },
+                new Models.Modelo
+                {
+                    NombreModelo = "AMG G63",
+                    MarcaId = 3,
+                    Estado = true
+                },
+                new Models.Modelo
+                {
+                    NombreModelo = "CLK 350",
+                    MarcaId = 3,
+                    Estado = true
+                }
+            );
+
+            context.Proveedors.AddOrUpdate(
+                p => p.RazonSocial,
+                new Models.Proveedor
+                {
+                    RazonSocial = "TOYOTOSHI",
+                    Ruc = "9283847-7",
+                    Direccion = "Avda. Mariscal López 2801/99 y Reclus",
+                    Telefono = "(021) 582 750 ",
+                    Celular = "(021) 582 750 "
+                },
+                new Models.Proveedor
+                {
+                    RazonSocial = "CONDOR SACI",
+                    Ruc = "2938475-9",
+                    Direccion = "Bernardino Gorostiaga y Guaraníes",
+                    Telefono = "595-61-575057",
+                    Celular = "595-61-575057"
+                }
+            );
+
+
+            context.Categorias.AddOrUpdate(
+                p => p.Nombre,
+                new Models.Categoria
+                {
+                    Nombre = "AMORTIGUADORES",
+                    Estado = true
+                },
+                new Models.Categoria
+                {
+                    Nombre = "FILTROS",
+                    Estado = true
+                },
+                new Models.Categoria
+                {
+                    Nombre = "RADIADORES",
+                    Estado = true
+                }
+            );
+
+            context.Repuestoes.AddOrUpdate(
+                p => p.Nombre,
+                new Models.Repuesto
+                {
+                    Nombre = "AMORTIGUADOR DELANTERO",
+                    ProveedorId = 1,
+                    ModeloId = 1,
+                    CategoriaId = 1,
+                    Stock = 0,
+                    StockMinimo = 10,
+                    StockMaximo = 100,
+                    PrecioCosto = 760000,
+                    PrecioVenta1 = 912000,
+                    PrecioVenta2 = 1026000,
+                    PrecioVenta3 = 1064000,
+                },
+                new Models.Repuesto
+                {
+                    Nombre = "BUJIA DE ENCENDIDO",
+                    ProveedorId = 2,
+                    ModeloId = 3,
+                    CategoriaId = 2,
+                    Stock = 0,
+                    StockMinimo = 10,
+                    StockMaximo = 100,
+                    PrecioCosto = 370000,
+                    PrecioVenta1 = 444000,
+                    PrecioVenta2 = 499500,
+                    PrecioVenta3 = 518000,
+                }
+            );
         }
     }
 }

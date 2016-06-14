@@ -1,5 +1,5 @@
 // Define variables
-var lookupSelector = '#RepuestoId'; // The ID selector to use for the autocomplete function
+var lookupSelector = '#Nombre'; // The ID selector to use for the autocomplete function
 var lookupInput = $(lookupSelector);
 
 var itemQtyPriceSelectors = '#Cantidad, #PrecioVenta1'; // The ID's used for the Price and Qty binding for updating price
@@ -9,7 +9,7 @@ var filePath;
  First, set the path to fetch items from database
  Initialize the lookup for the first input on the page
  */
-mioInvoice.setPathValue('http://localhost:53172/Compras/CargarRepuestos');
+mioInvoice.setPathValue('http://localhost:53172/FacturaProveedors/Search');
 mioInvoice.fetchItems(lookupInput);
 
 /*
@@ -17,23 +17,6 @@ mioInvoice.fetchItems(lookupInput);
  You will also want to make sure that your inputs match what's in the html current row.
  Also, be sure you have the correct id's for each input.
  */
-
-
-var i = $('.item-row').length;
-var rowTemp = [
-    '<tr class="item-row">',
-    '<td><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
-    '<td><input id="Id" type="hidden" value="" placeholder="" />' + // Hidden value to post to DB
-        '<input id="RepuestoId" name="detallesFacturaCliente[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" /> </td>',
-    '<td><input id="Nombre" name="detallesFacturaCliente[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" readonly="readonly" /></td>',
-    '<td><input id="Cantidad" name="detallesFacturaCliente[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
-    '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="PrecioVenta1" name="detallesFacturaCliente[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
-    '<td><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="TotalLinea" name="detallesFacturaCliente[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>' + i++,
-    '</tr>'
-].join('');
-
 
 
 /*
@@ -66,7 +49,6 @@ $.ui.autocomplete.prototype._renderItem = function (ul, item) {
 
 $("#addRowBtn").on('click', function (e) {
     mioInvoice.addRow(lookupSelector);
-    i++;
     e.preventDefault();
 });
 

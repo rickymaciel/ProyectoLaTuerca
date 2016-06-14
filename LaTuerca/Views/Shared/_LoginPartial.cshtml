@@ -7,6 +7,32 @@
         @Html.AntiForgeryToken()
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <i class="im-cart3"></i>
+                        <span class="label label-warning">2</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">Facturación</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <div class="slimScrollDiv" style="position: relative; overflow: hidden;">
+                                <ul class="menu" style="overflow: hidden;">
+                                    <li>
+                                        <a href="@Url.Action("Factura", "FacturaProveedors")" class="tipL" title="Compra">
+                                            <i class="im-truck text-yellow"></i> Compra
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Factura", "FacturaClientes")" class="tipL" title="Venta">
+                                            <i class="glyphicon glyphicon-shopping-cart text-yellow"></i> Venta
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown user user-menu">
                     <a class="dropdown-toggle text-uppercase" data-toggle="dropdown" href="@Url.Action("Index", "Manage")" title="Manage" aria-expanded="true">
                         <i class="im-user2"></i> @Nick

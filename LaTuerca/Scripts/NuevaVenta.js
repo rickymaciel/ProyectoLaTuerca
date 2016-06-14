@@ -96,6 +96,20 @@ var mioInvoice = {
      */
     addRow: function (lookupSelector) {
 
+        var i = $('.item-row').length;
+        var rowTemp = [
+    '<tr class="item-row">',
+    '<td class="col-lg-1"><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
+    '<td class="col-lg-1"><input id="RepuestoId" name="detallesFacturaCliente[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" readonly="readonly"   /> </td>',
+    '<td class="col-lg-4"><div class="has-feedback"><input id="Nombre" name="detallesFacturaCliente[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
+    '<td class="col-lg-2"><input id="Cantidad" name="detallesFacturaCliente[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
+    '<td class="col-lg-2"><div class="input-group"><span class="input-group-addon">Gs. </span>' +
+        '<input id="PrecioVenta1" name="detallesFacturaCliente[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
+    '<td class="col-lg-2"><div class="input-group"><span class="input-group-addon">Gs. </span>' +
+        '<input id="TotalLinea" name="detallesFacturaCliente[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>' + i++,
+    '</tr>'
+        ].join('');
+        i++;
         // Get the table object to use for adding a row at the end of the table
         var $itemsTable = $('#itemsTable');
         var $row = $(rowTemp);
@@ -104,10 +118,10 @@ var mioInvoice = {
         $('.item-row:last', $itemsTable).after($row);
 
         // save reference to inputs within row
-        var $RepuestoId = $row.find(lookupSelector);
+        var $Nombre = $row.find(lookupSelector);
 
-        $RepuestoId.focus();
-        mioInvoice.fetchItems($RepuestoId);
+        $Nombre.focus();
+        mioInvoice.fetchItems($Nombre);
 
         // Update the invoice total on keyup when the user updates the item qty or price input
         // ** Note: This is for the newly created row

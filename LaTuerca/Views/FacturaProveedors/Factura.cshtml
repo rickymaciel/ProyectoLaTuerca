@@ -1,14 +1,17 @@
 ﻿@model LaTuerca.Models.FacturaProveedor
+
 @{
-    ViewBag.Title = "Factura Compra";
-    
-    IFormatProvider formatProvider = new System.Globalization.CultureInfo("es-PY");
+    ViewBag.Title = "Presupuesto";
 }
+
 <section class="content-header">
-    <h1><i class="en-credit-card"></i>  @ViewBag.Title <small></small> </h1>
+    <h1>
+        @ViewBag.Title
+        <small>Factura Compra</small>
+    </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Factura</a></li>
-        <li class="active">Compra</li>
+        <li class="active">@ViewBag.Title</li>
     </ol>
 </section>
 @if (TempData["notice"] != null)
@@ -20,232 +23,209 @@
         </div>
     </div>
 }
-<!-- Main content -->
-<section class="invoice">
+<section class="content">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-    <!-- title row -->
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-header">
-                    <div class="user-block">
-                        <img class="img-circle" src="~/Content/img/mundo.jpeg" width="30" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                        <span class="description">Encarnación, Itapúa</span>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col -->
-        </div>
-    <!-- info row -->
-        <div class="row invoice-info">
-            <div class="col-lg-4 invoice-col">
-                <center class="text-lg-center">
-                    <strong>Mundo Tuerca, Inc.</strong><br>
-                    <small class="description">Mcal. Estigarribia c/ Artigas, Zona Alta</small><br />
-                    <small class="description">Encarnación, Itapúa</small><br />
-                    <small class="description">Telefono: (071) 243-345</small><br />
-                    <small class="description">Email: info@mundotuerca.com</small>
-                </center>
-            </div>
-            <!-- /.col -->
-            <div class="col-lg-4 invoice-col">
-                <div class="row  form-horizontal">
-                    <div class="col-lg-12">
-                        <div class=" form-group">
-                            <label class="col-lg-3">Proveedor:</label>
-                            <div class="col-lg-9">
-                                <input type="text" name="RazonSocial" class="RazonSocial form-control" id="RazonSocial" placeholder="RazonSocial" autofocus />
-                                <input type="hidden" name="ProveedorId" class="ProveedorId" id="ProveedorId" placeholder="ProveedorId"  />
-                                @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
-                            </div>
+            <div class="col-md-4">
+                <div class="box box-primary form-horizontal">
+                    <div class="box-body form-horizontal">
+                        <div class="user-block page-header">
+                            <img class="img-circle" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <small class="description">Mcal. Estigarribia c/ Artigas, Zona Alta</small>
+                            <small class="description">Encarnación, Itapúa</small>
+                            <!-- <small class="description">Telefono: (071) 243-345</small> -->
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class=" form-group">
-                            <label class="col-lg-3">R.U.C.:</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control input-sm Ruc" placeholder="RUC" id="Ruc" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class=" form-group">
-                            <label class="col-lg-3">Direccion:</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control input-sm Direccion" placeholder="Direccion" id="Direccion" readonly />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-lg-4 invoice-col">
-                <div class="row  form-horizontal">
-                    <div class="col-lg-12">
-                        <div class="form-group input-daterange" data-provide="datepicker">
-                            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm text-danger", placeholder = "Nº de Factura", @required = "true", aria_required = "true" } })
-                                @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control input-sm", placeholder = "Total", @required = "true", aria_required = "true", @readonly = "readonly" } })
-                                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <!-- /.row -->
-    <!-- Table row -->
-        <div class="row">
-            <div class="col-lg-12 ">
-                <table class="table table-responsive table-striped table-condensed" id="">
-                    <thead></thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <a href="#" id="addRowBtn" class="btn btn-primary btn-sm"><i class="im-cart3"></i> Agregar</a>
-                                <a href="" type="reset" id="" class="btn btn-danger btn-sm">
-                                    <i class="im-reply"></i> Cancelar
-                                </a>
-                                <button id="saveInvoiceBtn" class="btn btn-success btn-sm" type="submit" name="saveInvoice" value="Guardar"> <i class="fa fa-ok-sign"></i> Guardar</button>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    <!-- /.row -->
-    <!-- Table row -->
-        <div class="row">
-            <div class="col-lg-12 table-responsive">
-                <table class="table table-striped table-condensed table-hover table-inverse tabledata" id="itemsTable">
-                    <thead>
-                        <tr class="bg-primary">
-                            <th class="col-lg-1"><i class="im-remove"></i></th>
-                            <th class="col-lg-2">Item</th>
-                            <th class="col-lg-3">Description</th>
-                            <th class="col-lg-2">Cantidad</th>
-                            <th class="col-lg-2">Precio Unit.</th>
-                            <th class="col-lg-2">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="item-row">
-                            <td><i class="im-radio-checked"></i></td>
-                            <td>
-                                <input type="number" name="CompraDetalles.[0].RepuestoId" value="" placeholder="Cod.: Repuesto" autofocus class="form-control input-sm" id="RepuestoId" tabindex="1" />
-                            </td>
-                            <td>
-                                <input type="text" name="CompraDetalles.[0].Nombre" value="" class="form-control input-sm" placeholder="Descripcion" id="Nombre" readonly="readonly" />
-                            </td>
-                            <td>
-                                <input type="number" name="CompraDetalles.[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <span class="input-group-addon">Gs. </span><input name="CompraDetalles.[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text">
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
+                                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
+                                    @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                                 </div>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <span class="input-group-addon">Gs. </span><input name="CompraDetalles.[0].Total" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FechaPago, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
+                                    @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
+                                    @Html.ValidationMessageFor(model => model.FechaPago, "", new { @class = "text-danger" })
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-
-                    <tbody>
-                        @if (Model != null && Model.DetallesFacturaProveedores != null && Model.DetallesFacturaProveedores.Count > 0)
-                        {
-                            var i = 0;
-                            foreach (var item in Model.DetallesFacturaProveedores)
-                            {
-                                <tr>
-                                    <td>@Html.TextBox("CompraDetalles[" + i + "].RepuestoId", item.RepuestoId)</td>
-                                    <td>@Html.TextBox("CompraDetalles[" + i + "].Precio", item.Precio)</td>
-                                    <td>@Html.TextBox("CompraDetalles[" + i + "].Cantidad", item.Cantidad)</td>
-                                    <td>@Html.TextBox("CompraDetalles[" + i + "].Precio", item.Precio)</td>
-
-
-                                    <td><button type="submit" name="operacion" value="eliminar-detalle-@i">Eliminar</button></td>
-                                    <td><button type="reset" name="operacion" value="reset-detalle-@i">Cancela</button></td>
-
-                                </tr>
-                                i++;
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.col -->
-        </div>
-                <!-- /.row -->
-                <div class="row">
-                    <!-- accepted payments column -->
-                    <div class="col-lg-8">
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-lg-4">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-primary form-horizontal">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Información del Proveedor </h3>
+                    </div>
+                    <div class="box-body">
                         <div class="">
-                            <table class="table table-responsive table-hover table-inverse table-striped">
-                                <tr>
-                                    <th class="text-right col-lg-6">Subtotal:</th>
-                                    <td id="subTotal" class=" col-lg-6 text-right">Gs. </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="col-lg-2"></div>
-                                        <div class="col-lg-10">
+                            <div class="form-group">
+                                <div class="col-lg-12 has-feedback">
+                                    <input type="text" class="form-control RazonSocial" id="RazonSocial" placeholder="Buscar proveedor...">
+                                    @Html.EditorFor(model => model.ProveedorId, new { htmlAttributes = new { @id = "ProveedorId", @values = "", @required = "true", aria_required = "true", type = "hidden" } })
+                                    <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
+                                    @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class=" form-group">
+                                <div class="col-lg-12">
+                                    <textarea type="text" class="form-control input-sm InfoProveedor" rows="4" placeholder="Información del Proveedor" id="InfoProveedor" readonly required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-primary form-horizontal">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">FACTURA </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="has-feedback">
+                                    @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm text-danger", placeholder = "Nº de Factura", @required = "true", aria_required = "true" } })
+                                        <span class="glyphicon glyphicon-inbox form-control-feedback text-muted"></span>
+                                        @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Metodo, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("Metodo", new SelectList(Enum.GetValues(typeof(LaTuerca.Controllers.FacturaProveedorsController.Metodo))), "Método de pago", new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Metodo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control input-sm", placeholder = "Total", @required = "true", aria_required = "true", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <!--
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <span class="user-block">
+                                <img class="img-circle" src="~/Content/img/mundo.jpeg" width="30" title="Mundo Tuerca" alt="Mundo Tuerca">
+                                <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                                <span class="description">Encarnación, Itapúa</span>
+                            </span>
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <span data-toggle="tooltip" title="3 Productos en Detalles" class="badge bg-light-blue">3</span>
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
+                        </div>
+                    </div>
+                    -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Detalles</h3>
+                        <div class="box-tools pull-right">
+                            <a href="" id="addRowBtn" class="btn btn-primary btn-sm"><i class="im-cart3"></i> Agregar</a>
+                            <a href="" type="reset" id="limpiar" class="btn btn-danger btn-sm ">
+                                <i class="st-refresh"></i> Cancelar
+                            </a>
+                            <button href="" id="saveInvoiceBtn" class="btn btn-success btn-sm " type="submit" name="saveInvoice" value="Guardar">
+                                <i class="fa fa-ok-sign"></i> Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-lg-12 table-responsive">
+                            <table class="table table-striped table-condensed table-hover table-inverse tabledata" id="itemsTable">
+                                <thead>
+                                    <tr class="bg-primary">
+                                        <th class="col-lg-1"><i class="im-remove"></i></th>
+                                        <th class="col-lg-1">Item</th>
+                                        <th class="col-lg-4">Description</th>
+                                        <th class="col-lg-2">Cantidad</th>
+                                        <th class="col-lg-2">Precio Unit.</th>
+                                        <th class="col-lg-2">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="item-row">
+                                        <td class="col-lg-1"><i class="im-radio-checked"></i></td>
+                                        <td class="col-lg-1">
+                                            <input type="number" name="detallesFacturaProveedor[0].RepuestoId" value="" placeholder="Cod.: Repuesto" autofocus class="form-control input-sm" id="RepuestoId" tabindex="1" readonly="readonly" />
+                                        </td>
+                                        <td class="col-lg-4">
+                                            <div class="has-feedback">
+                                                <input type="text" name="detallesFacturaProveedor[0].Nombre" value="" class="form-control input-sm" placeholder="Descripcion" id="Nombre" required  />
+                                                <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-2">
+                                            <input type="number" name="detallesFacturaProveedor[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
+                                        </td>
+                                        <td class="col-lg-2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Gs. </span><input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Gs. </span><input name="detallesFacturaProveedor[0].Total" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4"></th>
+                                        <th class="text-right">Subtotal:</th>
+                                        <td id="subTotal" class="text-right">Gs. </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4"></th>
+                                        <th class="text-right">
                                             <div class="input-group">
                                                 <input placeholder="IVA" type="text" name="tax" id="tax" value="10" class="form-control input-sm text-right" />
                                                 <span class="input-group-addon">%</span>
                                             </div>
-                                        </div>
-                                    </th>
-                                    <td id="salesTax" class="text-xs-center text-right">Gs.</td>
-                                </tr>
-                                <tr>
-                                    <th class ="text-right">Total:</th>
-                                    <td id="grandTotal" class="text-xs-center text-right">Gs. </td>
-                                </tr>
+                                        </th>
+                                        <td id="salesTax" class="text-xs-center text-right">Gs.</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4"></th>
+                                        <th class="text-right">Total:</th>
+                                        <td id="grandTotal" class="text-xs-center text-right">Gs. </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-                <!-- this row will not appear when printing -->
-                <div class="row no-print">
-                    <div class="col-xs-12">
-                        <a href="" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
-                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Realizar pago</button>
-                        <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generar PDF</button>
-                    </div>
-                </div>
-                }
-    </section>
-<!-- /.content -->
-<div class="clearfix"></div>
+            </div>
+        </div>
+    }
+</section>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script></script>
+    @Scripts.Render("~/bundles/jqueryCompra")
 }

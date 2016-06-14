@@ -39,7 +39,7 @@ namespace LaTuerca.Controllers
         // GET: DetallesFacturaClientes/Create
         public ActionResult Create()
         {
-            ViewBag.FacturaClienteId = new SelectList(db.FacturaClientes, "Id", "Metodo");
+            ViewBag.FacturaClienteId = new SelectList(db.FacturaClientes, "Id", "Id");
             ViewBag.RepuestoId = new SelectList(db.Repuestoes, "Id", "Nombre");
             return View();
         }
@@ -58,7 +58,7 @@ namespace LaTuerca.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FacturaClienteId = new SelectList(db.FacturaClientes, "Id", "Metodo", detallesFacturaCliente.FacturaClienteId);
+            ViewBag.FacturaClienteId = new SelectList(db.FacturaClientes, "Id", "Id", detallesFacturaCliente.FacturaClienteId);
             ViewBag.RepuestoId = new SelectList(db.Repuestoes, "Id", "Nombre", detallesFacturaCliente.RepuestoId);
             return View(detallesFacturaCliente);
         }

@@ -335,7 +335,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
-    <Content Include="Scripts\general-scripts.js" />
     <Content Include="Scripts\icheck.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -354,8 +353,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\mioinvoice-scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\NuevaCompra.js" />
+    <Content Include="Scripts\NuevaCompraScript.js" />
+    <Content Include="Scripts\NuevaVenta.js" />
+    <Content Include="Scripts\NuevaVentaScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.js" />

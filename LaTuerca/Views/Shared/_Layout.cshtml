@@ -63,6 +63,7 @@
     @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {
+            $("#ProveedorId").val("");
             load_marcas();
             load_clientes();
             load_proveedores();
@@ -86,13 +87,13 @@
                             var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
 
                             $("#ProveedorId").val(ProveedorId).trigger("change");
-                            $("#RazonSocial").val(RazonSocial).trigger("change");
-                            $("#Ruc").val(Ruc).trigger("change");
-                            $("#Telefono").val(Telefono).trigger("change");
-                            $("#Direccion").val(Direccion).trigger("change");
+                            //$("#RazonSocial").val(RazonSocial).trigger("change");
+                            //$("#Ruc").val(Ruc).trigger("change");
+                            //$("#Telefono").val(Telefono).trigger("change");
+                            //$("#Direccion").val(Direccion).trigger("change");
                             $("#saveInvoiceBtn").removeClass('disabled');
-                            $("#limpiar").removeClass('disabled');
-                            $("#addRowBtn").removeClass('disabled');
+                            $("#InfoProveedor").val(RazonSocial + '\nR.U.C.: ' + Ruc + '\nTelefono: ' + Telefono + '\nDireccion:' + Direccion).trigger("change");
+                            //$("#addRowBtn").removeClass('disabled');
                         },
                     },
                     theme: "plate-dark",
