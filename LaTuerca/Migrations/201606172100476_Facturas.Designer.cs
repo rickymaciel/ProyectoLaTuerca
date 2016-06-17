@@ -7,13 +7,13 @@ namespace LaTuerca.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class FacturaCompra : IMigrationMetadata
+    public sealed partial class Facturas : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FacturaCompra));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Facturas));
         
         string IMigrationMetadata.Id
         {
-            get { return "201606101639445_FacturaCompra"; }
+            get { return "201606172100476_Facturas"; }
         }
         
         string IMigrationMetadata.Source

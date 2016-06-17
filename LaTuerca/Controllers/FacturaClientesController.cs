@@ -41,16 +41,26 @@ namespace LaTuerca.Controllers
             if (!facturaCliente.Pagado == true)
             {
                 //se genera el proximo numero de factura
-                var proximo = (from inv in db.FacturaClientes orderby inv.NumeroFactura descending select inv).FirstOrDefault();
-
-                if (proximo != null)
+                try
                 {
-                    facturaCliente.NumeroFactura = proximo.NumeroFactura + 1;
+                    var proximo = (from inv in db.FacturaClientes orderby inv.NumeroFactura descending select inv).FirstOrDefault();
+                    if (proximo != null)
+                    {
+                        facturaCliente.NumeroFactura = proximo.NumeroFactura + 1;
+                    }
+                    else
+                    {
+                        facturaCliente.NumeroFactura = 1000000;
+                    }
                 }
-                else
+                catch (NullReferenceException ex)
                 {
                     facturaCliente.NumeroFactura = 1000000;
+                    Console.WriteLine("No Record Found");
+                    Console.Write(ex.Message);
                 }
+
+                
             }
 
             return View(facturaCliente);

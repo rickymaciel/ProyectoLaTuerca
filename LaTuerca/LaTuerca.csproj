@@ -195,17 +195,9 @@
     <Compile Include="Migrations\201606031913199_Cheque.Designer.cs">
       <DependentUpon>201606031913199_Cheque.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606101639445_FacturaCompra.cs" />
-    <Compile Include="Migrations\201606101639445_FacturaCompra.Designer.cs">
-      <DependentUpon>201606101639445_FacturaCompra.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606101858014_FacturaVenta.cs" />
-    <Compile Include="Migrations\201606101858014_FacturaVenta.Designer.cs">
-      <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606110028010_FacturaCliente2.cs" />
-    <Compile Include="Migrations\201606110028010_FacturaCliente2.Designer.cs">
-      <DependentUpon>201606110028010_FacturaCliente2.cs</DependentUpon>
+    <Compile Include="Migrations\201606172100476_Facturas.cs" />
+    <Compile Include="Migrations\201606172100476_Facturas.Designer.cs">
+      <DependentUpon>201606172100476_Facturas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -532,14 +524,8 @@
     <EmbeddedResource Include="Migrations\201606031913199_Cheque.resx">
       <DependentUpon>201606031913199_Cheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606101639445_FacturaCompra.resx">
-      <DependentUpon>201606101639445_FacturaCompra.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606101858014_FacturaVenta.resx">
-      <DependentUpon>201606101858014_FacturaVenta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606110028010_FacturaCliente2.resx">
-      <DependentUpon>201606110028010_FacturaCliente2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606172100476_Facturas.resx">
+      <DependentUpon>201606172100476_Facturas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
