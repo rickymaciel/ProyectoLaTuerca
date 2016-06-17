@@ -24,7 +24,39 @@ namespace LaTuerca.Controllers
         public ActionResult Index()
         {
             var facturaProveedors = db.FacturaProveedors.Include(f => f.Proveedor);
-            return View(facturaProveedors.ToList().Where(w => w.Pagado == false));
+            return View(facturaProveedors.ToList().Where(w => w.Pagado == false && w.TotalPagado < 1));
+        }
+
+
+        // GET: FacturaProveedors/Edit/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaProveedor facturaProveedor = db.FacturaProveedors.Find(id);
+            if (facturaProveedor == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            return View(facturaProveedor);
+        }
+
+        // GET: FacturaProveedors
+        public ActionResult Presupuestos()
+        {
+            var facturaProveedors = db.FacturaProveedors.Include(f => f.Proveedor);
+            return View(facturaProveedors.ToList().Where(w => w.Pagado == false && w.TotalPagado < 1));
+        }
+
+
+        // GET: FacturaProveedors
+        public ActionResult Facturados()
+        {
+            var facturaProveedors = db.FacturaProveedors.Include(f => f.Proveedor);
+            return View(facturaProveedors.ToList().Where(w => w.Pagado == true && w.TotalPagado > 0));
         }
 
         // GET: FacturaProveedors
@@ -235,6 +267,23 @@ namespace LaTuerca.Controllers
         }
 
         // GET: FacturaProveedors/Edit/5
+        public ActionResult Pagar(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaProveedor facturaProveedor = db.FacturaProveedors.Find(id);
+            if (facturaProveedor == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            return View(facturaProveedor);
+        }
+
+
+        // GET: FacturaProveedors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -253,6 +302,23 @@ namespace LaTuerca.Controllers
         // POST: FacturaProveedors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Pagar([Bind(Include = "Id,Fecha,FechaPago,NumeroFactura,ProveedorId,Total,TotalPagado,Metodo,Pagado")] FacturaProveedor facturaProveedor)
+        {
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            if (ModelState.IsValid)
+            {
+                db.Entry(facturaProveedor).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["notice"] = "Factura generada!";
+                return RedirectToAction("Pagar");
+            }
+
+            TempData["notice"] = "No se creo la factura!";
+            return View(facturaProveedor);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Fecha,FechaPago,NumeroFactura,ProveedorId,Total,TotalPagado,Metodo,Pagado")] FacturaProveedor facturaProveedor)

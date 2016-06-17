@@ -47,9 +47,17 @@ var mioInvoice = {
     updatePrice: function ($this) {
         var $itemRow = $($this).closest('tr');
         // Calculate the price of the row.  Remove any $ so the calculation doesn't break
-        var price = $itemRow.find('#PrecioVenta1').val().replace("Gs. ", "") * $itemRow.find('#Cantidad').val();
-        price = this.roundNumber(price, 0);
+        var price = $itemRow.find('#PrecioVenta1').val() * $itemRow.find('#Cantidad').val();
+        //price = this.roundNumber(price, 0);
         isNaN(price) ? $itemRow.find('#TotalLinea').val("N/A") : $itemRow.find('#TotalLinea').val(price);
+
+
+        var iva = price / ((parseInt($("#tax").val()) / 100 + 1) * 10);
+        var neto = price / (parseInt($("#tax").val()) / 100 + 1);
+
+        $itemRow.find('#TotalLineaNeto').val(this.roundNumber(neto, 0)).number(true, 0);
+        $itemRow.find('#TotalLineaIva').val(this.roundNumber(iva, 0)).number(true, 0);
+
         this.updateSalesTax();
         this.updateTotal();
     },
@@ -60,32 +68,36 @@ var mioInvoice = {
     updateTotal: function () {
 
         var total = 0;
-        $('#TotalLinea').each(function (i) {
+        $('input#TotalLinea').each(function (i) {
             price = $(this).val();
             if (!isNaN(price)) total += Number(price);
         });
 
-        $('#subTotal').html("Gs. " + total);
+        //$('#subTotal').html("Gs. " + total);
 
-        var grdTotal = total + this.updateSalesTax();
-
-        grdTotal = this.roundNumber(grdTotal, 2);
-        $('#grandTotalTop, #grandTotal').html("Gs. " + grdTotal);
+        //var grdTotal = total + this.updateSalesTax();
+        var grdTotal = total;
         $('#Total').val(grdTotal);
-        
+
+        $('#grandTotal').html((grdTotal)).number(true, 0);
+        $('#subTotal').html(this.roundNumber(grdTotal - this.updateSalesTax(), 0)).number(true, 0);
+
 
     },
-
     updateSalesTax: function () {
         var total = 0;
-
         $('input#TotalLinea').each(function (i) {
-            price = $(this).val().replace("Gs. ", "");
+            price = $(this).val();
             if (!isNaN(price)) total += Number(price);
         });
 
-        var tax = $("#tax").val() * total * "0.01";
-        $("#salesTax").html("Gs. " + mioInvoice.roundNumber(tax, 2));
+        //var tax = total / $("#tax").val() + 1;
+        //var tax = total / ((parseInt($("#tax").val()) / 100 + 1) * 10);
+        //$("#salesTax").html("Gs. " + mioInvoice.roundNumber(tax, 0)).number(true, 0);
+
+
+        var tax = ($("#tax").val() * total * "0.01")/1.1;
+        $("#salesTax").html(mioInvoice.roundNumber(tax, 0)).number(true, 0);
 
         return tax;
     },
@@ -100,13 +112,13 @@ var mioInvoice = {
         var rowTemp = [
     '<tr class="item-row">',
     '<td class="col-lg-1"><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
-    '<td class="col-lg-1"><input id="RepuestoId" name="detallesFacturaProveedor[' + i + '].RepuestoId" type="number" class="form-control input-sm" placeholder="RepuestoId" value="" readonly="readonly"   /> </td>',
-    '<td class="col-lg-4"><div class="has-feedback"><input id="Nombre" name="detallesFacturaProveedor[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
-    '<td class="col-lg-2"><input id="Cantidad" name="detallesFacturaProveedor[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
-    '<td class="col-lg-2"><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="PrecioVenta1" name="detallesFacturaProveedor[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></div></td>',
-    '<td class="col-lg-2"><div class="input-group"><span class="input-group-addon">Gs. </span>' +
-        '<input id="TotalLinea" name="detallesFacturaProveedor[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></div></td>' + i++,
+    '<td class="col-lg-3"><input id="RepuestoId" name="detallesFacturaProveedor[' + i + '].RepuestoId" type="hidden" class="form-control input-sm" placeholder="RepuestoId" value="" readonly="readonly"   />',
+    '<div class="has-feedback"><input id="Nombre" name="detallesFacturaProveedor[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
+    '<td class="col-lg-1"><input id="Cantidad" name="detallesFacturaProveedor[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
+    '<td class="col-lg-2"><input id="PrecioVenta1" name="detallesFacturaProveedor[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></td>',
+    '<td class="col-lg-2"><input id="TotalLineaNeto" class="form-control input-sm" placeholder="Neto" type="text" readonly="readonly" required></td>',
+    '<td class="col-lg-1"><input id="TotalLineaIva"  class="form-control input-sm" placeholder="Iva" type="text" readonly="readonly" required></td>',
+    '<td class="col-lg-2"><input id="TotalLinea" name="detallesFacturaProveedor[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></td>',
     '</tr>'
         ].join('');
         i++;

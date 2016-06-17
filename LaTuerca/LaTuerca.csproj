@@ -244,6 +244,17 @@
     <Content Include="Content\easy-autocomplete.themes.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icons.css" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\img\blue%402x.png" />
     <Content Include="Content\img\blue.png" />
     <Content Include="Content\img\boxed-bg.jpg" />
@@ -335,6 +346,18 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\datatablesbuttons\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\datatablesbuttons\buttons.colVis.min.js" />
+    <Content Include="Scripts\datatablesbuttons\buttons.flash.min.js" />
+    <Content Include="Scripts\datatablesbuttons\buttons.html5.min.js" />
+    <Content Include="Scripts\datatablesbuttons\buttons.print.min.js" />
+    <Content Include="Scripts\datatablesbuttons\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\datatablesbuttons\dataTables.buttons.min.js" />
+    <Content Include="Scripts\datatablesbuttons\jquery-1.12.3.js" />
+    <Content Include="Scripts\datatablesbuttons\jquery.dataTables.min.js" />
+    <Content Include="Scripts\datatablesbuttons\jszip.min.js" />
+    <Content Include="Scripts\datatablesbuttons\pdfmake.min.js" />
+    <Content Include="Scripts\datatablesbuttons\vfs_fonts.js" />
     <Content Include="Scripts\icheck.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -347,6 +370,7 @@
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.easy-autocomplete.js" />
     <Content Include="Scripts\jquery.easy-autocomplete.min.js" />
+    <Content Include="Scripts\jquery.number.js" />
     <Content Include="Scripts\jquery.validate-1.14.0.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -356,8 +380,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\NuevaCompra.js" />
     <Content Include="Scripts\NuevaCompraScript.js" />
-    <Content Include="Scripts\NuevaVenta.js" />
-    <Content Include="Scripts\NuevaVentaScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.js" />
@@ -481,6 +503,11 @@
     <Content Include="Views\DetallesFacturaClientes\Edit.cshtml" />
     <Content Include="Views\DetallesFacturaClientes\Index.cshtml" />
     <Content Include="Views\FacturaClientes\Factura.cshtml" />
+    <Content Include="Views\FacturaProveedors\Facturados.cshtml" />
+    <Content Include="Views\FacturaProveedors\Presupuestos.cshtml" />
+    <Content Include="Views\FacturaProveedors\Pagar.cshtml" />
+    <Content Include="Views\Shared\_LayoutPrint.cshtml" />
+    <Content Include="Views\FacturaProveedors\Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

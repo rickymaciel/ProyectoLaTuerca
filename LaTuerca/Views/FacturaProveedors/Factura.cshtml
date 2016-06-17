@@ -7,10 +7,10 @@
 <section class="content-header">
     <h1>
         @ViewBag.Title
-        <small>Factura Compra</small>
+        <small>Compra</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Factura</a></li>
+        <li><a href="#"><i class="fa fa-truck"></i> Compra</a></li>
         <li class="active">@ViewBag.Title</li>
     </ol>
 </section>
@@ -91,7 +91,7 @@
             <div class="col-md-4">
                 <div class="box box-primary form-horizontal">
                     <div class="box-header with-border">
-                        <h3 class="box-title">FACTURA </h3>
+                        <h3 class="box-title text-primary">PRESUPUESTO </h3>
                     </div>
                     <div class="box-body">
                         <div class="form-horizontal">
@@ -123,6 +123,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="box-footer">
+                        <button href="" id="saveInvoiceBtn" class="btn btn-success btn-sm btn-block tip" title="Guardar Presupuesto" type="submit" name="saveInvoice" value="Guardar">
+                            <i class="br-floppy"></i>  Guardar Presupuesto
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -145,14 +150,11 @@
                     -->
                     <div class="box-header with-border">
                         <h3 class="box-title">Detalles</h3>
-                        <div class="box-tools pull-right">
+                        <div class="box-tools">
                             <a href="" id="addRowBtn" class="btn btn-primary btn-sm"><i class="im-cart3"></i> Agregar</a>
-                            <a href="" type="reset" id="limpiar" class="btn btn-danger btn-sm ">
-                                <i class="st-refresh"></i> Cancelar
+                            <a href="@Url.Action("Presupuestos", "FacturaProveedors")" id="limpiar" class="btn btn-default btn-sm ">
+                                <i class="im-stack"></i> Ver Presupuestos
                             </a>
-                            <button href="" id="saveInvoiceBtn" class="btn btn-success btn-sm " type="submit" name="saveInvoice" value="Guardar">
-                                <i class="fa fa-ok-sign"></i> Guardar
-                            </button>
                         </div>
                     </div>
                     <div class="box-body">
@@ -161,60 +163,64 @@
                                 <thead>
                                     <tr class="bg-primary">
                                         <th class="col-lg-1"><i class="im-remove"></i></th>
-                                        <th class="col-lg-1">Item</th>
-                                        <th class="col-lg-4">Description</th>
-                                        <th class="col-lg-2">Cantidad</th>
+                                        <th class="col-lg-3">Description</th>
+                                        <th class="col-lg-1">Cantidad</th>
                                         <th class="col-lg-2">Precio Unit.</th>
+                                        <th class="col-lg-2">Neto.</th>
+                                        <th class="col-lg-1">Iva.</th>
                                         <th class="col-lg-2">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="item-row">
                                         <td class="col-lg-1"><i class="im-radio-checked"></i></td>
-                                        <td class="col-lg-1">
-                                            <input type="number" name="detallesFacturaProveedor[0].RepuestoId" value="" placeholder="Cod.: Repuesto" autofocus class="form-control input-sm" id="RepuestoId" tabindex="1" readonly="readonly" />
-                                        </td>
-                                        <td class="col-lg-4">
+                                        <td class="col-lg-3">
+                                            <input type="hidden" name="detallesFacturaProveedor[0].RepuestoId" value="" placeholder="Cod.: Repuesto" class="form-control input-sm" id="RepuestoId" tabindex="1" readonly="readonly" />
+
                                             <div class="has-feedback">
-                                                <input type="text" name="detallesFacturaProveedor[0].Nombre" value="" class="form-control input-sm" placeholder="Descripcion" id="Nombre" required  />
+                                                <input type="text" name="detallesFacturaProveedor[0].Nombre" value="" class="form-control input-sm" placeholder="Descripcion" autofocus id="Nombre" required />
                                                 <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
                                             </div>
                                         </td>
-                                        <td class="col-lg-2">
+                                        <td class="col-lg-1">
                                             <input type="number" name="detallesFacturaProveedor[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
                                         </td>
                                         <td class="col-lg-2">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Gs. </span><input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
-                                            </div>
+                                            <input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
                                         </td>
                                         <td class="col-lg-2">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Gs. </span><input name="detallesFacturaProveedor[0].Total" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
-                                            </div>
+                                                <input  class="form-control input-sm" id="TotalLineaNeto" placeholder="Neto" type="text" readonly="readonly" required>
+                                        </td>
+                                        <td class="col-lg-1">
+                                                <input  class="form-control input-sm" id="TotalLineaIva" placeholder="Iva" type="text" readonly="readonly" required>
+                                            
+                                        </td>
+                                        <td class="col-lg-2">
+                                            <input name="detallesFacturaProveedor[0].Total" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="4"></th>
+                                        <th colspan="5"></th>
                                         <th class="text-right">Subtotal:</th>
-                                        <td id="subTotal" class="text-right">Gs. </td>
+                                        <td id="subTotal" class="text-right"></td>
                                     </tr>
                                     <tr>
                                         <th colspan="4"></th>
                                         <th class="text-right">
-                                            <div class="input-group">
-                                                <input placeholder="IVA" type="text" name="tax" id="tax" value="10" class="form-control input-sm text-right" />
-                                                <span class="input-group-addon">%</span>
+                                            <div class="has-feedback">
+                                                <input placeholder="IVA" type="number" name="tax" min="1" max="100" id="tax" value="10" class="form-control input-sm" />
+                                                <span class="fa fa-percent form-control-feedback"></span>
                                             </div>
                                         </th>
-                                        <td id="salesTax" class="text-xs-center text-right">Gs.</td>
+                                        <th class="text-right">Iva:</th>
+                                        <td id="salesTax" class="text-right"></td>
                                     </tr>
-                                    <tr>
-                                        <th colspan="4"></th>
+                                    <tr class="lead">
+                                        <th colspan="5"></th>
                                         <th class="text-right">Total:</th>
-                                        <td id="grandTotal" class="text-xs-center text-right">Gs. </td>
+                                        <td id="grandTotal" class=" text-right"> </td>
                                     </tr>
                                 </tfoot>
                             </table>

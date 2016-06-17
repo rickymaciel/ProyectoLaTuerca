@@ -63,7 +63,7 @@
     @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {
-            $("#ProveedorId").val("");
+            //$("#ProveedorId").val("");
             load_marcas();
             load_clientes();
             load_proveedores();
@@ -266,6 +266,13 @@
                 }
             });
             var oTable = $('#tablaMenu').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
                 "bProcessing": true,
                 "sPaginationType": "full_numbers",
                 "paging": true,
@@ -297,6 +304,9 @@
                     }
                 }
             });
+
+            oTable.buttons().container().appendTo('#tablaMenu .col-md-6:eq(0)');
+
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',

@@ -3,7 +3,7 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
-        String Nick = User.Identity.GetUserName().Substring(0, 5);
+        String Nick = User.Identity.GetUserName().Substring(0, 10);
         @Html.AntiForgeryToken()
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -13,19 +13,19 @@
                         <span class="label label-warning">2</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">Facturación</li>
+                        <li class="header text-nowrap"> <i class="fa fa-plus-square-o"></i> Nuevo Presupuesto</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <div class="slimScrollDiv" style="position: relative; overflow: hidden;">
                                 <ul class="menu" style="overflow: hidden;">
                                     <li>
-                                        <a href="@Url.Action("Factura", "FacturaProveedors")" class="tipL" title="Compra">
-                                            <i class="im-truck text-yellow"></i> Compra
+                                        <a href="@Url.Action("Factura", "FacturaProveedors")" class="" title="Compra">
+                                            <i class="fa fa-shopping-cart text-red"></i> Compra
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("Factura", "FacturaClientes")" class="tipL" title="Venta">
-                                            <i class="glyphicon glyphicon-shopping-cart text-yellow"></i> Venta
+                                        <a href="@Url.Action("Factura", "FacturaClientes")" class="" title="Venta">
+                                            <i class="fa fa-shopping-cart text-green"></i> Venta
                                         </a>
                                     </li>
                                 </ul>
@@ -34,8 +34,9 @@
                     </ul>
                 </li>
                 <li class="dropdown user user-menu">
-                    <a class="dropdown-toggle text-uppercase" data-toggle="dropdown" href="@Url.Action("Index", "Manage")" title="Manage" aria-expanded="true">
-                        <i class="im-user2"></i> @Nick
+                    <a href="@Url.Action("Index", "Manage")" title="Manage" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="~/Content/img/mundo.jpeg" class="user-image" alt="User Image">
+                        <span class="hidden-xs text-nowrap">@User.Identity.GetUserName()</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

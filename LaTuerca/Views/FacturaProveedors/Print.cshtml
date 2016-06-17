@@ -1,0 +1,104 @@
+﻿@model LaTuerca.Models.FacturaProveedor
+@{
+    ViewBag.Title = "Factura Nº " + @Html.DisplayFor(model => model.NumeroFactura);
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+
+<div class="wrapper">
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                    <address class="user-block page-header">
+                        <img class="img-circle" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                        <strong class="username"><a href="#">Mundo Tuerca, Inc</a></strong>
+                        <small class="description">Mcal. Estigarribia c/ Artigas, Zona Alta</small>
+                        <small class="description">Encarnación, Itapúa</small>
+                        <small class="description">Telefono: (071) 243-345</small>
+                    </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <strong>@Html.DisplayNameFor(model => model.Proveedor.RazonSocial):</strong> @Html.DisplayFor(model => model.Proveedor.RazonSocial)<br>
+                    <strong>@Html.DisplayNameFor(model => model.Proveedor.Ruc):</strong> @Html.DisplayFor(model => model.Proveedor.Ruc)<br>
+                    <strong>@Html.DisplayNameFor(model => model.Proveedor.Direccion):</strong> @Html.DisplayFor(model => model.Proveedor.Direccion)<br>
+                    <strong>@Html.DisplayNameFor(model => model.Proveedor.Telefono):</strong> @Html.DisplayFor(model => model.Proveedor.Telefono)
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <b class="fa-2x">@Html.DisplayNameFor(model => model.NumeroFactura)  @Html.DisplayFor(model => model.NumeroFactura)</b><br>
+                <br>
+                <b>@Html.DisplayNameFor(model => model.Fecha) </b> @Html.DisplayFor(model => model.Fecha) <br>
+                <b>@Html.DisplayNameFor(model => model.Metodo) </b> @Html.DisplayFor(model => model.Metodo) <br>
+                <b>@Html.DisplayNameFor(model => model.Total) </b> @Html.DisplayFor(model => model.Total) <br>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped table-inverse table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.detallesFacturaProveedor)
+                        {
+                            var subtotal = 0;
+                            {
+                                subtotal = (item.Precio*item.Cantidad);
+                            }
+                            <tr>
+                                <td>@item.RepuestoId</td>
+                                <td>@item.Repuesto.Nombre</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.Precio</td>
+                                <td>@subtotal</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <p class="lead">Método de pago:</p>
+                @Html.DisplayFor(model => model.Metodo)
+            </div><!-- /.col -->
+            <div class="col-xs-6">
+                <p class="lead">Fecha de pago: @Html.DisplayFor(model => model.FechaPago)</p>
+                <div class="table-responsive">
+                    <table class="table table-condensed table-inverse">
+                        <tr>
+                            @{
+                                decimal iva = 0;
+                                decimal neto = 0;
+                                iva = Model.Total / 11;
+                                neto = Model.Total - iva;
+                            }
+                            <th style="width:50%">Subtotal:</th>
+                            <td>@neto</td>
+                        </tr>
+                        <tr>
+                            <th>I.V.A (10%)</th>
+                            <td>@iva</td>
+                        </tr>
+                        <tr>
+                            <th>Total:</th>
+                            <td>@Html.DisplayFor(model => model.Total)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+</div><!-- ./wrapper -->

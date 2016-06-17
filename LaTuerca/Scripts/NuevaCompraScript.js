@@ -52,23 +52,48 @@ $("#addRowBtn").on('click', function (e) {
     e.preventDefault();
 });
 
+$(document).keyup(function (event) {
+    if (event.which == 27) {
+        console.log("Has pulsado la tecla ESC");
+        $("#addRowBtn").click();
+    }
+});
+
+$(document).bind('keydown', function (e) {
+    if (e.which == 32) {
+        console.log("Has pulsado la tecla Space");
+        $("#addRowBtn").click();
+    };
+});
+
+
+$(document).bind('keydown', function (e) {
+    if (e.which == 17) {
+        console.log("Has pulsado la tecla CTRL");
+        $("#deleteRow").click();
+    };
+});
+
 /*
  Update invoice total when item Qty or Price inputs have been updated
  */
-$(itemQtyPriceSelectors).on('keyup click focus', function () {
+//$(itemQtyPriceSelectors).on('keyup click focus', function () {
+$(itemQtyPriceSelectors).on('keyup click focus change  blur', function () {
     mioInvoice.updatePrice(this);
 });
 
 /*
  Update invoice total when invoice tax input has changed
  */
-$("#input#Cantidad").on('click', function (e) {
+//$("input#Cantidad").on('click', function (e) {
+$("input#Cantidad").on('keyup click focus change  blur', function (e) {
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();
     e.preventDefault();
 
 });
-$("input#tax").on('keyup', function () {
+//$("input#tax").on('keyup', function () {
+$("input#tax").on('keyup click focus change  blur', function () {
     mioInvoice.updateTotal();
 });
 
