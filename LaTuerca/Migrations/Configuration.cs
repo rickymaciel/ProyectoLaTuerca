@@ -31,14 +31,16 @@ namespace LaTuerca.Migrations
                 p => p.Name,
               new Models.Menu
               {
+                  //1
                   ParentId = 0,
-                  Name = "Admin",
+                  Name = "Administrador",
                   Description = "Modulo Administrador",
                   Action = "",
                   Controller = ""
               },
               new Models.Menu
               {
+                  //2
                   ParentId = 0,
                   Name = "Compras",
                   Description = "Modulo Compras",
@@ -47,6 +49,7 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
+                  //3
                   ParentId = 0,
                   Name = "Informes",
                   Description = "Modulo Informes",
@@ -55,6 +58,7 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
+                  //4
                   ParentId = 0,
                   Name = "Ventas",
                   Description = "Modulo Ventas",
@@ -63,110 +67,7 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
-                  ParentId = 1,
-                  Name = "Menús",
-                  Description = "Menús",
-                  Action = "Index",
-                  Controller = "Menus"
-              },
-              new Models.Menu
-              {
-                  ParentId = 1,
-                  Name = "Empresas",
-                  Description = "Empresas",
-                  Action = "Index",
-                  Controller = "Empresas"
-              },
-              new Models.Menu
-              {
-                  ParentId = 2,
-                  Name = "Proveedores",
-                  Description = "Proveedores",
-                  Action = "Index",
-                  Controller = "Proveedores"
-              },
-              new Models.Menu
-              {
-                  ParentId = 2,
-                  Name = "Presupuestos Compras",
-                  Description = "Presupuestos Proveedor",
-                  Action = "Presupuestos",
-                  Controller = "FacturaProveedors"
-              },
-              new Models.Menu
-              {
-                  ParentId = 2,
-                  Name = "Factura Compras",
-                  Description = "Facturacion Proveedor",
-                  Action = "Facturados",
-                  Controller = "FacturaProveedors"
-              },
-              new Models.Menu
-              {
-                  ParentId = 4,
-                  Name = "Mantenimiento",
-                  Description = "Mantenimiento de Marcas | Categorias | Modelos",
-                  Action = "",
-                  Controller = ""
-              },
-              new Models.Menu
-              {
-                  ParentId = 9,
-                  Name = "Marcas",
-                  Description = "Mantenimiento de Marcas",
-                  Action = "Index",
-                  Controller = "Marcas"
-              },
-              new Models.Menu
-              {
-                  ParentId = 9,
-                  Name = "Modelos",
-                  Description = "Mantenimiento de Modelos",
-                  Action = "Index",
-                  Controller = "Modelos"
-              },
-              new Models.Menu
-              {
-                  ParentId = 9,
-                  Name = "Categorias",
-                  Description = "Mantenimiento de Categorias",
-                  Action = "Index",
-                  Controller = "Categorias"
-              },
-              new Models.Menu
-              {
-                  ParentId = 4,
-                  Name = "Repuestos",
-                  Description = "Repuestos",
-                  Action = "Index",
-                  Controller = "Repuestos"
-              },
-              new Models.Menu
-              {
-                  ParentId = 4,
-                  Name = "Presupuestos Ventas",
-                  Description = "Presupuestos Cliente",
-                  Action = "Presupuestos",
-                  Controller = "FacturaClientes"
-              },
-              new Models.Menu
-              {
-                  ParentId = 4,
-                  Name = "Facturas Ventas",
-                  Description = "Facturas Cliente",
-                  Action = "Facturados",
-                  Controller = "FacturaClientes"
-              },
-              new Models.Menu
-              {
-                  ParentId = 4,
-                  Name = "Clientes",
-                  Description = "Clientes",
-                  Action = "Index",
-                  Controller = "Clientes"
-              },
-              new Models.Menu
-              {
+                  //5
                   ParentId = 0,
                   Name = "Stock",
                   Description = "Stock",
@@ -175,6 +76,7 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
+                  //6
                   ParentId = 0,
                   Name = "Caja",
                   Description = "Caja",
@@ -183,6 +85,7 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
+                  //7
                   ParentId = 0,
                   Name = "Bancos",
                   Description = "Bancos",
@@ -191,7 +94,125 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
-                  ParentId = 18,
+                  //8
+                  ParentId = 0,
+                  Name = "Configuración",
+                  Description = "Configuraciones del sistema",
+                  Action = "",
+                  Controller = ""
+              },
+              new Models.Menu
+              {
+                  //9
+                  ParentId = 1,
+                  Name = "Menús",
+                  Description = "Menús",
+                  Action = "Index",
+                  Controller = "Menus"
+              },
+              new Models.Menu
+              {
+                  //10
+                  ParentId = 1,
+                  Name = "Empresas",
+                  Description = "Empresas",
+                  Action = "Index",
+                  Controller = "Empresas"
+              },
+              new Models.Menu
+              {
+                  //11
+                  ParentId = 2,
+                  Name = "Proveedores",
+                  Description = "Proveedores",
+                  Action = "Index",
+                  Controller = "Proveedores"
+              },
+              new Models.Menu
+              {
+                  //12
+                  ParentId = 2,
+                  Name = "Facturas",
+                  Description = "Facturas Proveedor",
+                  Action = "Facturados",
+                  Controller = "FacturaProveedors"
+              },
+              new Models.Menu
+              {
+                  //13
+                  ParentId = 4,
+                  Name = "Mantenimiento",
+                  Description = "Mantenimiento de Marcas | Categorias | Modelos",
+                  Action = "",
+                  Controller = ""
+              },
+              new Models.Menu
+              {
+                  //14
+                  ParentId = 13,
+                  Name = "Marcas",
+                  Description = "Mantenimiento de Marcas",
+                  Action = "Index",
+                  Controller = "Marcas"
+              },
+              new Models.Menu
+              {
+                  //15
+                  ParentId = 13,
+                  Name = "Modelos",
+                  Description = "Mantenimiento de Modelos",
+                  Action = "Index",
+                  Controller = "Modelos"
+              },
+              new Models.Menu
+              {
+                  //16
+                  ParentId = 13,
+                  Name = "Categorias",
+                  Description = "Mantenimiento de Categorias",
+                  Action = "Index",
+                  Controller = "Categorias"
+              },
+              new Models.Menu
+              {
+                  //17
+                  ParentId = 4,
+                  Name = "Repuestos",
+                  Description = "Repuestos",
+                  Action = "Index",
+                  Controller = "Repuestos"
+              },
+              new Models.Menu
+              {
+                  //18
+                  ParentId = 4,
+                  Name = "Presupuesto Venta",
+                  Description = "Presupuestos Cliente",
+                  Action = "Presupuestos",
+                  Controller = "FacturaClientes"
+              },
+              new Models.Menu
+              {
+                  //19
+                  ParentId = 4,
+                  Name = "Factura Venta",
+                  Description = "Facturas Cliente",
+                  Action = "Facturados",
+                  Controller = "FacturaClientes"
+              },
+              new Models.Menu
+              {
+                  //20
+                  ParentId = 4,
+                  Name = "Clientes",
+                  Description = "Clientes",
+                  Action = "Index",
+                  Controller = "Clientes"
+              },
+              new Models.Menu
+              {
+                  //21
+                  ParentId = 7,
                   Name = "Bancos",
                   Description = "Bancos",
                   Action = "Index",
@@ -199,19 +220,12 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
-                  ParentId = 18,
+                  //22
+                  ParentId = 7,
                   Name = "Cheques",
                   Description = "Cheques",
                   Action = "Index",
                   Controller = "Cheques"
-              },
-              new Models.Menu
-              {
-                  ParentId = 0,
-                  Name = "Configuración",
-                  Description = "Configuraciones del sistema",
-                  Action = "",
-                  Controller = ""
               }
             );
 
@@ -315,7 +329,7 @@ namespace LaTuerca.Migrations
                 p => p.Nombre,
                 new Models.Repuesto
                 {
-                    Nombre = "AMORTIGUADOR DELANTERO",
+                    Nombre = "AMORTIGUADOR",
                     ProveedorId = 1,
                     ModeloId = 1,
                     CategoriaId = 1,

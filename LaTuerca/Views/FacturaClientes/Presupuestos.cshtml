@@ -1,34 +1,56 @@
-﻿@model IEnumerable<LaTuerca.Models.FacturaProveedor>
+﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
 
 @{
-    ViewBag.Title = "Facturas";
-}@if (TempData["notice"] != null)
-{
-    <div class="pad margin no-print" id="mensaje">
-        <div class="callout callout-success" style="margin-bottom: 0!important;">
-            <i class="fa fa-check"></i>   @TempData["notice"]
-        </div>
-    </div>
+    ViewBag.Title = "Presupuestos";
+    IFormatProvider formatProvider = new System.Globalization.CultureInfo("es-PY");
 }
+
+
+<section class="content-header">
+    <h1>
+        <i class="im-menu"></i> @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
+    </ol>
+</section>
 
 <section class="content">
     <div class="row">
+        @if (!Html.ViewData.ModelState.IsValid)
+        {
+            <div class="col-lg-12" id="mensaje">
+                <div class="callout callout-success">
+                    @Html.ValidationSummary()
+                </div>
+            </div>
+        }
         <div class="col-lg-12">
             <div class="box box-primary">
-                <div class='box-header with-border'>
-                    <div class="user-block">
-                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                        <span class='description'>Factura Proveedor</span>
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <a href="@Url.Action("Factura", "FacturaClientes")" class="btn btn-primary">
+                            <i class="im-plus"></i> Nuevo Presupuesto
+                        </a>
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
-                    <div class='box-tools btn-group'>
-                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm hidden-lg" title="Nueva Factura">
-                            <i class="fa fa-file-o"></i>
-                        </a>
-                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg" title="Nueva Factura">
-                            <i class="fa fa-file-o"></i> <b>Nueva Factura</b>
-                        </a>
-                    </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
@@ -37,8 +59,9 @@
                                 <table class="table table-condensed table-hover table-striped" id="tablaMenu">
                                     <thead>
                                         <tr>
+                                            <th class="col-lg-1"></th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
+                                                @Html.DisplayNameFor(model => model.Cliente.RazonSocial)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Fecha)
@@ -61,14 +84,18 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Pagado)
                                             </th>
-                                            <th class="col-lg-1"></th>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
                                             <tr>
+                                                <td class="col-lg-1">
+                                                    <div class="btn-group btn-group-justified">
+                                                        @Html.ActionLink("Confirmar ", "Pagar", new { id = item.Id }, new { @class = "btn btn-success btn-flat btn-xs", @title = "Realizar Pago", @data_original_title = "Realizar Pago" })
+                                                    </div>
+                                                </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
+                                                    @Html.DisplayFor(modelItem => item.Cliente.RazonSocial)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Fecha)
@@ -90,11 +117,6 @@
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Pagado)
-                                                </td>
-                                                <td class="col-lg-1">
-                                                    <div class="btn-group btn-group-justified">
-                                                        @Html.ActionLink("Ver Factura", "Pagar", new { id = item.Id }, new { @class = "btn btn-primary btn-xs", @data_original_title = "Ver" })
-                                                    </div>
                                                 </td>
                                             </tr>
                                         }

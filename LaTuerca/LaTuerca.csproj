@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201606172100476_Facturas.Designer.cs">
       <DependentUpon>201606172100476_Facturas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606212353072_Actualizar.cs" />
+    <Compile Include="Migrations\201606212353072_Actualizar.Designer.cs">
+      <DependentUpon>201606212353072_Actualizar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -372,6 +376,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\NuevaCompra.js" />
     <Content Include="Scripts\NuevaCompraScript.js" />
+    <Content Include="Scripts\NuevaVenta.js" />
+    <Content Include="Scripts\NuevaVentaScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.js" />
@@ -500,6 +506,12 @@
     <Content Include="Views\FacturaProveedors\Pagar.cshtml" />
     <Content Include="Views\Shared\_LayoutPrint.cshtml" />
     <Content Include="Views\FacturaProveedors\Print.cshtml" />
+    <Content Include="Views\FacturaClientes\Presupuestos.cshtml" />
+    <Content Include="Views\FacturaClientes\Facturados.cshtml" />
+    <Content Include="Views\FacturaClientes\Pagar.cshtml" />
+    <Content Include="Views\FacturaClientes\Print.cshtml" />
+    <Content Include="Views\Shared\_create_cliente.cshtml" />
+    <Content Include="Views\FacturaClientes\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -526,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606172100476_Facturas.resx">
       <DependentUpon>201606172100476_Facturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606212353072_Actualizar.resx">
+      <DependentUpon>201606212353072_Actualizar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -29,6 +29,7 @@ namespace LaTuerca.Models
         public virtual Repuesto Repuesto { get; set; }
 
         [Display(Name = "Precio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         [Required(ErrorMessage = "Debe ingresar el precio")]
         public int Precio { get; set; }
     }

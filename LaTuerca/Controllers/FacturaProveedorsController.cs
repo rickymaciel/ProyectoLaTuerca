@@ -108,9 +108,10 @@ namespace LaTuerca.Controllers
                     {
                         GuardarFactura(facturaProveedor);
                         GuardarFacturaDetalles(facturaProveedor);
+                        UpdateStock(facturaProveedor);
                         //commit transaction
                         dbTran.Commit();
-                        TempData["notice"] = "Factura Número: " + facturaProveedor.NumeroFactura + " guardado correctamente! ";
+                        TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente! ";
                     }
                     catch (Exception ex)
                     {
@@ -162,6 +163,21 @@ namespace LaTuerca.Controllers
                     db.DetallesFacturaProveedors.Add(detalles);
 
                 }
+            }
+        }
+
+
+
+        public void UpdateStock(FacturaProveedor facturaProveedor)
+        {
+            foreach (var item in facturaProveedor.detallesFacturaProveedor)
+            {
+                Repuesto repuesto = db.Repuestoes.Find(item.RepuestoId);
+                repuesto.Stock += item.Cantidad;
+
+                db.Entry(repuesto).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["notice"] = "Stock actualizado!";
             }
         }
 
@@ -279,23 +295,7 @@ namespace LaTuerca.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
-            return View(facturaProveedor);
-        }
-
-
-        // GET: FacturaProveedors/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            FacturaProveedor facturaProveedor = db.FacturaProveedors.Find(id);
-            if (facturaProveedor == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            ViewBag.RepuestoId = new SelectList(db.Repuestoes, "Id", "Nombre", facturaProveedor.detallesFacturaProveedor);
             return View(facturaProveedor);
         }
 
@@ -318,6 +318,36 @@ namespace LaTuerca.Controllers
             TempData["notice"] = "No se creo la factura!";
             return View(facturaProveedor);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Proveedor proveedor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Proveedors.Add(proveedor);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Factura", "FacturaProveedors");
+        }
+
+        // GET: FacturaProveedors/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaProveedor facturaProveedor = db.FacturaProveedors.Find(id);
+            if (facturaProveedor == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            return View(facturaProveedor);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -32,8 +32,8 @@ namespace LaTuerca.Migrations
                         FechaPago = c.DateTime(nullable: false, storeType: "date"),
                         NumeroFactura = c.Int(nullable: false),
                         ClienteId = c.Int(nullable: false),
-                        Total = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        TotalPagado = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Total = c.Int(nullable: false),
+                        TotalPagado = c.Int(nullable: false),
                         Metodo = c.String(nullable: false),
                         Pagado = c.Boolean(nullable: false),
                     })

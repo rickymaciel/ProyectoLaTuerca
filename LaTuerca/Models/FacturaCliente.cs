@@ -41,15 +41,14 @@ namespace LaTuerca.Models
         [ForeignKey("ClienteId")]
         public virtual Cliente Cliente { get; set; }
 
-        [Range(1, double.MaxValue, ErrorMessage = "El monto es requerido")]
         [Required(ErrorMessage = "El monto es requerido")]
         [Display(Name = "Total: ")]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        public decimal Total { get; set; }
+        public int Total { get; set; }
 
         [Display(Name = "Monto Pagado: ")]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        public decimal TotalPagado { get; set; }
+        public int TotalPagado { get; set; }
 
         [Display(Name = "Metodo: ")]
         [Required(ErrorMessage = "Debe indicar un método de pago")]

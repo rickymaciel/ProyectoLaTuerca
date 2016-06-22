@@ -26,7 +26,8 @@
                 </a>
                 @Html.Partial("_LoginPartial")
             </nav>
-        </header>@if (Request.IsAuthenticated)
+        </header>
+    @if (Request.IsAuthenticated)
         {
             <aside class="main-sidebar">
                 <section class="sidebar">
@@ -83,7 +84,7 @@
                             var ProveedorId = $(".RazonSocial").getSelectedItemData().Id;
                             var RazonSocial = $(".RazonSocial").getSelectedItemData().RazonSocial;
                             var Ruc = $(".RazonSocial").getSelectedItemData().Ruc;
-                            var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
+                            //var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
                             var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
 
                             $("#ProveedorId").val(ProveedorId).trigger("change");
@@ -92,7 +93,7 @@
                             //$("#Telefono").val(Telefono).trigger("change");
                             //$("#Direccion").val(Direccion).trigger("change");
                             $("#saveInvoiceBtn").removeClass('disabled');
-                            $("#InfoProveedor").val(RazonSocial + '\nR.U.C.: ' + Ruc + '\nTelefono: ' + Telefono + '\nDireccion:' + Direccion).trigger("change");
+                            $("#InfoProveedor").val(RazonSocial + ' - R.U.C.: ' + Ruc + ' - Direccion:' + Direccion).trigger("change");
                             //$("#addRowBtn").removeClass('disabled');
                         },
                     },
@@ -117,17 +118,17 @@
                             enabled: true
                         },
                         onSelectItemEvent: function () {
-                            var ClienteId = $(".RazonSocialCliente").getSelectedItemData().Id;
-                            var RazonSocial = $(".RazonSocialCliente").getSelectedItemData().RazonSocial;
-                            var Documento = $(".RazonSocialCliente").getSelectedItemData().Documento;
-                            var Telefono = $(".RazonSocialCliente").getSelectedItemData().Telefono;
-                            var Direccion = $(".RazonSocialCliente").getSelectedItemData().Direccion;
+                            var ClienteId = $(".RazonSocial").getSelectedItemData().Id;
+                            var RazonSocial = $(".RazonSocial").getSelectedItemData().RazonSocial;
+                            var Documento = $(".RazonSocial").getSelectedItemData().Documento;
+                            var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
+                            var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
 
-                            $("#ClienteIdCliente").val(ClienteId).trigger("change");
-                            $("#RazonSocialCliente").val(RazonSocial).trigger("change");
-                            $("#DocumentoCliente").val(Documento).trigger("change");
-                            $("#TelefonoCliente").val(Telefono).trigger("change");
-                            $("#DireccionCliente").val(Direccion).trigger("change");
+                            $("#ClienteId").val(ClienteId).trigger("change");
+                            $("#RazonSocial").val(RazonSocial).trigger("change");
+                            $("#Documento").val(Documento).trigger("change");
+                            $("#Telefono").val(Telefono).trigger("change");
+                            $("#Direccion").val(Direccion).trigger("change");
                         },
                     },
                     theme: "plate-dark",
@@ -312,7 +313,7 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
-            $('#mensaje').delay(4000).fadeOut(1000);
+            $('#mensaje').delay(6000).fadeOut(2000);
             $("#ClienteIdCliente").val('');
             $("[data-toggle=tooltip]").tooltip();
             $(".tip").tooltip({ placement: 'top' });

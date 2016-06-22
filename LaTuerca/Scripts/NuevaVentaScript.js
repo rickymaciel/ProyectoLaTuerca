@@ -9,7 +9,7 @@ var filePath;
  First, set the path to fetch items from database
  Initialize the lookup for the first input on the page
  */
-mioInvoice.setPathValue('http://localhost:53172/FacturaProveedors/Search');
+mioInvoice.setPathValue('http://localhost:53172/FacturaClientes/Search');
 mioInvoice.fetchItems(lookupInput);
 
 /*
@@ -46,44 +46,23 @@ $.ui.autocomplete.prototype._renderItem = function (ul, item) {
  Here's where we start adding rows to the invoice
  Add row to list and allow user to use autocomplete to find items.
  */
+$(".btnGuardar").on('click', function () {
+    var razon = $(".Cliente_RazonSocial").val();
+    $(".RazonSocial").val(razon);
+});
 
 $("#addRowBtn").on('click', function (e) {
     mioInvoice.addRow(lookupSelector);
     e.preventDefault();
 });
 
-
-$(document).bind('keydown', function (e) {
-    if (e.which == 27) {
-        console.log("Has pulsado la tecla ESC");
-        $("#deleteRow").click();
-    };
-});
-
-$(document).bind('keydown', function (e) {
-    if (e.which == 18) {
-        console.log("Has pulsado la tecla ALT");
-        $("#addRowBtn").click();
-        $("#Nombre").click();
-
-    };
-});
-
-/*
-
 $(document).keyup(function (event) {
     if (event.which == 27) {
         console.log("Has pulsado la tecla ESC");
-        $("#deleteRow").click();
+        $("#addRowBtn").click();
     }
 });
-
-$(document).bind('keydown', function (e) {
-    if (e.which == 17) {
-        console.log("Has pulsado la tecla CTRL");
-        $("#deleteRow").click();
-    };
-});
+/*
 $(document).bind('keydown', function (e) {
     if (e.which == 32) {
         console.log("Has pulsado la tecla Space");
@@ -97,20 +76,29 @@ $(document).bind('keydown', function (e) {
         $("#addRowBtn").click();
     };
 });
+*/
+
+$(document).bind('keydown', function (e) {
+    if (e.which == 18) {
+        console.log("Has pulsado la tecla ALT");
+        $("#addRowBtn").click();
+        $("#Nombre").click();
+
+    };
+});
+
 $(document).bind('keydown', function (e) {
     if (e.which == 17) {
         console.log("Has pulsado la tecla CTRL");
         $("#deleteRow").click();
     };
 });
-*/
-
 
 /*
  Update invoice total when item Qty or Price inputs have been updated
  */
 //$(itemQtyPriceSelectors).on('keyup click focus', function () {
-$(itemQtyPriceSelectors).on('keyup click focus mouseover keydown hover ready change  blur', function () {
+$(itemQtyPriceSelectors).on('keyup click focus change  blur', function () {
     mioInvoice.updatePrice(this);
 });
 
@@ -118,7 +106,7 @@ $(itemQtyPriceSelectors).on('keyup click focus mouseover keydown hover ready cha
  Update invoice total when invoice tax input has changed
  */
 //$("input#Cantidad").on('click', function (e) {
-$("input#Cantidad").on('keyup click focus hover mouseover keydown change ready blur', function (e) {
+$("input#Cantidad").on('keyup click focus change  blur', function (e) {
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();
     e.preventDefault();

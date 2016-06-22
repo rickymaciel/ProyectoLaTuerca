@@ -41,18 +41,19 @@ namespace LaTuerca.Models
         [ForeignKey("ProveedorId")]
         public virtual Proveedor Proveedor { get; set; }
 
-        [Range(1, double.MaxValue, ErrorMessage = "El monto es requerido")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         [Display(Name = "Total: ")]
         public int Total { get; set; }
 
-        [Display(Name = "Monto pagado: ")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
+        [Display(Name = "Pagado: ")]
         public int TotalPagado { get; set; }
 
         [Display(Name = "Metodo: ")]
         [Required(ErrorMessage = "Debe indicar un método de pago")]
         public string Metodo { get; set; }
 
-        [Display(Name = "Estado: ")]
+        [Display(Name = "Facturar: ")]
         public bool Pagado { get; set; }
 
         public virtual ICollection<DetallesFacturaProveedor> detallesFacturaProveedor { get; set; }

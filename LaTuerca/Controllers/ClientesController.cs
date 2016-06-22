@@ -73,6 +73,19 @@ namespace LaTuerca.Controllers
             return View(cliente);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Clientes.Add(cliente);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Create", "Clientes");
+        }
+
         // POST: Clientes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

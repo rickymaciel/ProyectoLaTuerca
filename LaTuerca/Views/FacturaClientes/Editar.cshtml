@@ -27,6 +27,7 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
         <div class="row">
             <div class="col-md-4">
                 <div class="box box-primary form-horizontal">
@@ -176,33 +177,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach (var item in Model.detallesFacturaCliente)
+                                    {
+                                    
                                     <tr class="item-row">
                                         <td class="col-lg-1"><i class="im-radio-checked"></i></td>
                                         <td class="col-lg-3">
-                                            <input type="hidden" name="detallesFacturaCliente[0].RepuestoId" value="" placeholder="Cod.: Repuesto" class="form-control input-sm" id="RepuestoId" tabindex="1" readonly="readonly" />
+                                            <input type="hidden" name="detallesFacturaCliente[0].RepuestoId" value="@item.RepuestoId" placeholder="Cod.: Repuesto" class="form-control input-sm" id="RepuestoId" tabindex="1" readonly="readonly" />
 
                                             <div class="has-feedback">
-                                                <input type="text" name="detallesFacturaCliente[0].Nombre" value="" class="form-control input-sm" placeholder="Descripcion" autofocus id="Nombre" required />
+                                                <input type="text" name="detallesFacturaCliente[0].Nombre" value="@item.Repuesto.Nombre" class="form-control input-sm" placeholder="Descripcion" autofocus id="Nombre" required />
                                                 <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
                                             </div>
                                         </td>
                                         <td class="col-lg-1">
-                                            <input type="number" name="detallesFacturaCliente[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
+                                            <input type="number" name="detallesFacturaCliente[0].Cantidad" value="@item.Cantidad" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
                                         </td>
                                         <td class="col-lg-2">
-                                            <input name="detallesFacturaCliente[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
+                                            <input name="detallesFacturaCliente[0].Precio" value="@item.Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
                                         </td>
                                         <td class="col-lg-2">
-                                                <input  class="form-control input-sm" id="TotalLineaNeto" placeholder="Neto" type="text" readonly="readonly" required>
+                                            <input  class="form-control input-sm" id="TotalLineaNeto" placeholder="Neto" type="text" readonly="readonly" required>
                                         </td>
                                         <td class="col-lg-1">
-                                                <input  class="form-control input-sm" id="TotalLineaIva" placeholder="Iva" type="text" readonly="readonly" required>
-                                            
+                                            <input  class="form-control input-sm" id="TotalLineaIva" placeholder="Iva" type="text" readonly="readonly" required>
                                         </td>
                                         <td class="col-lg-2">
-                                            <input name="detallesFacturaCliente[0].Total" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
+                                            <input name="detallesFacturaCliente[0].Total" value="" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
                                         </td>
                                     </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
                                     <tr>

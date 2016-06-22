@@ -28,6 +28,77 @@ namespace LaTuerca.Controllers
         }
 
 
+        // GET: FacturaProveedors/Edit/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaCliente facturaClientes = db.FacturaClientes.Find(id);
+            if (facturaClientes == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaClientes.ClienteId);
+            return View(facturaClientes);
+        }
+
+
+        // GET: FacturaProveedors/Edit/5
+        public ActionResult Pagar(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaCliente facturaCliente = db.FacturaClientes.Find(id);
+            if (facturaCliente == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ClienteId = new SelectList(db.Clientes, "Id", "RazonSocial", facturaCliente.ClienteId);
+            return View(facturaCliente);
+        }
+        // GET: FacturaProveedors
+        public ActionResult Presupuestos()
+        {
+            var facturaClientes = db.FacturaClientes.Include(f => f.Cliente);
+            return View(facturaClientes.ToList().Where(w => w.Pagado == false && w.TotalPagado < 1));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Pagar([Bind(Include = "Id,Fecha,FechaPago,NumeroFactura,ClienteId,Total,TotalPagado,Metodo,Pagado")] FacturaCliente facturaCliente)
+        {
+            ViewBag.ProveedorId = new SelectList(db.Clientes, "Id", "RazonSocial", facturaCliente.ClienteId);
+            if (ModelState.IsValid)
+            {
+                db.Entry(facturaCliente).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["notice"] = "Factura generada!";
+                return RedirectToAction("Pagar");
+            }
+
+            TempData["notice"] = "No se creo la factura!";
+            return View(facturaCliente);
+        }
+        // GET: FacturaProveedors
+        public ActionResult Facturados()
+        {
+            var facturaClientes = db.FacturaClientes.Include(f => f.Cliente);
+            return View(facturaClientes.ToList().Where(w => w.Pagado == true && w.TotalPagado > 0));
+        }
+
+        // GET: FacturaProveedors
+        public ActionResult Pagados()
+        {
+            var facturaClientes = db.FacturaClientes.Include(f => f.Cliente);
+            return View(facturaClientes.ToList().Where(w => w.Pagado == true));
+        }
+
+
         // GET: Compras/Transaction
         public ActionResult Factura()
         {
@@ -41,26 +112,16 @@ namespace LaTuerca.Controllers
             if (!facturaCliente.Pagado == true)
             {
                 //se genera el proximo numero de factura
-                try
+                var proximo = (from inv in db.FacturaClientes orderby inv.NumeroFactura descending select inv).FirstOrDefault();
+
+                if (proximo != null)
                 {
-                    var proximo = (from inv in db.FacturaClientes orderby inv.NumeroFactura descending select inv).FirstOrDefault();
-                    if (proximo != null)
-                    {
-                        facturaCliente.NumeroFactura = proximo.NumeroFactura + 1;
-                    }
-                    else
-                    {
-                        facturaCliente.NumeroFactura = 1000000;
-                    }
+                    facturaCliente.NumeroFactura = proximo.NumeroFactura + 1;
                 }
-                catch (NullReferenceException ex)
+                else
                 {
                     facturaCliente.NumeroFactura = 1000000;
-                    Console.WriteLine("No Record Found");
-                    Console.Write(ex.Message);
                 }
-
-                
             }
 
             return View(facturaCliente);
@@ -71,58 +132,175 @@ namespace LaTuerca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Factura(FacturaCliente facturaCliente)
         {
-            ViewBag.ClienteId = new SelectList(db.Clientes, "Id", "RazonSocial", facturaCliente.ClienteId);
+            //ViewBag.ClienteId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
             if (ModelState.IsValid)
             {
                 using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        db.FacturaClientes.Add(facturaCliente);
-                        db.SaveChanges();
-                        foreach (var item in facturaCliente.detallesFacturaCliente)
-                        {
-                            var detalles = new DetallesFacturaCliente{
-                                //FacturaClienteId = db.FacturaClientes.ToList().Select(e => e.Id).Max(),
-                                FacturaClienteId = 1,
-                                RepuestoId = item.RepuestoId,
-                                Cantidad = item.Cantidad,
-                                Precio = item.Precio,
-                            };
-                            if (detalles == null)
-                            {
-                                TempData["notice"] = "Detalle fail!";
-                            }
-                            else
-                            {
-                                TempData["notice"] = "Detalle ok!";
-                                db.DetallesFacturaClientes.Add(detalles);
-
-                            }
-                        }
+                        GuardarFactura(facturaCliente);
+                        GuardarFacturaDetalles(facturaCliente);
                         //commit transaction
                         dbTran.Commit();
-                        TempData["notice"] = "Factura guadada con exito!";
+                        TempData["notice"] = "El Presupuesto Número: " + facturaCliente.NumeroFactura + " fue guardado correctamente! ";
                     }
                     catch (Exception ex)
                     {
                         //Rollback transaction if exception occurs
                         dbTran.Rollback();
                         //Console.WriteLine("\nMessage ---\n{0}", ex.Message);
-                        TempData["notice"] = "Rollback transaction if exception occurs!" + ex.Message;
+                        TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
+                        //return View(facturaCliente);
                         return View(facturaCliente);
                     }
 
                 }
+                /*
+                if (facturaCliente.Id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                FacturaCliente editfacturaCliente = db.FacturaClientes.Find(facturaCliente.Id);
+                if (editfacturaCliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(editfacturaCliente);
 
                 //TempData["notice"] = "Error desconocido!";
-                return View(facturaCliente);
+                //return View(facturaProveedor);
+                 */
+                return RedirectToAction("Pagar/"+facturaCliente.Id);
             }
 
-            TempData["notice"] = "Error validaciones!";
+            TempData["notice"] = "Todos los campos son requeridos!";
             return View(facturaCliente);
 
         }
+
+        public void GuardarFactura(FacturaCliente facturaCliente)
+        {
+            db.FacturaClientes.Add(facturaCliente);
+            db.SaveChanges();
+
+        }
+
+        public void GuardarFacturaDetalles(FacturaCliente facturaCliente)
+        {
+            foreach (var item in facturaCliente.detallesFacturaCliente)
+            {
+                var detalles = new DetallesFacturaCliente
+                {
+                    //FacturaClienteId = db.FacturaClientes.ToList().Select(e => e.Id).Max(),
+                    FacturaClienteId = ObtenerIdMax(),
+                    RepuestoId = item.RepuestoId,
+                    Cantidad = item.Cantidad,
+                    Precio = item.Precio,
+                };
+                if (detalles == null)
+                {
+                    TempData["notice"] = "El Detalle de Factura esta vacío!";
+                }
+                else
+                {
+                    TempData["notice"] = "El Detalle de Factura fue guardado!";
+                    db.DetallesFacturaClientes.Add(detalles);
+
+                }
+            }
+        }
+
+        public int ObtenerIdMax()
+        {
+            //int idmax = db.FacturaProveedors.Max(item => item.Id);
+            //int? idmax = db.FacturaProveedors.Max(item => (int?)item.Id);
+            var idmax = db.FacturaClientes.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
+            if (idmax == 0)
+            {
+                return idmax + 1;
+            }
+            else
+            {
+                return idmax + 1;
+            }
+        }
+
+
+        // GET: FacturaClientes/Editar/1
+        public ActionResult Editar(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaCliente facturaCliente = db.FacturaClientes.Find(id);
+
+            DetallesFacturaCliente detallesFacturaCliente = db.DetallesFacturaClientes.Find(facturaCliente.Id);
+
+            if (facturaCliente == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(facturaCliente);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(FacturaCliente facturaCliente)
+        {
+            //ViewBag.ClienteId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            if (ModelState.IsValid)
+            {
+                using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        GuardarFactura(facturaCliente);
+                        GuardarFacturaDetalles(facturaCliente);
+                        //commit transaction
+                        db.Entry(facturaCliente).State = EntityState.Modified;
+                        dbTran.Commit();
+                        TempData["notice"] = "El Presupuesto Número: " + facturaCliente.NumeroFactura + " fue guardado correctamente! ";
+                    }
+                    catch (Exception ex)
+                    {
+                        //Rollback transaction if exception occurs
+                        dbTran.Rollback();
+                        //Console.WriteLine("\nMessage ---\n{0}", ex.Message);
+                        TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
+                        //return View(facturaCliente);
+                        return View(facturaCliente);
+                    }
+
+                }
+                /*
+                if (facturaCliente.Id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                FacturaCliente editfacturaCliente = db.FacturaClientes.Find(facturaCliente.Id);
+                if (editfacturaCliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(editfacturaCliente);
+
+                //TempData["notice"] = "Error desconocido!";
+                //return View(facturaProveedor);
+                 */
+                return RedirectToAction("Pagar/" + facturaCliente.Id);
+            }
+
+            TempData["notice"] = "Todos los campos son requeridos!";
+            return View(facturaCliente);
+
+        }
+
+
 
         // GET: FacturaClientes/Details/5
         public ActionResult Details(int? id)
@@ -249,6 +427,17 @@ namespace LaTuerca.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate(Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Clientes.Add(cliente);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Factura", "FacturaClientes");
+        }
 
         public ActionResult Search(string term)
         {
