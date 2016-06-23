@@ -125,10 +125,13 @@
                             var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
 
                             $("#ClienteId").val(ClienteId).trigger("change");
-                            $("#RazonSocial").val(RazonSocial).trigger("change");
-                            $("#Documento").val(Documento).trigger("change");
-                            $("#Telefono").val(Telefono).trigger("change");
-                            $("#Direccion").val(Direccion).trigger("change");
+                            //$("#RazonSocial").val(RazonSocial).trigger("change");
+                            //$("#Ruc").val(Ruc).trigger("change");
+                            //$("#Telefono").val(Telefono).trigger("change");
+                            //$("#Direccion").val(Direccion).trigger("change");
+                            $("#saveInvoiceBtn").removeClass('disabled');
+                            $("#InfoCliente").val(RazonSocial + ' - R.U.C.: ' + Documento + ' - Direccion:' + Direccion).trigger("change");
+                            //$("#addRowBtn").removeClass('disabled');
                         },
                     },
                     theme: "plate-dark",

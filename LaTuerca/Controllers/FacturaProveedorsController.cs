@@ -108,7 +108,6 @@ namespace LaTuerca.Controllers
                     {
                         GuardarFactura(facturaProveedor);
                         GuardarFacturaDetalles(facturaProveedor);
-                        UpdateStock(facturaProveedor);
                         //commit transaction
                         dbTran.Commit();
                         TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente! ";
@@ -163,21 +162,6 @@ namespace LaTuerca.Controllers
                     db.DetallesFacturaProveedors.Add(detalles);
 
                 }
-            }
-        }
-
-
-
-        public void UpdateStock(FacturaProveedor facturaProveedor)
-        {
-            foreach (var item in facturaProveedor.detallesFacturaProveedor)
-            {
-                Repuesto repuesto = db.Repuestoes.Find(item.RepuestoId);
-                repuesto.Stock += item.Cantidad;
-
-                db.Entry(repuesto).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["notice"] = "Stock actualizado!";
             }
         }
 
@@ -453,6 +437,7 @@ namespace LaTuerca.Controllers
 
         public enum Metodo
         {
+            Presupuesto,
             Contado,
             Financiado
         }

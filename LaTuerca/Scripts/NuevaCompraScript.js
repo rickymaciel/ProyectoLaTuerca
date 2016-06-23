@@ -53,14 +53,14 @@ $("#addRowBtn").on('click', function (e) {
 });
 
 
-$(document).bind('keydown', function (e) {
+$(document).bind('keypress', function (e) {
     if (e.which == 27) {
         console.log("Has pulsado la tecla ESC");
         $("#deleteRow").click();
     };
 });
 
-$(document).bind('keydown', function (e) {
+$(document).bind('keypress', function (e) {
     if (e.which == 18) {
         console.log("Has pulsado la tecla ALT");
         $("#addRowBtn").click();
@@ -110,7 +110,7 @@ $(document).bind('keydown', function (e) {
  Update invoice total when item Qty or Price inputs have been updated
  */
 //$(itemQtyPriceSelectors).on('keyup click focus', function () {
-$(itemQtyPriceSelectors).on('keyup click focus mouseover keydown hover ready change  blur', function () {
+$(itemQtyPriceSelectors).on('keyup click focus mouseover hover change  blur', function () {
     mioInvoice.updatePrice(this);
 });
 
@@ -118,7 +118,7 @@ $(itemQtyPriceSelectors).on('keyup click focus mouseover keydown hover ready cha
  Update invoice total when invoice tax input has changed
  */
 //$("input#Cantidad").on('click', function (e) {
-$("input#Cantidad").on('keyup click focus hover mouseover keydown change ready blur', function (e) {
+$("input#Cantidad").on('keyup click focus hover mouseover change blur', function (e) {
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();
     e.preventDefault();

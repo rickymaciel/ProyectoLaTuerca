@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.TotalPagado, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9">
-                                        @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @class = "form-control input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", aria_required = "true" } })
+                                        @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @type ="text", @class = "form-control input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", aria_required = "true" } })
                                         @Html.ValidationMessageFor(model => model.TotalPagado, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                             </div>
                                         </td>
                                         <td class="col-lg-1">
-                                            <input type="number" name="detallesFacturaProveedor[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" tabindex="2" required />
+                                            <input type="number" name="detallesFacturaProveedor[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" required />
                                         </td>
                                         <td class="col-lg-2">
                                             <input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
