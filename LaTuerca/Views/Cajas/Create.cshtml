@@ -1,0 +1,269 @@
+﻿@model LaTuerca.Models.Caja
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Abrir Caja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Nick = "";
+    int IndexNick = 0;
+    string NewNick = "";
+
+}
+@if (Request.IsAuthenticated)
+{
+    if (User.Identity.GetUserName() != "")
+    {
+        Nick = User.Identity.GetUserName();
+        IndexNick = Nick.IndexOf("@");
+
+        NewNick = Nick.Substring(0, IndexNick);
+    }
+}
+
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+<section class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <span class='description'>@ViewBag.Title</span>
+                        </div>
+                        <div class='box-tools btn-group'>
+                            <!--
+                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#crearCliente" title="Crear nuevo cliente">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
+                            <a href="" id="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#crearCliente" title="Crear nuevo cliente">
+                                <i class="fa fa-user-plus"></i> <b>Nuevo Cliente</b>
+                            </a>
+                            -->
+                            <a href="@Url.Action("Index", "Cajas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Lista">
+                                <i class="fa fa-files-o"></i>
+                            </a>
+                            <a href="@Url.Action("Index", "Cajas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Lista">
+                                <i class="fa fa-files-o"></i> <b>Ver Lista</b>
+                            </a>
+                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i>
+                            </a>
+                            <a href="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
+                            </a>
+                            <button href="" id="open" class="btn btn-success btn-sm tip pagar pull-right visible-lg" title="Abrir" type="submit" name="open" value="Abrir Caja">
+                                <i class="fa fa-folder-open"></i>  <b>Abrir Caja</b>
+                            </button>
+                            <button href="" id="open" class="btn btn-success hidden-lg btn-sm tip pagar pull-right" title="Abrir" type="submit" name="open" value="Abrir Caja">
+                                <i class="fa fa-folder-open"></i>
+                            </button>
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body'>
+                        <div class="col-lg-12 form-horizontal">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha_Apertura, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        @Html.EditorFor(model => model.Fecha_Apertura, new { htmlAttributes = new { @class = "form-control", @id = "datetimepicker1" } })
+                                        @Html.ValidationMessageFor(model => model.Fecha_Apertura, "", new { @class = "text-danger" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Inicial, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Inicial, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Inicial, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha_Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Fecha_Cierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Cierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Operaciones, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Operaciones, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Operaciones, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.Estado)
+                                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </section>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(function () {
+
+                $('#abrir').datetimepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    },
+                    locale: 'es',
+                    format: 'YYYY-MM-DD hh:mm:ss'
+                });
+                $('#datetimepicker2').datetimepicker();
+                $("#Usuario").val('@NewNick');
+                $("#Usuario").attr('readonly', true);
+
+                $("#UsuarioModal").val('@NewNick');
+                $("#UsuarioModal").attr('readonly', true);
+            });
+        </script>
+    }
+
+
+
+    <div class="modal" id="abrirCaja" tabindex="-1" role="dialog">
+        @using (Ajax.BeginForm("AjaxCreate", "Cajas", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "Caja"
+
+        }))
+        {
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            <span class="im-plus"></span>
+                            Abrir Caja
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+                        @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha_Apertura, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        @Html.EditorFor(model => model.Fecha_Apertura, new { htmlAttributes = new { @class = "form-control", @id = "datetimepicker1" } })
+                                        @Html.ValidationMessageFor(model => model.Fecha_Apertura, "", new { @class = "text-danger" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Inicial, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Inicial, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Inicial, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha_Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Fecha_Cierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Cierre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Cierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Operaciones, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Operaciones, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Operaciones, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.Estado)
+                                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Abrir Caja</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        }
+    </div><!-- /.modal -->

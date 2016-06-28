@@ -26,20 +26,12 @@ mioInvoice.fetchItems(lookupInput);
  You'll want to modify the ajax-services/fetch-inventory.php file for the returned values
  */
 $.ui.autocomplete.prototype._renderItem = function (ul, item) {
-    return $("<li></li>")
-        .data("item.autocomplete", item)
-
-        // This is the autocomplete list that is generated
-        .append("<a class='additionalInfo'>" + item.Id + " - " + item.Nombre + " " +
-
-            // This is the hover box that is generated when you hover over an item in the list
-            "<span class='additionalInfoColor'>" +
-            "<div><h4 class='text-info'>Repuesto Informaci&oacute;n</h4></div>" +
-            "<div><strong>En stock: </strong> " + item.Stock + "</div>" +
-            "<div><strong>Precio: </strong> Gs. " + item.PrecioVenta1 + "</div>" +
-            "</span> </a>")
-
-        .appendTo(ul);
+    return $("<li></li>").data("item.autocomplete", item).append("<a class='additionalInfo'>" + item.Id + " - " + item.Nombre + " " +
+        "<span class='additionalInfoColor'>" +
+        "<div><h4 class='text-info'>Repuesto Informaci&oacute;n</h4></div>" +
+        "<div><strong>En stock: </strong> <strong class='pull-right badge bg-blue'>" + item.Stock + "</strong></div>" +
+        "<div><strong>Precio: </strong> Gs. " + item.PrecioVenta1 + "</div>" +
+        "</span> </a>").appendTo(ul);
 };
 
 /*
@@ -107,6 +99,7 @@ $(itemQtyPriceSelectors).on('keyup click focus change  blur', function () {
  */
 //$("input#Cantidad").on('click', function (e) {
 $("input#Cantidad").on('keyup click focus change  blur', function (e) {
+    $("select#Metodo").prop('disabled', false);
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();
     e.preventDefault();

@@ -15,11 +15,6 @@ namespace LaTuerca.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public static class Cultures
-        {
-            public static readonly CultureInfo Paraguay = CultureInfo.GetCultureInfo("es-PY");
-        }
-
         // GET: FacturaProveedors
         public ActionResult Index()
         {
@@ -108,6 +103,8 @@ namespace LaTuerca.Controllers
                     {
                         GuardarFactura(facturaProveedor);
                         GuardarFacturaDetalles(facturaProveedor);
+                        ActualizarStock(facturaProveedor);
+                        ActualizarCaja(facturaProveedor);
                         //commit transaction
                         dbTran.Commit();
                         TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente! ";
@@ -152,6 +149,9 @@ namespace LaTuerca.Controllers
                     Cantidad = item.Cantidad,
                     Precio = item.Precio,
                 };
+                
+                //ActRepuesto(item.RepuestoId, item.Cantidad);
+
                 if (detalles == null)
                 {
                     TempData["notice"] = "El Detalle de Factura esta vacío!";
@@ -160,9 +160,56 @@ namespace LaTuerca.Controllers
                 {
                     TempData["notice"] = "El Detalle de Factura fue guardado!";
                     db.DetallesFacturaProveedors.Add(detalles);
-
                 }
             }
+        }
+
+        public void ActualizarStock(FacturaProveedor facturaProveedor)
+        {
+            foreach (var item in facturaProveedor.detallesFacturaProveedor)
+            {
+                try
+                {
+                    Repuesto repuesto = db.Repuestoes.Find(item.RepuestoId);
+                    repuesto.Stock += item.Cantidad;
+                    db.Entry(repuesto).State = EntityState.Modified;
+                    TempData["notice"] = "Actualizado 1!";
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    TempData["notice"] = "No se pudo realizar la transacción Actualizar!" + ex.Message;
+                }
+            }
+        }
+
+
+        public void ActualizarCaja(FacturaProveedor facturaProveedor)
+        {
+            try
+                {
+                    int? total = facturaProveedor.TotalPagado;
+                    int ultimoIdCaja= ObtenerUltimoCajaAbierto();
+                    Caja caja = db.Cajas.Find(ultimoIdCaja);
+                    caja.Operaciones += 1;
+                    caja.Cierre += total;
+                    db.Entry(caja).State = EntityState.Modified;
+                    TempData["notice"] = "Caja Actualizado!";
+                    db.SaveChanges();
+                }
+            catch (Exception ex)
+            {
+                TempData["notice"] = "No se pudo realizar la transacción Actualizar!" + ex.Message;
+            }
+        }
+
+
+        public int ObtenerUltimoCajaAbierto()
+        {
+            //var ultimoabierto = db.Cajas.Where(o => o.Estado == false).Max(o => o == null ? 0 : o.Id);
+            //var ultimoabierto = db.Cajas.Any() ? db.Cajas.Max(s => s.Id) : 0;
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            return ultimoabierto;
         }
 
         public int ObtenerIdMax()
@@ -437,9 +484,8 @@ namespace LaTuerca.Controllers
 
         public enum Metodo
         {
-            Presupuesto,
-            Contado,
-            Financiado
+            Credito,
+            Contado
         }
     }
 }

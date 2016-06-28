@@ -119,6 +119,7 @@ $(itemQtyPriceSelectors).on('keyup click focus mouseover hover change  blur', fu
  */
 //$("input#Cantidad").on('click', function (e) {
 $("input#Cantidad").on('keyup click focus hover mouseover change blur', function (e) {
+    $("select#Metodo").prop('disabled', false);
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();
     e.preventDefault();

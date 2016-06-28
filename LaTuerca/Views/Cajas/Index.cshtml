@@ -1,0 +1,302 @@
+﻿@model IEnumerable<LaTuerca.Models.Caja>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Cajas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Nick = "";
+    int IndexNick = 0;
+    string NewNick = "";
+
+    int Diferencia = 0;
+}
+@if (Request.IsAuthenticated)
+{
+    if (User.Identity.GetUserName() != "")
+    {
+        Nick = User.Identity.GetUserName();
+        IndexNick = Nick.IndexOf("@");
+
+        NewNick = Nick.Substring(0, IndexNick);
+    }
+}
+
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+<section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <span class='description'>@ViewBag.Title</span>
+                        </div>
+                        <div class='box-tools btn-group'>
+                        @if (TempData["Fecha_Apertura"] != null)
+                        { 
+                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i>
+                            </a>
+                            <a href="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
+                            </a>
+                        }
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body'>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover table-striped" id="tablaMenu">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Fecha_Apertura)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Inicial)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Fecha_Cierre)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Cierre)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Operaciones)
+                                                </th>
+                                                <th>
+                                                    Diferencia
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Usuario)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Estado)
+                                                </th>
+                                                <th class="col-lg-1"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model) {
+                                                string bg = "";
+                                                    if (item.Estado == false)
+                                                    {
+                                                        bg = "danger";
+                                                    }
+                                                    else
+                                                    {
+                                                        bg = "success";
+                                                    }
+                                                <tr class="@bg">
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Fecha_Apertura)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Inicial)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Fecha_Cierre)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Cierre)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Operaciones)
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            if (item.Cierre != null){
+                                                                Diferencia = item.Inicial + (int)item.Cierre;
+                                                            }
+                                                            else
+                                                            {
+                                                                Diferencia = item.Inicial + 0;
+                                                            }
+                                                        }
+                                                        @Diferencia
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Usuario)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Estado)
+                                                    </td>
+                                                    <td class="col-lg-1">
+                                                        <div class="btn-group btn-group-justified">
+                                                            @{
+                                                                if (item.Estado == false)
+                                                                {
+                                                                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs fa fa-lock", @title = "Cerrar" })
+                                                                }
+                                                                else
+                                                                {
+
+                                                                }
+                                                             }
+                                                            
+                                                            @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs fa fa-info", @title = "Detalles" })
+                                                            @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs fa fa-times", @title = "Eliminar" })
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+                $('#Fecha_Apertura').attr("readonly", true);
+                $('#Fecha_Cierre').attr("readonly", true);
+                $('#Cierre').attr("readonly", true);
+                $('#Operaciones').attr("readonly", true);
+                $('#Cierre').attr("readonly", true);
+
+                $("#Estado").attr('readonly', true);
+                $("#Estado").prop('disabled', true);
+                $("input[name=Estado]").attr('checked', false);
+                $("input[name=Estado]").val("false");
+
+                $('#Estado').prop('checked', false);
+                $('#Estado').attr('checked', false);
+                $('#Estado').removeClass("checked disabled");
+                $('#Estado').addClass("icheckbox_minimal-blue");
+                $('#Estado').attr('aria-checked', 'false');
+                $(".icheckbox_minimal-blue").removeClass("checked disabled");
+
+                $('#abrir').datetimepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    },
+                    //locale: 'es',
+                    format: 'YYYY-MM-DD hh:mm:ss'
+                })
+                $("#Usuario").val('@NewNick');
+                $("#Usuario").attr('readonly', true);
+
+                $("#UsuarioModal").val('@NewNick');
+                $("#UsuarioModal").attr('readonly', true);
+            });
+    </script>
+}
+<div class="modal" id="abrirCaja" tabindex="-1" role="dialog">
+    @using (Ajax.BeginForm("AjaxCreate", "Cajas", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "Caja"
+
+        }))
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="im-plus"></span>
+                        Abrir Caja
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+                    @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Fecha_Apertura">Fecha de Apertura: </label>
+                            <div class="col-md-10">
+                                <div class='input-group' id='abri'>
+                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Inicial">Monto Inicial</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="0" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Inicial" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Fecha_Cierre">Fecha de Cierre: </label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Cierre:  must be a date." id="Fecha_Cierre" name="Fecha_Cierre" type="datetime" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Cierre" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Cierre">Monto Cierre</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Cierre" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Operaciones">Cantidad de Operaciones: </label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Cantidad de Operaciones:  must be a number." data-val-required="La cantidad de operaciones es requerido" id="Operaciones" name="Operaciones" type="number" value="0" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Operaciones" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Usuario">Usuario: </label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe indicar un usuario" id="Usuario" name="Usuario" type="text" value=@Nick />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Usuario" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Estado">Estado: </label>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <input class="check-box" data-val="true" data-val-required="El campo Estado:  es obligatorio." id="Estado" name="Estado" type="checkbox" value="true" /><input name="Estado" type="hidden" value="false" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Estado" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Abrir Caja</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    }
+</div><!-- /.modal -->
+
+

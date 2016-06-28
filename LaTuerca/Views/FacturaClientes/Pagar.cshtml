@@ -1,13 +1,14 @@
 ﻿@model LaTuerca.Models.FacturaCliente
+
 @{
-    ViewBag.Title = "Factura";
+    ViewBag.Title = "Presupuesto";
 }
+
 @if (TempData["notice"] != null)
 {
     <div class="pad margin no-print" id="mensaje">
         <div class="callout callout-success" style="margin-bottom: 0!important;">
-            <h4><i class="fa fa-info"></i> Alerta:</h4>
-            @TempData["notice"]
+            <i class="fa fa-check"></i>   @TempData["notice"]
         </div>
     </div>
 }
@@ -18,60 +19,84 @@
         @Html.HiddenFor(model => model.Id)
         <div class="row">
             <div class="col-lg-12">
-                <div class="box box-primary form-horizontal">
-                    <div class="box-body form-horizontal">
-                        <div class="user-block page-header">
-                            <img class="img-circle" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
                             <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                            <small class="description">Mcal. Estigarribia c/ Artigas, Zona Alta</small>
-                           <!--  <small class="description">Encarnación, Itapúa</small>
-                            <small class="description">Telefono: (071) 243-345</small> -->
+                            <span class='description'>Factura Proveedor</span>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9 has-feedback">
-                                    @Html.DropDownList("ClienteId", null, "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
-                                    <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
-                                    @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                        <div class='box-tools btn-group'>
+                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
+                            <a href="" id="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor">
+                                <i class="fa fa-user-plus"></i> <b>Nuevo Proveedor</b>
+                            </a>
+                            <a href="@Url.Action("Facturados", "FacturaClientes")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Facturas">
+                                <i class="fa fa-files-o"></i>
+                            </a>
+                            <a href="@Url.Action("Facturados", "FacturaClientes")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Facturas">
+                                <i class="fa fa-files-o"></i> <b>Ver Facturas</b>
+                            </a>
+                            @if (Model.Pagado == true)
+                            {
+                                <a href="@Url.Action("Print", "FacturaClientes", new { id = Model.Id })" target="_blank" class="btn btn-link btn-sm hidden-lg tip" title="Imprimir Factura">
+                                    <i class="fa fa-print"></i>
+                                </a>
+                                <a href="@Url.Action("Print", "FacturaClientes", new { id = Model.Id })" target="_blank" class="btn btn-link btn-sm visible-lg tip" title="Imprimir Factura">
+                                    <i class="fa fa-print"></i> <b>Imprimir Factura</b>
+                                </a>
+                            }
+                            else
+                            {
+                                <button href="" id="Pagar" class="btn btn-success btn-sm btn-flat tip pagar pull-right visible-lg" title="Confirmar Pago" type="submit" name="saveInvoice" value="Guardar">
+                                    <i class="fa fa-credit-card"></i>  <b>Confirmar Pago</b>
+                                </button>
+                                <button href="" id="Pagar" class="btn btn-success btn-sm btn-flat hidden-lg btn-sm tip pagar pull-right" title="Confirmar Pago" type="submit" name="saveInvoice" value="Guardar">
+                                    <i class="fa fa-credit-card"></i>
+                                </button>
+                            }
+                            
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body'>
+                        <div class="col-lg-12 form-horizontal">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9 has-feedback">
+                                        @Html.DropDownList("ClienteId", null, "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
+                                        <span class="glyphicon glyphicon-search form-control-feedback text-muted"></span>
+                                        @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
-                                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
-                                    <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
-                                    @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.FechaPago, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
-                                    @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
-                                    <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
-                                    @Html.ValidationMessageFor(model => model.FechaPago, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <div class="has-feedback">
-                                    @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm text-danger", placeholder = "Nº de Factura", @required = "true", aria_required = "true", @readonly = "true" } })
-                                        <span class="glyphicon glyphicon-inbox form-control-feedback text-muted"></span>
-                                        @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        @Html.LabelFor(model => model.Pagado, htmlAttributes: new { @class = "" })
+                                        @Html.EditorFor(model => model.Pagado, "", new { @required = "true" })
+                                        @Html.ValidationMessageFor(model => model.Pagado, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <div class="has-feedback">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-lg-3" })
+                                    <div class="col-lg-9 has-feedback input-daterange" data-provide="datepicker">
+                                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
+                                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FechaPago, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
+                                        @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
+                                        @Html.ValidationMessageFor(model => model.FechaPago, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     @Html.LabelFor(model => model.Metodo, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9">
                                         @Html.DropDownList("Metodo", new SelectList(Enum.GetValues(typeof(LaTuerca.Controllers.FacturaProveedorsController.Metodo))), "Método de pago", new { @class = "form-control input-sm" })
@@ -79,100 +104,133 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control input-sm tip", title = "Total a pagar", placeholder = "Total", @required = "true", aria_required = "true", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="has-feedback">
+                                        @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm text-danger", placeholder = "Nº de Factura", @required = "true", aria_required = "true", @readonly = "true" } })
+                                            <span class="glyphicon glyphicon-inbox form-control-feedback text-muted"></span>
+                                            @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.TotalPagado, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @class = "form-control input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", aria_required = "true" } })
-                                    @Html.ValidationMessageFor(model => model.TotalPagado, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @type = "text", @class = "form-control input-sm", placeholder = "Total", @required = "true", aria_required = "true" } })
+                                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TotalPagado, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @type = "text", @class = "form-control input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", aria_required = "true" } })
+                                        @Html.ValidationMessageFor(model => model.TotalPagado, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="box-footer">
-                        @if (Model.Pagado == true)
-                        {
-                            <div class="form-horizontal">
-                                @Html.ActionLink("Imprimir Factura", "Print", new { id = Model.Id }, new { @target = "_blank", @class = "btn btn-primary pull-right", @id = "ImprimirFactura", @data_original_title = "Imprimir Factura" })
-                            </div>
-                        }
-                        else
-                        {
-
-                            <div class="form-horizontal">
-                                @Html.EditorFor(model => model.Pagado, "", new { @required = "true" })
-                                @Html.ValidationMessageFor(model => model.Pagado, "", new { @class = "text-danger" })
-                                <label class="control-label">Confirmar Pago</label>
-                                <button type="submit" id="Pagar" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Confirmar Pago</button>
-                            </div>
-                        }
-                    </div>
-
                 </div>
             </div>
+
             <div class="col-lg-12">
                 <div class="box box-primary direct-chat direct-chat-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Detalles</h3>
-                    </div>
                     <div class="box-body">
-                        <div class=" table-responsive">
-                            <table class="table table-striped table-condensed table-hover table-inverse tabledata" id="itemsTable">
+                        <div class="col-lg-12 table-responsive">
+                            <table class="table table-striped table-condensed table-hover table-inverse table-sm tabledat tip" title="Agregar nueva linea" id="itemsTable">
                                 <thead>
-                                    <tr class="bg-primary">
-                                        <th class="col-lg-1"><i class="im-remove"></i></th>
-                                        <th class="col-lg-1">Item</th>
-                                        <th class="col-lg-4">Description</th>
-                                        <th class="col-lg-3">Cantidad</th>
-                                        <th class="col-lg-3">Precio Unit.</th>
+                                    <tr class="">
+                                        <th class="col-lg-1">
+                                            <a href="" id="addRowBtn" class="btn btn-default btn-xs btn-flat btn-block tipB" title="Agregar nueva línea">
+                                                <i class="fa fa-plus-sign"></i> Agregar
+                                            </a>
+                                        </th>
+                                        <th class="col-lg-3">Description</th>
+                                        <th class="col-lg-1">Cantidad</th>
+                                        <th class="col-lg-2">Precio Unit.</th>
+                                        <th class="col-lg-2">Neto.</th>
+                                        <th class="col-lg-1">Iva.</th>
+                                        <th class="col-lg-2">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.detallesFacturaCliente)
+                                    @if (Model != null && Model.detallesFacturaCliente != null && Model.detallesFacturaCliente.Count > 0)
                                     {
-                                        <tr class="item-row">
-                                            <td class="col-lg-1"><i class="im-radio-checked"></i></td>
-                                            <td class="col-lg-1">
-                                                @item.RepuestoId
-                                            </td>
-                                            <td class="col-lg-4">
-                                                @item.Repuesto.Nombre
-                                            </td>
-                                            <td class="col-lg-3">
-                                                @item.Cantidad
-                                            </td>
-                                            <td class="col-lg-3">
-                                                @item.Precio
-                                            </td>
-                                        </tr>
+                                        var i = 0;
+                                        foreach (var item in Model.detallesFacturaCliente)
+                                        {
+                                            <tr class="item-row">
+                                                <td class="col-lg-1">
+                                                    <button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar" disabled> <i class="im-remove2"></i></button>
+                                                </td>
+                                                <td class="col-lg-3">
+                                                   @Html.TextBox("detallesFacturaCliente[" + i + "].RepuestoId", item.Precio, new { @class = "form-control input-sm", @type = "hidden", @id = "RepuestoId", @placeholder = "Cod.: Repuesto", @readonly = "readonly" })
+                                                   @Html.TextBox("detallesFacturaCliente[" + i + "].Nombre", item.Repuesto.Nombre, new { @class = "form-control input-sm", @id = "Nombre", @placeholder = "Descripción", @required = "true", @autofocus = "" })
+                                                </td>
+                                                <td class="col-lg-1">
+                                                    @Html.TextBox("detallesFacturaCliente[" + i + "].Cantidad", item.Cantidad, new { @class = "form-control input-sm", @min ="1", @max ="100", @id = "Cantidad", @placeholder = "Cantidad", @required = "true" })
+                                                </td>
+                                                <td class="col-lg-2">
+                                                    @Html.TextBox("detallesFacturaCliente[" + i + "].Precio", item.Precio, new { @class = "form-control input-sm", @id = "PrecioVenta1", @placeholder = "Precio", @required = "true" })
+
+                                                </td>
+                                                <td class="col-lg-2">
+                                                    <input class="form-control input-sm" id="TotalLineaNeto" placeholder="Neto" type="text" readonly="readonly" required>
+                                                </td>
+                                                <td class="col-lg-1">
+                                                    <input class="form-control input-sm" id="TotalLineaIva" placeholder="Iva" type="text" readonly="readonly" required>
+
+                                                </td>
+                                                <td class="col-lg-2">
+                                                    <input name="" class="form-control input-sm" id="TotalLinea" placeholder="Total" type="text" readonly="readonly" required>
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
                                     }
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5"></th>
+                                        <th class="text-right">Subtotal:</th>
+                                        <td id="subTotal" class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4"></th>
+                                        <th class="text-right">
+                                            <div class="has-feedback">
+                                                <input placeholder="IVA" type="number" name="tax" min="1" max="100" id="tax" value="10" class="form-control input-sm" />
+                                                <span class="fa fa-percent form-control-feedback"></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-right">Iva:</th>
+                                        <td id="salesTax" class="text-right"></td>
+                                    </tr>
+                                    <tr class="lead">
+                                        <th colspan="5"></th>
+                                        <th class="text-right">Total:</th>
+                                        <td id="grandTotal" class=" text-right"> </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     }
 </section>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jqueryCompra")
+    @Scripts.Render("~/bundles/jqueryVenta")
     <script>
         $(document).ready(function () {
+
             $("#Pagar").on('click', function () {
                 //e.preventDefault();
+                $('#Metodo').val('Contado');
                 var Total = $("#Total").val();
                 var TotalPagado = $("#TotalPagado").val(Total);
                 $("input[name=Pagado]").attr('checked', true);
@@ -185,6 +243,116 @@
 
                 $(".icheckbox_square-blue").removeClass("icheckbox_square-blue").addClass("icheckbox_square-blue checked");
             });
+
+
+            $("#TotalPagado").attr('readonly', true);
+            $("#Pagado").prop('disabled', true);
+            //$('select#Metodo').prop('disabled', true);
+
+            $("select#Metodo").change(function () {
+                var str = "";
+                $("select option:selected").each(function () {
+                    str = $(this).text();
+                    if (str == "Contado") {
+                        var Total = $("#Total").val();
+                        var TotalPagado = $("#TotalPagado").val(Total);
+                        $("input[name=Pagado]").attr('checked', true);
+                        $("input[name=Pagado]").val("true");
+
+                        $('#Pagado').prop('checked', true);
+                        $('#Pagado').attr('checked', true);
+                        $('#Pagado').addClass("icheckbox_square-blue checked");
+                        $('#Pagado').attr('aria-checked', 'true');
+                        $(".icheckbox_square-blue").addClass("checked");
+                    } else {
+                        var TotalPagado = $("#TotalPagado").val("");
+                        $("input[name=Pagado]").attr('checked', false);
+                        $("input[name=Pagado]").val("false");
+
+                        $('#Pagado').prop('checked', false);
+                        $('#Pagado').attr('checked', false);
+                        $('#Pagado').addClass("icheckbox_square-blue");
+                        $('#Pagado').removeClass("checked");
+                        $('#Pagado').attr('aria-checked', 'false');
+                        $(".icheckbox_square-blue").removeClass("checked");
+                    }
+                });
+                //$("div").text(str);
+            }).change();
         });
     </script>
 }
+
+
+
+<div class="modal" id="crearProveedor" tabindex="-1" role="dialog">
+    @using (Ajax.BeginForm("AjaxCreate", "FacturaClientes", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "Cliente"
+
+        }))
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="fa fa-user-plus"></span>
+                        Nuevo Cliente
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+                    @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cliente.RazonSocial, htmlAttributes: new { @class = "control-label col-lg-3" })
+                            <div class="col-lg-9">
+                                @Html.EditorFor(model => model.Cliente.RazonSocial, new { htmlAttributes = new { @class = "form-control Cliente_RazonSocial", @placeholder = "Razón Social", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Cliente.RazonSocial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cliente.Documento, htmlAttributes: new { @class = "control-label col-lg-3" })
+                            <div class="col-lg-9">
+                                @Html.EditorFor(model => model.Cliente.Documento, new { htmlAttributes = new { @class = "form-control", @placeholder = "C.I.Nº / R.U.C", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Cliente.Documento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cliente.Direccion, htmlAttributes: new { @class = "control-label col-lg-3" })
+                            <div class="col-lg-9">
+                                @Html.EditorFor(model => model.Cliente.Direccion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dirección", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Cliente.Direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cliente.Telefono, htmlAttributes: new { @class = "control-label col-lg-3" })
+                            <div class="col-lg-9">
+                                @Html.EditorFor(model => model.Cliente.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Cliente.Telefono, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cliente.Celular, htmlAttributes: new { @class = "control-label col-lg-3" })
+                            <div class="col-lg-9">
+                                @Html.EditorFor(model => model.Cliente.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "Celular", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Cliente.Celular, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    }
+</div><!-- /.modal -->
+
+

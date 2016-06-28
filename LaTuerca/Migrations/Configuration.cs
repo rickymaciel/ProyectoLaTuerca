@@ -226,6 +226,15 @@ namespace LaTuerca.Migrations
                   Description = "Cheques",
                   Action = "Index",
                   Controller = "Cheques"
+              },
+              new Models.Menu
+              {
+                  //23
+                  ParentId = 6,
+                  Name = "Caja",
+                  Description = "Modulo Caja",
+                  Action = "Index",
+                  Controller = "Cajas"
               }
             );
 
@@ -302,6 +311,22 @@ namespace LaTuerca.Migrations
                     Direccion = "Bernardino Gorostiaga y Guaraníes",
                     Telefono = "595-61-575057",
                     Celular = "595-61-575057"
+                },
+                new Models.Proveedor
+                {
+                    RazonSocial = "HONDA MOTOR CO. Ltd",
+                    Ruc = "2102832-9",
+                    Direccion = "Avda. Eusebio Ayala",
+                    Telefono = "595-61-510057",
+                    Celular = "595-61-510057"
+                },
+                new Models.Proveedor
+                {
+                    RazonSocial = "De La Sobera S.A.",
+                    Ruc = "3745673-9",
+                    Direccion = "Ruta 6 Km. 48",
+                    Telefono = "595-71-203026",
+                    Celular = "595-971-203026"
                 }
             );
 
@@ -321,6 +346,11 @@ namespace LaTuerca.Migrations
                 new Models.Categoria
                 {
                     Nombre = "RADIADORES",
+                    Estado = true
+                },
+                new Models.Categoria
+                {
+                    Nombre = "TRANSMISIONES",
                     Estado = true
                 }
             );
@@ -354,6 +384,20 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 444000,
                     PrecioVenta2 = 499500,
                     PrecioVenta3 = 518000,
+                },
+                new Models.Repuesto
+                {
+                    Nombre = "EJE DE TRANSMISION",
+                    ProveedorId = 3,
+                    ModeloId = 2,
+                    CategoriaId = 3,
+                    Stock = 0,
+                    StockMinimo = 10,
+                    StockMaximo = 100,
+                    PrecioCosto = 450000,
+                    PrecioVenta1 = 540000,
+                    PrecioVenta2 = 607500,
+                    PrecioVenta3 = 630000,
                 }
             );
         }

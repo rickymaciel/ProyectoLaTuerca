@@ -23,18 +23,19 @@ var mioInvoice = {
             minLength: 1,
             select: function (event, ui) {
 
-                var $itemRow = $(this).closest('tr');
-
-                // Modify this information to match the information coming from assets/ajax-services/fetch-inventory.php
-                //$itemRow.find('#Id').val(ui.item.Id); // Hidden input on form
-                $itemRow.find('#RepuestoId').val(ui.item.Id);
-                $itemRow.find('#Nombre').val(ui.item.Nombre);
-                $itemRow.find('#PrecioVenta1').val(ui.item.PrecioVenta1);
-                $itemRow.find('#Stock').val(ui.item.Stock);
-
-                // Give focus to the next input field to receive input from user
-                $itemRow.find('#Cantidad').focus();
-                return false;
+                if (ui.item.Stock > 0) {
+                    var $itemRow = $(this).closest('tr');
+                    $itemRow.find('#RepuestoId').val(ui.item.Id);
+                    $itemRow.find('#Nombre').val(ui.item.Nombre);
+                    $itemRow.find('#PrecioVenta1').val(ui.item.PrecioVenta1);
+                    $itemRow.find('#Stock').val(ui.item.Stock);
+                    $itemRow.find('#Cantidad').focus();
+                    return false;
+                }
+                else {
+                    return alert("No hay stock disponible");
+                    $itemRow.find('#Nombre').focus();
+                }
             }
         });
 
@@ -78,9 +79,11 @@ var mioInvoice = {
         //var grdTotal = total + this.updateSalesTax();
         var grdTotal = total;
         $('#Total').val(grdTotal);
+        $("select#Metodo").attr('readonly', false);
 
         $('#grandTotal').html((grdTotal)).number(true, 0);
         $('#subTotal').html(this.roundNumber(grdTotal - this.updateSalesTax(), 0)).number(true, 0);
+
 
 
     },

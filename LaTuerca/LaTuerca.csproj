@@ -160,6 +160,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BancosController.cs" />
+    <Compile Include="Controllers\CajasController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ChequesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Controllers\MarcasController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\ModelosController.cs" />
+    <Compile Include="Controllers\MovimientoCajasController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\RepuestosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -203,9 +205,14 @@
     <Compile Include="Migrations\201606212353072_Actualizar.Designer.cs">
       <DependentUpon>201606212353072_Actualizar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606281431050_Caja.cs" />
+    <Compile Include="Migrations\201606281431050_Caja.Designer.cs">
+      <DependentUpon>201606281431050_Caja.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
+    <Compile Include="Models\Caja.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Cheque.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -221,6 +228,7 @@
     <Compile Include="Models\Marca.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Modelo.cs" />
+    <Compile Include="Models\MovimientoCaja.cs" />
     <Compile Include="Models\Proveedor.cs" />
     <Compile Include="Models\Repuesto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,7 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminLTE.min.css" />
-    <Content Include="Content\blue.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
@@ -239,6 +247,39 @@
     <Content Include="Content\easy-autocomplete.min.css" />
     <Content Include="Content\easy-autocomplete.themes.min.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\iCheck\all.css" />
+    <Content Include="Content\iCheck\icheck.js" />
+    <Content Include="Content\iCheck\minimal\aero%402x.png" />
+    <Content Include="Content\iCheck\minimal\aero.css" />
+    <Content Include="Content\iCheck\minimal\aero.png" />
+    <Content Include="Content\iCheck\minimal\blue%402x.png" />
+    <Content Include="Content\iCheck\minimal\blue.css" />
+    <Content Include="Content\iCheck\minimal\blue.png" />
+    <Content Include="Content\iCheck\minimal\green%402x.png" />
+    <Content Include="Content\iCheck\minimal\green.css" />
+    <Content Include="Content\iCheck\minimal\green.png" />
+    <Content Include="Content\iCheck\minimal\grey%402x.png" />
+    <Content Include="Content\iCheck\minimal\grey.css" />
+    <Content Include="Content\iCheck\minimal\grey.png" />
+    <Content Include="Content\iCheck\minimal\minimal%402x.png" />
+    <Content Include="Content\iCheck\minimal\minimal.css" />
+    <Content Include="Content\iCheck\minimal\minimal.png" />
+    <Content Include="Content\iCheck\minimal\orange%402x.png" />
+    <Content Include="Content\iCheck\minimal\orange.css" />
+    <Content Include="Content\iCheck\minimal\orange.png" />
+    <Content Include="Content\iCheck\minimal\pink%402x.png" />
+    <Content Include="Content\iCheck\minimal\pink.css" />
+    <Content Include="Content\iCheck\minimal\pink.png" />
+    <Content Include="Content\iCheck\minimal\purple%402x.png" />
+    <Content Include="Content\iCheck\minimal\purple.css" />
+    <Content Include="Content\iCheck\minimal\purple.png" />
+    <Content Include="Content\iCheck\minimal\red%402x.png" />
+    <Content Include="Content\iCheck\minimal\red.css" />
+    <Content Include="Content\iCheck\minimal\red.png" />
+    <Content Include="Content\iCheck\minimal\yellow%402x.png" />
+    <Content Include="Content\iCheck\minimal\yellow.css" />
+    <Content Include="Content\iCheck\minimal\yellow.png" />
+    <Content Include="Content\iCheck\minimal\_all.css" />
     <Content Include="Content\icons.css" />
     <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
@@ -311,6 +352,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\brocolidry.eot" />
@@ -340,6 +382,8 @@
     <Content Include="fonts\meteo.woff" />
     <Content Include="fonts\steadysets.eot" />
     <Content Include="fonts\steadysets.ttf" />
+    <Content Include="Scripts\input-mask\phone-codes\phone-be.json" />
+    <Content Include="Scripts\input-mask\phone-codes\phone-codes.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
@@ -355,7 +399,12 @@
     <Content Include="Scripts\datatablesbuttons\jszip.min.js" />
     <Content Include="Scripts\datatablesbuttons\pdfmake.min.js" />
     <Content Include="Scripts\datatablesbuttons\vfs_fonts.js" />
-    <Content Include="Scripts\icheck.min.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.extensions.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Scripts\input-mask\jquery.inputmask.regex.extensions.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -375,6 +424,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Moment.js" />
     <Content Include="Scripts\NuevaCompra.js" />
     <Content Include="Scripts\NuevaCompraScript.js" />
     <Content Include="Scripts\NuevaVenta.js" />
@@ -513,9 +563,22 @@
     <Content Include="Views\FacturaClientes\Print.cshtml" />
     <Content Include="Views\Shared\_create_cliente.cshtml" />
     <Content Include="Views\FacturaClientes\Editar.cshtml" />
+    <Content Include="Views\phone-codes.json" />
+    <Content Include="Views\MovimientoCajas\Create.cshtml" />
+    <Content Include="Views\MovimientoCajas\Delete.cshtml" />
+    <Content Include="Views\MovimientoCajas\Details.cshtml" />
+    <Content Include="Views\MovimientoCajas\Edit.cshtml" />
+    <Content Include="Views\MovimientoCajas\Index.cshtml" />
+    <Content Include="Views\Cajas\Create.cshtml" />
+    <Content Include="Views\Cajas\Delete.cshtml" />
+    <Content Include="Views\Cajas\Details.cshtml" />
+    <Content Include="Views\Cajas\Edit.cshtml" />
+    <Content Include="Views\Cajas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\lib\" />
+    <Folder Include="Scripts\locale\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -542,6 +605,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606212353072_Actualizar.resx">
       <DependentUpon>201606212353072_Actualizar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606281431050_Caja.resx">
+      <DependentUpon>201606281431050_Caja.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

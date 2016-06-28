@@ -59,5 +59,9 @@ namespace LaTuerca.Models
         public System.Data.Entity.DbSet<LaTuerca.Models.FacturaCliente> FacturaClientes { get; set; }
 
         public System.Data.Entity.DbSet<LaTuerca.Models.DetallesFacturaCliente> DetallesFacturaClientes { get; set; }
+
+        public System.Data.Entity.DbSet<LaTuerca.Models.Caja> Cajas { get; set; }
+
+        public System.Data.Entity.DbSet<LaTuerca.Models.MovimientoCaja> MovimientoCajas { get; set; }
     }
 }

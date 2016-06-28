@@ -1,0 +1,57 @@
+﻿@model LaTuerca.Models.MovimientoCaja
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MovimientoCaja</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Caja.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caja.Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -311,9 +311,18 @@
 
             oTable.buttons().container().appendTo('#tablaMenu .col-md-6:eq(0)');
 
+            $("[data-mask]").inputmask();
+            /*
+            $("[data-mask]").inputmask("phone", {
+                url: "C:/Users/MACIEL/Desktop/GITHUB/MUNDOTUERCA/LaTuerca/Scripts/input-mask/phone-codes/phone-codes.json",
+                onKeyValidation: function () { //show some metadata in the console
+                    console.log($(this).inputmask("getmetadata")["name_en"]);
+                }
+            });
+            */
             $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'icheckbox_minimal-blue',
                 increaseArea: '20%' // optional
             });
             $('#mensaje').delay(6000).fadeOut(2000);
@@ -378,7 +387,7 @@
                 plugins: ['optgroup_columns'],
                 openOnFocus: true
             });
-            $('#preciocosto').val('');
+            //$('#preciocosto').val('');
             $("#nombre").removeClass('has-error');
             $("#guardar").click(function () {
                 var nombre = $('#nombre').val();

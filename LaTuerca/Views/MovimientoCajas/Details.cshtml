@@ -1,0 +1,51 @@
+﻿@model LaTuerca.Models.MovimientoCaja
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MovimientoCaja</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Caja.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caja.Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

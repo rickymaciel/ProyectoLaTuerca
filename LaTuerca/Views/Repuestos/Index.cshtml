@@ -101,7 +101,7 @@
                                                     @Html.DisplayFor(modelItem => item.Categoria.Nombre)
                                                 </td>
                                                 <td>
-                                                    @if (item.Stock > item.StockMinimo)
+                                                    @if (item.Stock >= item.StockMinimo)
                                                     {
                                                         <span class="label label-success">@Html.DisplayFor(modelItem => item.Stock)</span>
                                                     }
@@ -109,7 +109,7 @@
                                                     {
                                                         <span class="label label-warning">@Html.DisplayFor(modelItem => item.Stock)</span>
                                                     }
-                                                    @if (item.Stock == 0)
+                                                    @if (item.Stock < 1)
                                                     {
                                                         <span class="label label-danger">@Html.DisplayFor(modelItem => item.Stock)</span>
                                                     }
