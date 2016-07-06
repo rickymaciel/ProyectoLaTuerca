@@ -1,82 +1,142 @@
 ﻿@model LaTuerca.Models.FacturaProveedor
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Factura Nº " + @Html.DisplayFor(model => model.NumeroFactura);
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>FacturaProveedor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.RazonSocial)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaPago)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaPago)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroFactura)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumeroFactura)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPagado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalPagado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Metodo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Metodo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pagado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pagado)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <section class="content-header">
+    </section>
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header box-header">
+                    <small class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                        <span class='description'>Factura Proveedor</span>
+                    </small>
+                    <span class='box-tools btn-group'>
+                        <a href="@Url.Action("Factura", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Factura">
+                            <i class="fa fa-file-alt"></i>
+                        </a>
+                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Factura">
+                            <i class="fa fa-file-alt"></i> <b>Nueva Factura</b>
+                        </a>
+                    </span>
+                </h2>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                @Html.DisplayNameFor(model => model.Proveedor)
+                <address>
+                    <strong>@Html.DisplayFor(model => model.Proveedor.RazonSocial)</strong><br>
+                    @Html.DisplayNameFor(model => model.Proveedor.Direccion): @Html.DisplayFor(model => model.Proveedor.Direccion)<br>
+                    @Html.DisplayNameFor(model => model.Proveedor.Ruc): @Html.DisplayFor(model => model.Proveedor.Ruc)<br>
+                    @Html.DisplayNameFor(model => model.Proveedor.Telefono): @Html.DisplayFor(model => model.Proveedor.Telefono)<br>
+                </address>
+            </div>
+            <div class="col-sm-4 invoice-col">
+                <b>@Html.DisplayNameFor(model => model.Metodo)</b> @Html.DisplayFor(model => model.Metodo)<br>
+                <br>
+                <b>@Html.DisplayNameFor(model => model.Total)</b> @Html.DisplayFor(model => model.Total)<br>
+                <b>@Html.DisplayNameFor(model => model.TotalPagado)</b> @Html.DisplayFor(model => model.TotalPagado)<br>
+            </div>
+            <div class="col-sm-4 invoice-col">
+                <b>@Html.DisplayNameFor(model => model.NumeroFactura) @Html.DisplayFor(model => model.NumeroFactura)</b><br>
+                <br>
+                <b>@Html.DisplayNameFor(model => model.Fecha)</b> @Html.DisplayFor(model => model.Fecha)<br>
+                <b>@Html.DisplayNameFor(model => model.FechaPago)</b> @Html.DisplayFor(model => model.FechaPago)<br>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-lg-12 table-responsive">
+                <table class="table table-striped table-condensed table-hover table-inverse" title="" id="">
+                    <thead>
+                        <tr class="">
+                            <th class="col-lg-1">Item</th>
+                            <th class="col-lg-4">Descripción</th>
+                            <th class="col-lg-2">Cantidad</th>
+                            <th class="col-lg-3">Precio Unit.</th>
+                            <th class="col-lg-2 text-right">Total.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            double iva = 0.0;
+                            double neto = 0.0;
+                            var total = 0;
+                        }
+                        @foreach (var item in Model.detallesFacturaProveedor)
+                        {
+                            var subtotal = 0;
+                            {
+                                subtotal = (item.Precio * item.Cantidad);
+                                total += subtotal;
+                            }
+                            <tr class="item-row">
+                                <td class="col-lg-1">
+                                    @item.RepuestoId
+                                </td>
+                                <td class="col-lg-4">
+                                    @item.Repuesto.Nombre
+                                </td>
+                                <td class="col-lg-2">
+                                    @item.Cantidad
+                                </td>
+                                <td class="col-lg-3">
+                                    @item.Precio
+                                </td>
+                                <td class="col-lg-2 text-right">
+                                    @subtotal
+                                </td>
+                            </tr>
+                        }
+                        @{
+                            neto = total / 1.1;
+                            iva = total / 11;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-8 col-lg-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th class="text-right">Subtotal:</th>
+                            <td class="text-right">@neto</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Iva (10%)</th>
+                            <td class="text-right">@iva</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Total:</th>
+                            <td class="text-right">@Html.DisplayFor(model => model.TotalPagado)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="@Url.Action("Print", "FacturaProveedors", new { id = Model.Id })" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    <div class="clearfix"></div>

@@ -14,18 +14,6 @@ namespace LaTuerca.Migrations
 
         protected override void Seed(LaTuerca.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-
             //Insertar Menu
             context.Menus.AddOrUpdate(
                 p => p.Name,
@@ -301,32 +289,32 @@ namespace LaTuerca.Migrations
                     RazonSocial = "TOYOTOSHI",
                     Ruc = "9283847-7",
                     Direccion = "Avda. Mariscal López 2801/99 y Reclus",
-                    Telefono = "(021) 582 750 ",
-                    Celular = "(021) 582 750 "
+                    Telefono = "(021) 582-750",
+                    Celular = "(021) 582-750 "
                 },
                 new Models.Proveedor
                 {
                     RazonSocial = "CONDOR SACI",
                     Ruc = "2938475-9",
                     Direccion = "Bernardino Gorostiaga y Guaraníes",
-                    Telefono = "595-61-575057",
-                    Celular = "595-61-575057"
+                    Telefono = "(021) 582-750",
+                    Celular = "(0981) 382-750"
                 },
                 new Models.Proveedor
                 {
                     RazonSocial = "HONDA MOTOR CO. Ltd",
                     Ruc = "2102832-9",
                     Direccion = "Avda. Eusebio Ayala",
-                    Telefono = "595-61-510057",
-                    Celular = "595-61-510057"
+                    Telefono = "(021) 782-750",
+                    Celular = "(0973) 882-980"
                 },
                 new Models.Proveedor
                 {
                     RazonSocial = "De La Sobera S.A.",
                     Ruc = "3745673-9",
                     Direccion = "Ruta 6 Km. 48",
-                    Telefono = "595-71-203026",
-                    Celular = "595-971-203026"
+                    Telefono = "(021) 582-750",
+                    Celular = "(0975) 582-750"
                 }
             );
 

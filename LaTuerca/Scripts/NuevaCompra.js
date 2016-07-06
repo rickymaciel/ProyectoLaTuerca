@@ -113,7 +113,7 @@ var mioInvoice = {
     '<tr class="item-row">',
     '<td class="col-lg-1"><button id="deleteRow" class="btn btn-xs btn-danger tip" title="Eliminar"> <i class="im-remove2"></i></button</td>',
     '<td class="col-lg-3"><input id="RepuestoId" name="detallesFacturaProveedor[' + i + '].RepuestoId" type="hidden" class="form-control input-sm" placeholder="RepuestoId" value="" readonly="readonly"   />',
-    '<div class="has-feedback"><input id="Nombre" name="detallesFacturaProveedor[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Descripcion" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
+    '<div class="has-feedback"><input id="Nombre" name="detallesFacturaProveedor[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Buscar Repuesto" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
     '<td class="col-lg-1"><input id="Cantidad" name="detallesFacturaProveedor[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
     '<td class="col-lg-2"><input id="PrecioVenta1" name="detallesFacturaProveedor[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></td>',
     '<td class="col-lg-2"><input id="TotalLineaNeto" class="form-control input-sm" placeholder="Neto" type="text" readonly="readonly" required></td>',

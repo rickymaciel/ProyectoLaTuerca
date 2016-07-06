@@ -19,7 +19,6 @@ namespace LaTuerca.Models
         [ForeignKey("CajaId")]
         public virtual Caja Caja { get; set; }
 
-        
         [Required(ErrorMessage = "El concepto es requerido")]
         [Display(Name = "Concepto: ")]
         public string Concepto { get; set; }
@@ -28,6 +27,7 @@ namespace LaTuerca.Models
         [Display(Name = "Movimiento: ")]
         public string Movimiento { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
         [Required(ErrorMessage = "El monto es requerido")]
         [Display(Name = "Monto: ")]
         public int Monto { get; set; }

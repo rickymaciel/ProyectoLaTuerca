@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LaTuerca.Controllers
 {
@@ -74,6 +75,8 @@ namespace LaTuerca.Controllers
                     {
                         GuardarFacturaDetalles(facturaCliente);
                         ActualizarStock(facturaCliente);
+                        ActualizarCaja(facturaCliente);
+                        GuardarMovimiento(facturaCliente);
                         db.Entry(facturaCliente).State = EntityState.Modified;
                         db.SaveChanges();
                         dbTran.Commit();
@@ -153,8 +156,9 @@ namespace LaTuerca.Controllers
                         GuardarFacturaDetalles(facturaCliente);
                         if(facturaCliente.Pagado == true){
                             ActualizarStock(facturaCliente);
+                            ActualizarCaja(facturaCliente);
+                            GuardarMovimiento(facturaCliente);
                         }
-                        //commit transaction
                         dbTran.Commit();
                         TempData["notice"] = "El Presupuesto Número: " + facturaCliente.NumeroFactura + " fue guardado correctamente! ";
                     }
@@ -166,7 +170,7 @@ namespace LaTuerca.Controllers
                     }
 
                 }
-                return RedirectToAction("Pagar/"+facturaCliente.Id);
+                return RedirectToAction("Pagar/"+ObtenerIdMax());
             }
 
             TempData["notice"] = "Todos los campos son requeridos!";
@@ -176,91 +180,133 @@ namespace LaTuerca.Controllers
 
         public void GuardarFactura(FacturaCliente facturaCliente)
         {
-            db.FacturaClientes.Add(facturaCliente);
-            db.SaveChanges();
+            using (var context = new ApplicationDbContext())
+            {
+                var factura = new FacturaCliente
+                {
+                    Fecha = facturaCliente.Fecha,
+                    FechaPago = facturaCliente.FechaPago,
+                    Metodo = facturaCliente.Metodo,
+                    NumeroFactura = facturaCliente.NumeroFactura,
+                    Pagado = facturaCliente.Pagado,
+                    ClienteId = facturaCliente.ClienteId,
+                    Total = facturaCliente.Total,
+                    TotalPagado = facturaCliente.TotalPagado
+                };
+                context.FacturaClientes.Add(factura);
+                context.SaveChanges();
+            }
         }
 
         public void GuardarFacturaDetalles(FacturaCliente facturaCliente)
         {
-            foreach (var item in facturaCliente.detallesFacturaCliente)
+            using (var contextDetalles = new ApplicationDbContext())
             {
-                var detalle = new DetallesFacturaCliente
+                foreach (var item in facturaCliente.detallesFacturaCliente)
                 {
-                    FacturaClienteId = ObtenerIdMax(),
-                    RepuestoId = item.RepuestoId,
-                    Cantidad = item.Cantidad,
-                    Precio = item.Precio,
-                };
-
-                if (detalle == null)
-                {
-                    TempData["notice"] = "El Detalle de Factura esta vacío!";
+                    int idmax = ObtenerIdMax();
+                    var detalles = new DetallesFacturaCliente
+                    {
+                        FacturaClienteId = idmax,
+                        RepuestoId = item.RepuestoId,
+                        Cantidad = item.Cantidad,
+                        Precio = item.Precio,
+                    };
+                    contextDetalles.DetallesFacturaClientes.Add(detalles);
                 }
-                else
-                {
-                    db.DetallesFacturaClientes.Add(detalle);
-                    //ActualizarStock(facturaCliente);
-                    //UpdateStock(item.RepuestoId, item.Cantidad);
-                    TempData["notice"] = "El Detalle de Factura fue guardado!";
-                }
+                contextDetalles.SaveChanges();
             }
-        }
-
-        public void UpdateStock(int RepuestoId, int Cantidad)
-        {
-            Repuesto repuesto = db.Repuestoes.Find(RepuestoId);
-            if (repuesto.Stock >= Cantidad)
-            {
-                repuesto.Stock -= Cantidad;
-                db.Entry(repuesto).State = EntityState.Modified;
-                TempData["notice"] = "Actualizado 1!";
-                //db.SaveChanges();
-            }
-        }
-
-        public int StockRepuestoId(int RepuestoId)
-        {
-            Repuesto repuesto = db.Repuestoes.Find(RepuestoId);
-            return repuesto.Stock;
         }
 
         public void ActualizarStock(FacturaCliente facturaCliente)
         {
-            foreach (var item in facturaCliente.detallesFacturaCliente)
+            using (var context = new ApplicationDbContext())
             {
-                try
+                foreach (var item in facturaCliente.detallesFacturaCliente)
                 {
-                    Repuesto repuesto = db.Repuestoes.Find(item.RepuestoId);
-                    //if (repuesto.Stock >= item.Cantidad)
-                    //{
-                        repuesto.Stock -= item.Cantidad;
-                        db.Entry(repuesto).State = EntityState.Modified;
-                        TempData["notice"] = "Actualizado 1!";
-                        db.SaveChanges();
-                    //}
+                    Repuesto r = db.Repuestoes.Find(item.RepuestoId);
+                    int cant = r.Stock - item.Cantidad;
+                    var repuesto = new Repuesto
+                    {
+                        Id = item.RepuestoId,
+                        Stock = cant,
+                        Nombre = r.Nombre,
+                        ProveedorId = r.ProveedorId,
+                        CategoriaId = r.CategoriaId,
+                        ModeloId = r.ModeloId,
+                        PrecioCosto = r.PrecioCosto,
+                        PrecioVenta1 = r.PrecioVenta1,
+                        PrecioVenta2 = r.PrecioVenta2,
+                        PrecioVenta3 = r.PrecioVenta3,
+                        StockMinimo = r.StockMinimo,
+                        StockMaximo = r.StockMaximo
+                    };
+                    context.Repuestoes.Add(repuesto);
+                    context.Entry(repuesto).State = EntityState.Modified;
                 }
-                catch (Exception ex)
-                {
-                    TempData["notice"] = "No se pudo realizar la transacción Actualizar!" + ex.Message;
-                }
-                
+                context.SaveChanges();
             }
+        }
+
+
+
+        public void ActualizarCaja(FacturaCliente facturaCliente)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
+                int cantOperaciones = (int)c.Operaciones + 1;
+                int cierre = (int)c.Cierre - facturaCliente.TotalPagado;
+                var caja = new Caja
+                {
+                    Id = c.Id,
+                    Fecha_Apertura = c.Fecha_Apertura,
+                    Inicial = c.Inicial,
+                    Operaciones = cantOperaciones,
+                    Fecha_Cierre = c.Fecha_Cierre,
+                    Cierre = cierre,
+                    Estado = c.Estado,
+                    Usuario = c.Usuario
+                };
+                context.Cajas.Add(caja);
+                context.Entry(caja).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+
+        public void GuardarMovimiento(FacturaCliente facturaCliente)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var movimiento = new MovimientoCaja
+                {
+                    CajaId = ObtenerUltimoCajaAbierto(),
+                    Concepto = "Venta",
+                    Movimiento = "Entrada",
+                    Monto = facturaCliente.TotalPagado
+                };
+                context.MovimientoCajas.Add(movimiento);
+                context.SaveChanges();
+            }
+        }
+
+
+        public int ObtenerUltimoCajaAbierto()
+        {
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            return ultimoabierto;
         }
 
         public int ObtenerIdMax()
         {
-            //int idmax = db.FacturaProveedors.Max(item => item.Id);
-            //int? idmax = db.FacturaProveedors.Max(item => (int?)item.Id);
             var idmax = db.FacturaClientes.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
-            if (idmax == 0)
-            {
-                return idmax + 1;
-            }
-            else
-            {
-                return idmax + 1;
-            }
+            return idmax;
         }
+
 
         // GET: FacturaClientes/Editar/1
         public ActionResult Editar(int? id)

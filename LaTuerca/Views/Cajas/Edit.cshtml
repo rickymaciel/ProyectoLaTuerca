@@ -68,60 +68,102 @@
                     <div class='box-body'>
                         <div class="col-lg-12 form-horizontal">
                             @Html.HiddenFor(model => model.Id)
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Fecha_Apertura, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Fecha_Apertura, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
-                                    @Html.ValidationMessageFor(model => model.Fecha_Apertura, "", new { @class = "text-danger" })
+
+                            <div class="form-group col-lg-6 has-success">
+                                @Html.LabelFor(model => model.Fecha_Apertura, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.Fecha_Apertura, new { @Value = Model.Fecha_Apertura, @id = "cerrar", @class = "form-control", @readonly = "true" })
+                                        @Html.ValidationMessageFor(model => model.Fecha_Apertura, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Inicial, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Inicial, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
-                                    @Html.ValidationMessageFor(model => model.Inicial, "", new { @class = "text-danger" })
+                            <div class="form-group col-lg-6 has-error">
+                                @Html.LabelFor(model => model.Fecha_Cierre, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.Fecha_Cierre, new { @Value = Model.Fecha_Cierre, @id = "cerrar", @class = "form-control", @readonly = "true" })
+                                        @Html.ValidationMessageFor(model => model.Fecha_Cierre, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Fecha_Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Fecha_Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Fecha_Cierre, "", new { @class = "text-danger" })
+                            <div class="form-group col-lg-6 has-success">
+                                @Html.LabelFor(model => model.Inicial, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-money"></span>
+                                        </span>
+                                        @Html.EditorFor(model => model.Inicial, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.Inicial, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Cierre, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Cierre, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Cierre, "", new { @class = "text-danger" })
+                            <div class="form-group col-lg-6 has-error">
+                                @Html.LabelFor(model => model.Cierre, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-money"></span>
+                                        </span>
+                                        @Html.EditorFor(model => model.Cierre, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.Cierre, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Operaciones, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Operaciones, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
-                                    @Html.ValidationMessageFor(model => model.Operaciones, "", new { @class = "text-danger" })
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.Operaciones, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-file2"></span>
+                                        </span>
+                                        @Html.EditorFor(model => model.Operaciones, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.Operaciones, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
-                                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    <div class='input-group'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                            <div class="form-group col-lg-6">
+                                @{
+                                    var estado = "";
+                                    if(Model.Estado == true){
+                                        estado = "Caja cerrada";
+                                    }
+                                    else
+                                    {
+                                        estado = "Caja abierta";
+                                    }
+                                }
+                                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-4"})
+                                <div class="col-md-8">
                                     <div class="checkbox">
                                         @Html.EditorFor(model => model.Estado)
-                                        @Html.ValidationMessageFor(model => model.Estado, "", new { @id = "Estado" ,@class = "text-danger", @checked = "checked", @readonly = "true" })
+                                        <span class="label label-warning"> @estado </span>
+                                        @Html.ValidationMessageFor(model => model.Estado, "", new { @id = "Estado", @class = "text-danger", @checked = "checked", @readonly = "true" })
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +178,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-            $(function () {
+        $(function () {
                 $("#Estado").attr('readonly', true);
                 $("#Estado").prop('disabled', true);
                 $("input[name=Estado]").attr('checked', true);
@@ -148,7 +190,7 @@
                 $('#Estado').attr('aria-checked', 'true');
                 $(".icheckbox_minimal-blue").addClass("checked");
 
-                $('#datetimepicker1').datetimepicker({
+                $('#cerrar').datetimepicker({
                     icons: {
                         time: "fa fa-clock-o",
                         date: "fa fa-calendar",
@@ -156,9 +198,8 @@
                         down: "fa fa-arrow-down"
                     },
                     locale: 'es',
-                    format: 'YYYY-MM-DD hh:mm:ss'
+                    format: 'DD/MM/YYYY hh:mm:ss'
                 });
-                $('#datetimepicker2').datetimepicker();
                 $("#Usuario").val('@NewNick');
                 $("#Usuario").attr('readonly', true);
 

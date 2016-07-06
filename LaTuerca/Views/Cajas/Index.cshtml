@@ -50,6 +50,7 @@
                                 <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
                             </a>
                         }
+                        
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class='box-body'>
@@ -100,16 +101,16 @@
                                                     }
                                                 <tr class="@bg">
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Fecha_Apertura)
+                                                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Apertura)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Inicial)
+                                                        @String.Format("{0:C}", item.Inicial)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Fecha_Cierre)
+                                                       @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Cierre)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Cierre)
+                                                        @String.Format("{0:C}", item.Cierre)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Operaciones)
@@ -123,8 +124,14 @@
                                                             {
                                                                 Diferencia = item.Inicial + 0;
                                                             }
+                                                            
+                                                            if (Diferencia > 0){
+                                                                <span class="label label-success">@Diferencia</span>
+                                                            }
+                                                            else {
+                                                                <span class="label label-danger">@Diferencia</span>
+                                                            }
                                                         }
-                                                        @Diferencia
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Usuario)
@@ -190,9 +197,9 @@
                         up: "fa fa-arrow-up",
                         down: "fa fa-arrow-down"
                     },
-                    //locale: 'es',
-                    format: 'YYYY-MM-DD hh:mm:ss'
-                })
+                    locale: 'es',
+                    format: 'DD/MM/YYYY hh:mm:ss'
+                });
                 $("#Usuario").val('@NewNick');
                 $("#Usuario").attr('readonly', true);
 
@@ -216,7 +223,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
-                        <span class="im-plus"></span>
+                        <span class="fa fa-folder-open"></span> 
                         Abrir Caja
                     </h4>
                 </div>
@@ -229,11 +236,11 @@
                             <label class="control-label col-md-2" for="Fecha_Apertura">Fecha de Apertura: </label>
                             <div class="col-md-10">
                                 <div class='input-group' id='abri'>
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
                                     <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
                                     <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -241,12 +248,12 @@
                         <div class="form-group">
                             <label class="control-label col-md-2" for="Inicial">Monto Inicial</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="0" />
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="" placeholder="¿Cuanto dinero hay en la caja?" autofocus />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Inicial" data-valmsg-replace="true"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group hidden">
                             <label class="control-label col-md-2" for="Fecha_Cierre">Fecha de Cierre: </label>
                             <div class="col-md-10">
                                 <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Cierre:  must be a date." id="Fecha_Cierre" name="Fecha_Cierre" type="datetime" value="" />
@@ -254,15 +261,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group hidden">
                             <label class="control-label col-md-2" for="Cierre">Monto Cierre</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="" />
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="0" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Cierre" data-valmsg-replace="true"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group hidden">
                             <label class="control-label col-md-2" for="Operaciones">Cantidad de Operaciones: </label>
                             <div class="col-md-10">
                                 <input class="form-control text-box single-line" data-val="true" data-val-number="The field Cantidad de Operaciones:  must be a number." data-val-required="La cantidad de operaciones es requerido" id="Operaciones" name="Operaciones" type="number" value="0" />
@@ -278,7 +285,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group hidden">
                             <label class="control-label col-md-2" for="Estado">Estado: </label>
                             <div class="col-md-10">
                                 <div class="checkbox">
@@ -291,7 +298,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Abrir Caja</button>
                 </div>
             </div><!-- /.modal-content -->

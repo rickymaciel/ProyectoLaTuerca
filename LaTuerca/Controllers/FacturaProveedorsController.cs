@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
 
 namespace LaTuerca.Controllers
 {
@@ -70,24 +71,18 @@ namespace LaTuerca.Controllers
             DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             facturaProveedor.Fecha = Fecha;
             facturaProveedor.FechaPago = DateTime.Now.AddDays(30); //30 dias
-
-            if (!facturaProveedor.Pagado == true)
+            var proximo = (from inv in db.FacturaProveedors orderby inv.NumeroFactura descending select inv).FirstOrDefault();
+            if (proximo != null)
             {
-                //se genera el proximo numero de factura
-                var proximo = (from inv in db.FacturaProveedors orderby inv.NumeroFactura descending select inv).FirstOrDefault();
-
-                if (proximo != null)
-                {
-                    facturaProveedor.NumeroFactura = proximo.NumeroFactura + 1;
-                }
-                else
-                {
-                    facturaProveedor.NumeroFactura = 1000000;
-                }
+                facturaProveedor.NumeroFactura = proximo.NumeroFactura + 1;
             }
-
+            else
+            {
+                facturaProveedor.NumeroFactura = 1000000;
+            }
             return View(facturaProveedor);
         }
+
 
 
         [HttpPost]
@@ -105,24 +100,20 @@ namespace LaTuerca.Controllers
                         GuardarFacturaDetalles(facturaProveedor);
                         ActualizarStock(facturaProveedor);
                         ActualizarCaja(facturaProveedor);
-                        //commit transaction
+                        GuardarMovimiento(facturaProveedor);
+
                         dbTran.Commit();
-                        TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente! ";
+                        TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente!";
                     }
                     catch (Exception ex)
                     {
-                        //Rollback transaction if exception occurs
                         dbTran.Rollback();
-                        //Console.WriteLine("\nMessage ---\n{0}", ex.Message);
                         TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
                         return View(facturaProveedor);
                     }
 
                 }
-
-                //TempData["notice"] = "Error desconocido!";
-                //return View(facturaProveedor);
-                return RedirectToAction("Factura");
+                return RedirectToAction("Details/" + ObtenerIdMax());
             }
 
             TempData["notice"] = "Todos los campos son requeridos!";
@@ -132,98 +123,138 @@ namespace LaTuerca.Controllers
 
         public void GuardarFactura(FacturaProveedor facturaProveedor)
         {
-            db.FacturaProveedors.Add(facturaProveedor);
-            db.SaveChanges();
-
+            using (var context = new ApplicationDbContext())
+            {
+                var factura = new FacturaProveedor
+                {
+                    Fecha = facturaProveedor.Fecha,
+                    FechaPago = facturaProveedor.FechaPago,
+                    Metodo = facturaProveedor.Metodo,
+                    NumeroFactura = facturaProveedor.NumeroFactura,
+                    Pagado = facturaProveedor.Pagado,
+                    ProveedorId = facturaProveedor.ProveedorId,
+                    Total = facturaProveedor.Total,
+                    TotalPagado = facturaProveedor.TotalPagado
+                };
+                context.FacturaProveedors.Add(factura);
+                context.SaveChanges();
+            }
         }
 
         public void GuardarFacturaDetalles(FacturaProveedor facturaProveedor)
         {
-            foreach (var item in facturaProveedor.detallesFacturaProveedor)
+            using (var contextDetalles = new ApplicationDbContext())
             {
-                var detalles = new DetallesFacturaProveedor
+                foreach (var item in facturaProveedor.detallesFacturaProveedor)
                 {
-                    //FacturaClienteId = db.FacturaClientes.ToList().Select(e => e.Id).Max(),
-                    FacturaProveedorId = ObtenerIdMax(),
-                    RepuestoId = item.RepuestoId,
-                    Cantidad = item.Cantidad,
-                    Precio = item.Precio,
-                };
-                
-                //ActRepuesto(item.RepuestoId, item.Cantidad);
-
-                if (detalles == null)
-                {
-                    TempData["notice"] = "El Detalle de Factura esta vacío!";
+                    int idmax =  ObtenerIdMax();
+                    var detalles = new DetallesFacturaProveedor
+                    {
+                        FacturaProveedorId = idmax,
+                        RepuestoId = item.RepuestoId,
+                        Cantidad = item.Cantidad,
+                        Precio = item.Precio,
+                    };
+                    contextDetalles.DetallesFacturaProveedors.Add(detalles);
                 }
-                else
-                {
-                    TempData["notice"] = "El Detalle de Factura fue guardado!";
-                    db.DetallesFacturaProveedors.Add(detalles);
-                }
+                contextDetalles.SaveChanges();
             }
         }
 
         public void ActualizarStock(FacturaProveedor facturaProveedor)
         {
-            foreach (var item in facturaProveedor.detallesFacturaProveedor)
+            using (var context = new ApplicationDbContext())
             {
-                try
+                foreach (var item in facturaProveedor.detallesFacturaProveedor)
                 {
-                    Repuesto repuesto = db.Repuestoes.Find(item.RepuestoId);
-                    repuesto.Stock += item.Cantidad;
-                    db.Entry(repuesto).State = EntityState.Modified;
-                    TempData["notice"] = "Actualizado 1!";
-                    db.SaveChanges();
+                    Repuesto r = db.Repuestoes.Find(item.RepuestoId);
+                    int cant = r.Stock + item.Cantidad;
+                    var repuesto = new Repuesto
+                    {
+                        Id = item.RepuestoId,
+                        Stock = cant,
+                        Nombre = r.Nombre,
+                        ProveedorId = r.ProveedorId,
+                        CategoriaId = r.CategoriaId,
+                        ModeloId = r.ModeloId,
+                        PrecioCosto = r.PrecioCosto,
+                        PrecioVenta1 = r.PrecioVenta1,
+                        PrecioVenta2 = r.PrecioVenta2,
+                        PrecioVenta3 = r.PrecioVenta3,
+                        StockMinimo = r.StockMinimo,
+                        StockMaximo = r.StockMaximo
+                    };
+                    context.Repuestoes.Add(repuesto);
+                    context.Entry(repuesto).State = EntityState.Modified;
                 }
-                catch (Exception ex)
-                {
-                    TempData["notice"] = "No se pudo realizar la transacción Actualizar!" + ex.Message;
-                }
+                context.SaveChanges();
             }
         }
 
 
         public void ActualizarCaja(FacturaProveedor facturaProveedor)
         {
-            try
-                {
-                    int? total = facturaProveedor.TotalPagado;
-                    int ultimoIdCaja= ObtenerUltimoCajaAbierto();
-                    Caja caja = db.Cajas.Find(ultimoIdCaja);
-                    caja.Operaciones += 1;
-                    caja.Cierre += total;
-                    db.Entry(caja).State = EntityState.Modified;
-                    TempData["notice"] = "Caja Actualizado!";
-                    db.SaveChanges();
-                }
-            catch (Exception ex)
+            using (var context = new ApplicationDbContext())
             {
-                TempData["notice"] = "No se pudo realizar la transacción Actualizar!" + ex.Message;
+                Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
+                int cantOperaciones = (int)c.Operaciones + 1;
+                int cierre = (int)c.Cierre - facturaProveedor.TotalPagado;
+                var caja = new Caja
+                {
+                    Id = c.Id,
+                    Fecha_Apertura= c.Fecha_Apertura,
+                    Inicial = c.Inicial,
+                    Operaciones = cantOperaciones,
+                    Fecha_Cierre = c.Fecha_Cierre,
+                    Cierre = cierre,
+                    Estado = c.Estado,
+                    Usuario = c.Usuario
+                };
+                context.Cajas.Add(caja);
+                context.Entry(caja).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+
+        public void GuardarMovimiento(FacturaProveedor facturaProveedor)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var idmax = ObtenerUltimoCajaAbierto();
+                var movimiento = new MovimientoCaja
+                {
+                    CajaId = idmax,
+                    Concepto = "Compra",
+                    Movimiento = "Salida",
+                    Monto = facturaProveedor.TotalPagado
+                };
+                context.MovimientoCajas.Add(movimiento);
+                context.SaveChanges();
             }
         }
 
 
         public int ObtenerUltimoCajaAbierto()
         {
-            //var ultimoabierto = db.Cajas.Where(o => o.Estado == false).Max(o => o == null ? 0 : o.Id);
-            //var ultimoabierto = db.Cajas.Any() ? db.Cajas.Max(s => s.Id) : 0;
-            var ultimoabierto = db.Cajas.Where(c => c.Estado == false).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Id).DefaultIfEmpty(0).Max();
             return ultimoabierto;
         }
 
         public int ObtenerIdMax()
         {
-            //int idmax = db.FacturaProveedors.Max(item => item.Id);
-            //int? idmax = db.FacturaProveedors.Max(item => (int?)item.Id);
             var idmax = db.FacturaProveedors.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
-            if (idmax == 0)
+            return idmax;
+        }
+
+        public void EditarRepuesto(Repuesto repuestos)
+        {
+            if (ModelState.IsValid)
             {
-                return idmax + 1;
-            }
-            else
-            {
-                return idmax + 1;
+                db.Entry(repuestos).State = EntityState.Modified;
             }
         }
 
@@ -484,7 +515,6 @@ namespace LaTuerca.Controllers
 
         public enum Metodo
         {
-            Credito,
             Contado
         }
     }

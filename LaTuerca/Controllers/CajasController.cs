@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LaTuerca.Controllers
 {
@@ -18,9 +19,12 @@ namespace LaTuerca.Controllers
         public ActionResult Index()
         {
             var caja = new Caja();
-            string fecha = DateTime.Now.ToString("{0:yyyy-MM-dd hh:mm:ss}");
-            DateTime Fecha = DateTime.ParseExact(fecha, "{0:yyyy-MM-dd hh:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
-            
+            //string fecha = DateTime.Now;
+            DateTime Fecha = DateTime.Now;
+
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
             if (ObtenerUltimoCajaAbierto() == 0)
             {
                 TempData["notice"] = "Todas las cajas estan cerradas";
@@ -31,7 +35,7 @@ namespace LaTuerca.Controllers
                 TempData["notice"] = "Caja abierta";
                 TempData["Fecha_Apertura"] = null;
             }
-            return View(db.Cajas.ToList().OrderByDescending(c => c.Id));
+            return View(db.Cajas.ToList().Where(c => c.Usuario == usuario).OrderByDescending(c => c.Id));
         }
 
 
@@ -74,9 +78,10 @@ namespace LaTuerca.Controllers
 
         public int ObtenerUltimoCajaAbierto()
         {
-            //var ultimoabierto = db.Cajas.Where(o => o.Estado == false).Max(o => o == null ? 0 : o.Id);
-            //var ultimoabierto = db.Cajas.Any() ? db.Cajas.Max(s => s.Id) : 0;
-            var ultimoabierto = db.Cajas.Where(c => c.Estado == false).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Id).DefaultIfEmpty(0).Max();
             return ultimoabierto;
         }
         // POST: Cajas/Create
