@@ -60,6 +60,10 @@
                                     <table class="table table-condensed table-hover table-striped" id="tablaMenu">
                                         <thead>
                                             <tr>
+                                                <th class="col-lg-1"></th>
+                                                <th>
+                                                    Caja Nº:
+                                                </th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.Fecha_Apertura)
                                                 </th>
@@ -100,6 +104,12 @@
                                                         bg = "success";
                                                     }
                                                 <tr class="@bg">
+                                                    <td class="col-lg-1">
+                                                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs fa fa-eye", @title = "Ver Detalles" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
                                                     <td>
                                                         @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Apertura)
                                                     </td>
@@ -126,10 +136,10 @@
                                                             }
                                                             
                                                             if (Diferencia > 0){
-                                                                <span class="label label-success">@Diferencia</span>
+                                                                <span class="label label-success">@String.Format("{0:C}", Diferencia)</span>
                                                             }
                                                             else {
-                                                                <span class="label label-danger">@Diferencia</span>
+                                                                <span class="label label-danger">@String.Format("{0:C}", Diferencia)</span>
                                                             }
                                                         }
                                                     </td>
@@ -140,7 +150,7 @@
                                                         @Html.DisplayFor(modelItem => item.Estado)
                                                     </td>
                                                     <td class="col-lg-1">
-                                                        <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
                                                             @{
                                                                 if (item.Estado == false)
                                                                 {
@@ -151,8 +161,6 @@
 
                                                                 }
                                                              }
-                                                            
-                                                            @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs fa fa-info", @title = "Detalles" })
                                                             @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs fa fa-times", @title = "Eliminar" })
                                                         </div>
                                                     </td>
@@ -208,102 +216,3 @@
             });
     </script>
 }
-<div class="modal" id="abrirCaja" tabindex="-1" role="dialog">
-    @using (Ajax.BeginForm("AjaxCreate", "Cajas", FormMethod.Post,
-        new AjaxOptions
-        {
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST",
-            UpdateTargetId = "Caja"
-
-        }))
-    {
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">
-                        <span class="fa fa-folder-open"></span> 
-                        Abrir Caja
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    @Html.AntiForgeryToken()
-                    @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
-                    @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="Fecha_Apertura">Fecha de Apertura: </label>
-                            <div class="col-md-10">
-                                <div class='input-group' id='abri'>
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
-                                    <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="Inicial">Monto Inicial</label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="" placeholder="¿Cuanto dinero hay en la caja?" autofocus />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Inicial" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label class="control-label col-md-2" for="Fecha_Cierre">Fecha de Cierre: </label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Cierre:  must be a date." id="Fecha_Cierre" name="Fecha_Cierre" type="datetime" value="" />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Cierre" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label class="control-label col-md-2" for="Cierre">Monto Cierre</label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="0" />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Cierre" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label class="control-label col-md-2" for="Operaciones">Cantidad de Operaciones: </label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Cantidad de Operaciones:  must be a number." data-val-required="La cantidad de operaciones es requerido" id="Operaciones" name="Operaciones" type="number" value="0" />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Operaciones" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="Usuario">Usuario: </label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe indicar un usuario" id="Usuario" name="Usuario" type="text" value=@Nick />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Usuario" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label class="control-label col-md-2" for="Estado">Estado: </label>
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    <input class="check-box" data-val="true" data-val-required="El campo Estado:  es obligatorio." id="Estado" name="Estado" type="checkbox" value="true" /><input name="Estado" type="hidden" value="false" />
-                                    <span class="field-validation-valid text-danger" data-valmsg-for="Estado" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Abrir Caja</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    }
-</div><!-- /.modal -->
-
-

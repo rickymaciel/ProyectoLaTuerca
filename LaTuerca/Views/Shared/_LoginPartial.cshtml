@@ -4,9 +4,24 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
         String Nick = User.Identity.GetUserName().Substring(0, 10);
+        
+        
         @Html.AntiForgeryToken()
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li class="dropdown notifications-menu" id="openCaja">
+                    <a href="@Url.Action("Index", "Cajas")" class="" title="Nº de Caja">
+                        <i class="fa fa-folder-open-alt"></i>
+                        <span class="label label-warning">
+                            <i class="" id="idcaja"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="dropdown notifications-menu" id="closeCaja">
+                    <a href="#" class="tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                        <i class="fa fa-folder-close-alt"></i> Abrir caja para continuar
+                    </a>
+                </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <i class="fa fa-cart-plus"></i>
@@ -110,3 +125,4 @@ else
         </ul>
     </div>
 }
+

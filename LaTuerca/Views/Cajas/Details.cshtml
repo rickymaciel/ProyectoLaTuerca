@@ -3,6 +3,32 @@
 @{
     ViewBag.Title = "Detalles de Caja";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string estado = "";
+    string bgfechacierre = "";
+    if (Model.Estado == true)
+    {
+        estado = "Caja Cerrada";
+        bgfechacierre = "bg-green";
+    }
+    else
+    {
+        estado = "Caja Abierta";
+        bgfechacierre = "bg-red";
+    }
+
+    var encierre = Model.Inicial + (int)Model.Cierre;
+    var saldo = "";
+    var bgcolor = "";
+    if (Model.Inicial + (int)Model.Cierre > 0)
+    {
+        saldo = "Saldo: " + @String.Format("{0:C}", encierre);
+        bgcolor = "bg-green";
+    }
+    else
+    {
+        saldo = "Saldo: " + @String.Format("{0:C}", encierre);
+        bgcolor = "bg-red";
+    }
 }
 
 
@@ -16,15 +42,56 @@
 }
 <section class="content">
     <div class="row">
+        <div class="col-lg-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa  fa-calendar-check-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Apertura)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Apertura)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Inicial)</span>
+                    <span class="info-box-number">@String.Format("{0:C}", Model.Inicial)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box">
+                <span class="info-box-icon @bgfechacierre"><i class="fa  fa-calendar-minus-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Cierre)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box @bgcolor">
+                <span class="info-box-icon"><i class="fa fa-credit-card"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:C}", Model.Cierre)</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                        @saldo
+                    </span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class='box-header with-border'>
                     <div class="user-block">
-                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                        <span class='description'>@ViewBag.Title</span>
-                        <strong class='description'>Caja Nº @Html.DisplayFor(model => model.Id)</strong>
-
+                        <span class='text-muted'>Caja Nº <b class="text-primary">@Html.DisplayFor(model => model.Id)</b>  |  
+                          @Html.DisplayNameFor(model => model.Operaciones) <b class="text-primary">@Html.DisplayFor(model => model.Operaciones)</b>  |
+                          @Html.DisplayNameFor(model => model.Estado) <b class="text-primary">@Html.DisplayFor(model => model.Estado)  @estado</b>
+                        </span>
                     </div>
                     <div class='box-tools btn-group'>
                         <a href="@Url.Action("Index", "Cajas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Cajas">
@@ -36,70 +103,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-condensed table-hover table-reflow table-inverse tip" title="" id="">
-                            <thead>
-                                <tr class="primary">
-                                    <th class="col-lg-2">
-                                        @Html.DisplayNameFor(model => model.Fecha_Apertura)
-
-                                    </th>
-                                    <th class="col-lg-2">
-                                        @Html.DisplayNameFor(model => model.Inicial)
-                                    </th>
-                                    <th class="col-lg-2">
-                                        @Html.DisplayNameFor(model => model.Operaciones)
-                                    </th>
-                                    <th class="col-lg-2">
-                                        @Html.DisplayNameFor(model => model.Fecha_Cierre)
-                                    </th>
-                                    <th class="col-lg-2">
-                                        @Html.DisplayNameFor(model => model.Cierre)
-                                    </th>
-                                    <th class="col-lg-1">
-                                        @Html.DisplayNameFor(model => model.Estado)
-                                    </th>
-                                    <th class="col-lg-1">
-                                        @Html.DisplayNameFor(model => model.Usuario)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="col-lg-2">
-                                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Apertura)
-                                    </td>
-                                    <td class="col-lg-2">
-                                        @String.Format("{0:C}", Model.Inicial)
-                                    </td>
-                                    <td class="col-lg-2">
-                                        @Html.DisplayFor(model => model.Operaciones)
-                                    </td>
-                                    <td class="col-lg-2">
-                                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Cierre)
-                                    </td>
-                                    <td class="col-lg-2">
-                                        @String.Format("{0:C}", Model.Cierre)
-                                    </td>
-                                    <td class="col-lg-1">
-                                        @Html.DisplayFor(model => model.Estado)
-                                    </td>
-                                    <td class="col-lg-1">
-                                        @Html.DisplayFor(model => model.Usuario)
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><span class="fa fa-inbox"></span> Movimientos</h3>
-                </div>
-                <div class="box-body">
                     <div class=" table-responsive">
-                        <table class="table table-striped table-condensed table-hover table-reflow table-inverse tip" title="" id="">
+                        <table class="table table-condensed table-hover table-striped table-inverse" id="tablaMenu">
                             <thead>
                                 <tr class="">
                                     <th class="col-lg-4">
@@ -140,16 +145,6 @@
                                         </tr>
                                     </tbody>
                                 }
-                            }
-                            else
-                            {
-                                <tbody>
-                                    <tr class="warning">
-                                        <th colspan="3" class="col-lg-12 text-center">
-                                            No se registran movimientos
-                                        </th>
-                                    </tr>
-                                </tbody>
                             }
                         </table>
                     </div>

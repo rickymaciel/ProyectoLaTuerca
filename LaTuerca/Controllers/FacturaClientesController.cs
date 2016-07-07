@@ -256,7 +256,7 @@ namespace LaTuerca.Controllers
             {
                 Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
                 int cantOperaciones = (int)c.Operaciones + 1;
-                int cierre = (int)c.Cierre - facturaCliente.TotalPagado;
+                int cierre = (int)c.Cierre + facturaCliente.TotalPagado;
                 var caja = new Caja
                 {
                     Id = c.Id,
@@ -282,7 +282,7 @@ namespace LaTuerca.Controllers
                 var movimiento = new MovimientoCaja
                 {
                     CajaId = ObtenerUltimoCajaAbierto(),
-                    Concepto = "Venta",
+                    Concepto = "Factura Venta Nº: " + facturaCliente.NumeroFactura,
                     Movimiento = "Entrada",
                     Monto = facturaCliente.TotalPagado
                 };

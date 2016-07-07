@@ -225,7 +225,7 @@ namespace LaTuerca.Controllers
                 var movimiento = new MovimientoCaja
                 {
                     CajaId = idmax,
-                    Concepto = "Compra",
+                    Concepto = "Factura Compra Nº: "+facturaProveedor.NumeroFactura,
                     Movimiento = "Salida",
                     Monto = facturaProveedor.TotalPagado
                 };

@@ -41,7 +41,7 @@ namespace LaTuerca.Models
         public int? Cierre { get; set; }
 
         [Required(ErrorMessage = "La cantidad de operaciones es requerido")]
-        [Display(Name = "Cantidad de Operaciones: ")]
+        [Display(Name = "Cant. Operaciones: ")]
         public int? Operaciones { get; set; }
 
         [Display(Name = "Usuario: ")]

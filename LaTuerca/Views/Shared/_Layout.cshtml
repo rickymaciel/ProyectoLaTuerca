@@ -1,6 +1,24 @@
-﻿@if (!Request.IsAuthenticated)
+﻿@using Microsoft.AspNet.Identity
+@if (!Request.IsAuthenticated)
 {
     Response.Redirect("Account/Login");
+}
+@{
+    string Nick = "";
+    int IndexNick = 0;
+    string NewNick = "";
+
+    int Diferencia = 0;
+}
+@if (Request.IsAuthenticated)
+{
+    if (User.Identity.GetUserName() != "")
+    {
+        Nick = User.Identity.GetUserName();
+        IndexNick = Nick.IndexOf("@");
+
+        NewNick = Nick.Substring(0, IndexNick);
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -63,7 +81,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-        $(document).ready(function () {
+        $(function () {
+
             //$("#ProveedorId").val("");
             load_marcas();
             load_clientes();
@@ -230,15 +249,37 @@
                     }
                 });
             };
-        });
-    </script>
 
+            
+            $("#openCaja").hide();
+            $("#closeCaja").hide();
+            var serviceURL = 'http://localhost:53172/Cajas/ObtenerUltimoCajaAbierto';
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: param = "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
 
-
-
-
-    <script type="text/javascript" language="javascript" class="init">
-        $(document).ready(function () {
+            function successFunc(data, status) {
+                //alert(data);
+                if (data == 0) {
+                    $("#openCaja").hide();
+                    $("#closeCaja").show();
+                    //window.location.href = "http://localhost:53172/Cajas/Index";
+                }
+                else {
+                    $("#openCaja").show();
+                    $("#closeCaja").hide();
+                    $("i#idcaja").html(data);
+                }
+            }
+            function errorFunc() {
+                alert('error');
+            }
             var oTable = $('table.tabledata').DataTable({
                 "bProcessing": true,
                 "sPaginationType": "full_numbers",
@@ -512,5 +553,104 @@
             });
         });
     </script>
+
+    <div class="modal" id="abrirCaja" tabindex="-1" role="dialog">
+        @using (Ajax.BeginForm("AjaxCreate", "Cajas", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "Caja"
+
+        }))
+        {
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            <span class="fa fa-folder-open"></span>
+                            Abrir Caja
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
+                        @Html.Hidden("controller", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Fecha_Apertura">Fecha de Apertura: </label>
+                                <div class="col-md-10">
+                                    <div class='input-group' id='abri'>
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Inicial">Monto Inicial</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="" placeholder="¿Cuanto dinero hay en la caja?" autofocus />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Inicial" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-2" for="Fecha_Cierre">Fecha de Cierre: </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Cierre:  must be a date." id="Fecha_Cierre" name="Fecha_Cierre" type="datetime" value="" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Cierre" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-2" for="Cierre">Monto Cierre</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="0" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Cierre" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-2" for="Operaciones">Cantidad de Operaciones: </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" data-val="true" data-val-number="The field Cantidad de Operaciones:  must be a number." data-val-required="La cantidad de operaciones es requerido" id="Operaciones" name="Operaciones" type="number" value="0" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Operaciones" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Usuario">Usuario: </label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" data-val="true" data-val-required="Debe indicar un usuario" id="Usuario" name="Usuario" type="text" value=@Nick />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Usuario" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-2" for="Estado">Estado: </label>
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        <input class="check-box" data-val="true" data-val-required="El campo Estado:  es obligatorio." id="Estado" name="Estado" type="checkbox" value="true" /><input name="Estado" type="hidden" value="false" />
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="Estado" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btnGuardar"><i class="en-add-to-list"></i> Abrir Caja</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        }
+    </div><!-- /.modal -->
+
 </body>
 </html>
