@@ -19,12 +19,14 @@ namespace LaTuerca.Controllers
         public ActionResult Index()
         {
             var caja = new Caja();
-            //string fecha = DateTime.Now;
             DateTime Fecha = DateTime.Now;
-
-            var Nick = User.Identity.GetUserName();
-            var IndexNick = Nick.IndexOf("@");
-            var usuario = Nick.Substring(0, IndexNick);
+            var usuario = "";
+            if (User.Identity.GetUserName() != "")
+            {
+                var Nick = User.Identity.GetUserName();
+                var IndexNick = Nick.IndexOf("@");
+                usuario = Nick.Substring(0, IndexNick);
+            }
             if (ObtenerUltimoCajaAbierto() == 0)
             {
                 TempData["notice"] = "Todas las cajas estan cerradas";

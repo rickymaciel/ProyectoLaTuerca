@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown notifications-menu" id="openCaja">
+                <li class="dropdown notifications-menu hidden" id="openCaja">
                     <a href="@Url.Action("Index", "Cajas")" class="" title="Nº de Caja">
                         <i class="fa fa-folder-open-alt"></i>
                         <span class="label label-warning">
@@ -17,7 +17,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="dropdown notifications-menu" id="closeCaja">
+                <li class="dropdown notifications-menu hidden" id="closeCaja">
                     <a href="#" class="tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
                         <i class="fa fa-folder-close-alt"></i> Abrir caja para continuar
                     </a>
