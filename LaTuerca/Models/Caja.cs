@@ -36,6 +36,16 @@ namespace LaTuerca.Models
         [Column(TypeName = "DateTime")]
         public DateTime? Fecha_Cierre { get; set; }
 
+
+        [Display(Name = "Total Entrada")]
+        [Range(-100000000000000000, 100000000000000000, ErrorMessage = "El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000")]
+        public int? Entrada { get; set; }
+
+
+        [Display(Name = "Total Salida")]
+        public int? Salida { get; set; }
+
+
         [Display(Name = "Monto Cierre")]
         [Range(-100000000000000000, 100000000000000000, ErrorMessage = "El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000")]
         public int? Cierre { get; set; }

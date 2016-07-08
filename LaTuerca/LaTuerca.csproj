@@ -209,6 +209,14 @@
     <Compile Include="Migrations\201606281431050_Caja.Designer.cs">
       <DependentUpon>201606281431050_Caja.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607081459384_UpdateCaja.cs" />
+    <Compile Include="Migrations\201607081459384_UpdateCaja.Designer.cs">
+      <DependentUpon>201607081459384_UpdateCaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607081543267_UpdateMoviemiento.cs" />
+    <Compile Include="Migrations\201607081543267_UpdateMoviemiento.Designer.cs">
+      <DependentUpon>201607081543267_UpdateMoviemiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -608,6 +616,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606281431050_Caja.resx">
       <DependentUpon>201606281431050_Caja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607081459384_UpdateCaja.resx">
+      <DependentUpon>201607081459384_UpdateCaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607081543267_UpdateMoviemiento.resx">
+      <DependentUpon>201607081543267_UpdateMoviemiento.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

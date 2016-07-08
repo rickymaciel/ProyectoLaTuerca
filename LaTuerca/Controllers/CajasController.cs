@@ -47,11 +47,74 @@ namespace LaTuerca.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Cajas.Add(caja);
-                db.SaveChanges();
+                using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        AbrirCaja(caja);
+                        MovimientoInicial(caja);
+
+                        dbTran.Commit();
+                        TempData["notice"] = "Caja iniciada con: " + caja.Inicial + "!";
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
+                        return View(caja);
+                    }
+
+                }
+                //return RedirectToAction("Index", "Cajas");
+                return RedirectToAction("Details/" + ObtenerUltimoCajaAbierto());
             }
-            return RedirectToAction("Index", "Cajas");
+
+            TempData["notice"] = "Todos los campos son requeridos!";
+            return View(caja);
+
         }
+
+
+        public void AbrirCaja(Caja caja)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var abrir = new Caja
+                {
+                    Fecha_Apertura = caja.Fecha_Apertura,
+                    Inicial = caja.Inicial,
+                    Entrada = caja.Entrada,
+                    Salida = caja.Salida,
+                    Fecha_Cierre = caja.Fecha_Cierre,
+                    Cierre = caja.Cierre,
+                    Operaciones = caja.Operaciones,
+                    Usuario = caja.Usuario
+                };
+                context.Cajas.Add(caja);
+                context.SaveChanges();
+            }
+        }
+
+
+        public void MovimientoInicial(Caja caja)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var idmax = ObtenerUltimoCajaAbierto();
+                var movimiento = new MovimientoCaja
+                {
+                    CajaId = idmax,
+                    Concepto = "Apertura de caja",
+                    Movimiento = "Entrada",
+                    Ingreso = caja.Inicial,
+                    Egreso = 0,
+                    Saldo = caja.Inicial
+                };
+                context.MovimientoCajas.Add(movimiento);
+                context.SaveChanges();
+            }
+        }
+
         // GET: Cajas/Details/5
         public ActionResult Details(int? id)
         {

@@ -28,9 +28,19 @@ namespace LaTuerca.Models
         public string Movimiento { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
-        [Required(ErrorMessage = "El monto es requerido")]
-        [Display(Name = "Monto: ")]
-        public int Monto { get; set; }
+        [Required(ErrorMessage = "El ingreso es requerido")]
+        [Display(Name = "Ingreso: ")]
+        public int Ingreso { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
+        [Required(ErrorMessage = "El egreso es requerido")]
+        [Display(Name = "Egreso: ")]
+        public int Egreso { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C}")]
+        [Required(ErrorMessage = "El saldo es requerido")]
+        [Display(Name = "Saldo: ")]
+        public int Saldo { get; set; }
 
     }
 }

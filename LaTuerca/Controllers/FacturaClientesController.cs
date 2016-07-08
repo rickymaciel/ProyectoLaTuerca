@@ -256,6 +256,7 @@ namespace LaTuerca.Controllers
             {
                 Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
                 int cantOperaciones = (int)c.Operaciones + 1;
+                int sumaEntrada = (int)c.Entrada + facturaCliente.TotalPagado;
                 int cierre = (int)c.Cierre + facturaCliente.TotalPagado;
                 var caja = new Caja
                 {
@@ -264,6 +265,8 @@ namespace LaTuerca.Controllers
                     Inicial = c.Inicial,
                     Operaciones = cantOperaciones,
                     Fecha_Cierre = c.Fecha_Cierre,
+                    Salida = c.Salida,
+                    Entrada = sumaEntrada,
                     Cierre = cierre,
                     Estado = c.Estado,
                     Usuario = c.Usuario
@@ -284,13 +287,24 @@ namespace LaTuerca.Controllers
                     CajaId = ObtenerUltimoCajaAbierto(),
                     Concepto = "Factura Venta Nº: " + facturaCliente.NumeroFactura,
                     Movimiento = "Entrada",
-                    Monto = facturaCliente.TotalPagado
+                    Ingreso = facturaCliente.TotalPagado,
+                    Egreso = 0,
+                    Saldo = (int)ObtenerSaldoUltimoCajaAbierto()
                 };
                 context.MovimientoCajas.Add(movimiento);
                 context.SaveChanges();
             }
         }
 
+
+        public int? ObtenerSaldoUltimoCajaAbierto()
+        {
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
+            int? ultimosaldocajaabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Cierre).DefaultIfEmpty(0).Max();
+            return ultimosaldocajaabierto;
+        }
 
         public int ObtenerUltimoCajaAbierto()
         {

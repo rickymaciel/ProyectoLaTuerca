@@ -198,7 +198,8 @@ namespace LaTuerca.Controllers
             {
                 Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
                 int cantOperaciones = (int)c.Operaciones + 1;
-                int cierre = c.Inicial - facturaProveedor.TotalPagado + (int)c.Cierre;
+                int sumaSalida = (int)c.Salida + facturaProveedor.TotalPagado;
+                int cierre = (int) c.Cierre - facturaProveedor.TotalPagado;
                 var caja = new Caja
                 {
                     Id = c.Id,
@@ -206,6 +207,8 @@ namespace LaTuerca.Controllers
                     Inicial = c.Inicial,
                     Operaciones = cantOperaciones,
                     Fecha_Cierre = c.Fecha_Cierre,
+                    Salida = sumaSalida,
+                    Entrada = c.Entrada,
                     Cierre = cierre,
                     Estado = c.Estado,
                     Usuario = c.Usuario
@@ -227,13 +230,24 @@ namespace LaTuerca.Controllers
                     CajaId = idmax,
                     Concepto = "Factura Compra Nº: "+facturaProveedor.NumeroFactura,
                     Movimiento = "Salida",
-                    Monto = facturaProveedor.TotalPagado
+                    Ingreso = 0,
+                    Egreso = facturaProveedor.TotalPagado,
+                    Saldo = (int)ObtenerSaldoUltimoCajaAbierto()
                 };
                 context.MovimientoCajas.Add(movimiento);
                 context.SaveChanges();
             }
         }
 
+
+        public int? ObtenerSaldoUltimoCajaAbierto()
+        {
+            var Nick = User.Identity.GetUserName();
+            var IndexNick = Nick.IndexOf("@");
+            var usuario = Nick.Substring(0, IndexNick);
+            int? ultimosaldocajaabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Cierre).DefaultIfEmpty(0).Max();
+            return ultimosaldocajaabierto;
+        }
 
         public int ObtenerUltimoCajaAbierto()
         {
@@ -248,6 +262,13 @@ namespace LaTuerca.Controllers
         {
             var idmax = db.FacturaProveedors.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
             return idmax;
+        }
+
+
+        public int sumaIngreso()
+        {
+            var sumaIngreso = db.MovimientoCajas.Where(c => c.CajaId == ObtenerUltimoCajaAbierto()).Select(x => x.Ingreso).DefaultIfEmpty(0).Sum();
+            return sumaIngreso;
         }
 
         public void EditarRepuesto(Repuesto repuestos)

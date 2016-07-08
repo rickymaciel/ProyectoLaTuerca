@@ -48,7 +48,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CajaId,Concepto,Movimiento,Monto")] MovimientoCaja movimientoCaja)
+        public ActionResult Create([Bind(Include = "Id,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CajaId,Concepto,Movimiento,Monto")] MovimientoCaja movimientoCaja)
+        public ActionResult Edit([Bind(Include = "Id,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
         {
             if (ModelState.IsValid)
             {

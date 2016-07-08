@@ -16,17 +16,13 @@
         bgfechacierre = "bg-red";
     }
 
-    var encierre = Model.Inicial + (int) Model.Cierre;
-    var saldo = "";
     var bgcolor = "";
     if (Model.Inicial + (int) Model.Cierre > 0)
     {
-        saldo = "Saldo: " + @String.Format("{0:C}", encierre);
         bgcolor = "bg-green";
     }
     else
     {
-        saldo = "Saldo: " + @String.Format("{0:C}", encierre);
         bgcolor = "bg-red";
     }
 }
@@ -44,7 +40,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa  fa-calendar-check-o"></i></span>
+                <span class="info-box-icon bg-green"><i class="fa-calendar fa"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Apertura)</span>
                     <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Apertura)</span>
@@ -53,7 +49,16 @@
         </div>
         <div class="col-lg-3">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+                <span class="info-box-icon @bgfechacierre"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Cierre)</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion ion-cash"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Inicial)</span>
                     <span class="info-box-number">@String.Format("{0:C}", Model.Inicial)</span>
@@ -61,28 +66,73 @@
             </div><!-- /.info-box -->
         </div>
         <div class="col-lg-3">
-            <div class="info-box">
-                <span class="info-box-icon @bgfechacierre"><i class="fa  fa-calendar-minus-o"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
-                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Cierre)</span>
-                </div><!-- /.info-box-content -->
-            </div><!-- /.info-box -->
-        </div>
-        <div class="col-lg-3">
             <div class="info-box @bgcolor">
-                <span class="info-box-icon"><i class="fa fa-credit-card"></i></span>
+                <span class="info-box-icon"><i class="ion ion-cash"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Cierre)</span>
                     <span class="info-box-number">@String.Format("{0:C}", Model.Cierre)</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="progress-description">
-                        @saldo
-                    </span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ribbon-b"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Operaciones)</span>
+                    <span class="info-box-number">@Html.DisplayFor(model => model.Operaciones)</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box bg-green">
+                <span class="info-box-icon"><i class="fa fa-cloud-download"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Entrada)</span>
+                    <span class="info-box-number">@String.Format("{0:C}", Model.Entrada)</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="info-box bg-red">
+                <span class="info-box-icon"><i class="fa fa-cloud-upload"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Salida)</span>
+                    <span class="info-box-number">@String.Format("{0:C}", Model.Salida)</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <a href="@Url.Action("Edit", "Cajas", new { id = Model.Id })" class="info-box bg-red tip" title="Cerrar Caja">
+                <span class="info-box-icon"><i class="ion-ios-locked"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Cerrar Caja</span>
+                    <span class="info-box-number">
+                        @Html.DisplayNameFor(model => model.Estado)
+                        @estado
+                    </span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                    </span>
+                </div>
+            </a>
         </div>
         <div class="col-lg-12">
             <div class="box box-primary">
@@ -110,11 +160,17 @@
                                     <th class="col-lg-4">
                                         Concepto
                                     </th>
-                                    <th class="col-lg-4">
-                                        Monto
-                                    </th>
-                                    <th class="col-lg-4">
+                                    <th class="col-lg-2">
                                         Movimiento
+                                    </th>
+                                    <th class="col-lg-2">
+                                        Ingreso
+                                    </th>
+                                    <th class="col-lg-2">
+                                        Egreso
+                                    </th>
+                                    <th class="col-lg-2">
+                                        Saldo
                                     </th>
                                 </tr>
                             </thead>
@@ -136,11 +192,17 @@
                                             <th class="col-lg-4">
                                                 @item.Concepto
                                             </th>
-                                            <th class="col-lg-4">
-                                                @String.Format("{0:C}", item.Monto)
-                                            </th>
-                                            <th class="col-lg-4">
+                                            <th class="col-lg-2">
                                                 @item.Movimiento
+                                            </th>
+                                            <th class="col-lg-2">
+                                                @String.Format("{0:C}", item.Ingreso)
+                                            </th>
+                                            <th class="col-lg-2">
+                                                @String.Format("{0:C}", item.Egreso)
+                                            </th>
+                                            <th class="col-lg-2">
+                                                @String.Format("{0:C}", item.Saldo)
                                             </th>
                                         </tr>
                                     </tbody>

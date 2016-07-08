@@ -9,7 +9,6 @@
     int IndexNick = 0;
     string NewNick = "";
 
-    int Diferencia = 0;
 }
 @if (Request.IsAuthenticated)
 {
@@ -70,16 +69,19 @@
                                                     @Html.DisplayNameFor(model => model.Inicial)
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.Fecha_Cierre)
+                                                    @Html.DisplayNameFor(model => model.Entrada)
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.Cierre)
+                                                    @Html.DisplayNameFor(model => model.Salida)
                                                 </th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.Operaciones)
                                                 </th>
                                                 <th>
-                                                    Diferencia
+                                                    @Html.DisplayNameFor(model => model.Fecha_Cierre)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Cierre)
                                                 </th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.Usuario)
@@ -113,31 +115,19 @@
                                                         @String.Format("{0:C}", item.Inicial)
                                                     </td>
                                                     <td>
-                                                       @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Cierre)
+                                                        @String.Format("{0:C}", item.Entrada)
                                                     </td>
                                                     <td>
-                                                        @String.Format("{0:C}", item.Cierre)
+                                                        @String.Format("{0:C}", item.Salida)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Operaciones)
                                                     </td>
                                                     <td>
-                                                        @{
-                                                            if (item.Cierre != null){
-                                                                Diferencia = item.Inicial + (int)item.Cierre;
-                                                            }
-                                                            else
-                                                            {
-                                                                Diferencia = item.Inicial + 0;
-                                                            }
-                                                            
-                                                            if (Diferencia > 0){
-                                                                <span class="label label-success">@String.Format("{0:C}", Diferencia)</span>
-                                                            }
-                                                            else {
-                                                                <span class="label label-danger">@String.Format("{0:C}", Diferencia)</span>
-                                                            }
-                                                        }
+                                                       @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Cierre)
+                                                    </td>
+                                                    <td>
+                                                        @String.Format("{0:C}", item.Cierre)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Usuario)
@@ -179,11 +169,15 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
+            $("input#Inicial").on('keyup click focus change  blur', function () {
+                var cierre = $("input#Inicial").val();
+                $("input#Cierre").val(cierre);
+                $("input#Entrada").val(cierre);
+            });
                 $('#Fecha_Apertura').attr("readonly", true);
                 $('#Fecha_Cierre').attr("readonly", true);
                 $('#Cierre').attr("readonly", true);
                 $('#Operaciones').attr("readonly", true);
-                $('#Cierre').attr("readonly", true);
 
                 $("#Estado").attr('readonly', true);
                 $("#Estado").prop('disabled', true);
@@ -272,8 +266,24 @@
                         <div class="form-group hidden">
                             <label class="control-label col-md-2" for="Cierre">Monto Cierre</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="0" />
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Cierre must be a number." data-val-range="El monto de cierre debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Cierre" name="Cierre" type="number" value="" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Cierre" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-2" for="Cierre">Total Entrada</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Entrada must be a number." data-val-range="El Entrada debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Entrada" name="Entrada" type="number" value="0" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Entrada" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-2" for="Cierre">Total Salida</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Salida must be a number." data-val-range="El Salida debe ser un número entre 1 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" id="Salida" name="Salida" type="number" value="0" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Salida" data-valmsg-replace="true"></span>
                             </div>
                         </div>
 
