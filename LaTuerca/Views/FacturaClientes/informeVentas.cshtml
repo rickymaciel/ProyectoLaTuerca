@@ -1,8 +1,8 @@
-﻿@model IEnumerable<LaTuerca.Models.Caja>
+﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "Informe de Movimientos";
+    ViewBag.Title = "Informe de Ventas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string Nick = "";
@@ -49,20 +49,14 @@
                                 <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
                             </a>
                         }
-                        <a href="@Url.Action("Index", "Cajas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Cajas">
-                            <i class="fa fa-inbox"></i>
-                        </a>
-                        <a href="@Url.Action("Index", "Cajas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Cajas">
-                            <i class="fa fa-inbox"></i> <b>Ver Cajas</b>
-                        </a>
                         
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class='box-body '>
                         <div class="row">
                             <div class="col-lg-12">
-                                <h4 class="col-lg-2 control-label">Movimiento de Cajas</h4>
-                                @using (Html.BeginForm(new { Action = "MovimientoCaja" }))
+                                <h4 class="col-lg-2 control-label">Resumen de Ventas</h4>
+                                @using (Html.BeginForm(new { Action = "ResumenVentas" }))
                                 {
                                     @Html.AntiForgeryToken()
     <div class="form-horizontal ">
@@ -89,60 +83,10 @@
             </div>
         </div>
         
-        <button type="submit" class="btn btn-default enviar col-lg-1 pull-right" id="informe" formtarget="_blank" title="Generar informe de movimientos" data-loading-text="<i class='ion-load-c fa-spin'></i> Generando">
+        <button type="submit" class="btn btn-default enviar col-lg-1 pull-right" id="informe" formtarget="_blank" title="Generar resumen de ventas" data-loading-text="<i class='ion-load-c fa-spin'></i> Generando">
                                             <i class="fa fa-filter"></i> Generar
                                         </button>
     </div>
-                                }
-
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h4 class="col-lg-2 control-label">Por usuario</h4>
-                                @using (Html.BeginForm(new { Action = "MovimientoUsuario" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-horizontal">
-                                        <div class="form-group col-lg-3">
-                                            <div class="col-lg-12">
-                                                <div class='input-group' id=''>
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-user"></span>
-                                                    </span>
-                                                    @Html.DropDownList("Usuarios", null, htmlAttributes: new { @class = "form-control" })
-                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Usuarios" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-lg-3">
-                                            <div class="col-lg-12">
-                                                <div class='input-group date' id=''>
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-calendar"></span>
-                                                    </span>
-                                                    <input class="form-control text-box single-line from" placeholder="Desde" data-val="false" required data-val-date="The field Desde  must be a date." data-val-required="La Fecha de Apertura es requerida" id="desde" name="from" type="datetime" />
-                                                    <span class="field-validation-valid text-danger" data-valmsg-for="from" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-lg-3">
-                                            <div class="col-lg-12">
-                                                <div class='input-group date' id=''>
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-calendar"></span>
-                                                    </span>
-                                                    <input class="form-control text-box single-line to" placeholder="Hasta" data-val="false" required data-val-date="The field Hasta  must be a date." data-val-required="La Fecha de Apertura es requerida" id="hasta" name="to" type="datetime" />
-                                                    <span class="field-validation-valid text-danger" data-valmsg-for="to" data-valmsg-replace="true"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-default col-lg-1 pull-right enviar" id="informeUsuario" formtarget="_blank" title="Generar informe de movimientos" data-loading-text="<i class='ion-load-c fa-spin'></i> Generando">
-                                            <i class="fa fa-filter"></i> Generar
-                                        </button>
-                                    </div>
                                 }
 
                             </div>
@@ -156,7 +100,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
-            $('#informe, #informeUsuario').on('click', function () {
+            $('#informe').on('click', function () {
                 var $this = $(this);
                 $this.button('loading');
                 setTimeout(function () {

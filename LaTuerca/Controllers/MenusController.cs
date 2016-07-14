@@ -46,12 +46,13 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ParentId,Name,Description,Action,Controller")] Menu menu)
+        public ActionResult Create([Bind(Include = "Id,ParentId,Name,Description,Action,Controller,Active")] Menu menu)
         {
             if (ModelState.IsValid)
             {
                 db.Menus.Add(menu);
                 db.SaveChanges();
+                TempData["notice"] = "El Menu " + menu.Name +" fue creado correctamente";
                 return RedirectToAction("Index");
             }
 
@@ -78,12 +79,13 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ParentId,Name,Description,Action,Controller")] Menu menu)
+        public ActionResult Edit([Bind(Include = "Id,ParentId,Name,Description,Action,Controller,Active")] Menu menu)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(menu).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["notice"] = "El Menu " + menu.Name + " fue modificado correctamente";
                 return RedirectToAction("Index");
             }
             return View(menu);
@@ -112,19 +114,21 @@ namespace LaTuerca.Controllers
             Menu menu = db.Menus.Find(id);
             db.Menus.Remove(menu);
             db.SaveChanges();
+            TempData["notice"] = "El Menu " + menu.Name + " fue eliminado correctamente";
             return RedirectToAction("Index");
         }
 
         [ChildActionOnly]
         public ActionResult MainMenu()
         {
-            List<Menu> menuItems = db.Menus.Where(b => b.ParentId == 0).ToList();
+            List<Menu> menuItems = db.Menus.Where(b => b.ParentId == 0).Where(b => b.Active == true).ToList();
 
             //Get the menuItems collection from somewhere
             if (menuItems != null || menuItems.Count > 0)
             {
                 return View(menuItems);
             }
+            TempData["notice"] = "Listado de menús vacíos";
             return View();
         }
         protected override void Dispose(bool disposing)

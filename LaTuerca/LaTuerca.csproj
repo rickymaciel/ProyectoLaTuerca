@@ -598,6 +598,8 @@
     <Content Include="Views\Cajas\ReporteCaja.cshtml" />
     <Content Include="Views\Cajas\ReporteMovimientoCaja.cshtml" />
     <Content Include="Views\Shared\_PdfLayout.cshtml" />
+    <Content Include="Views\FacturaClientes\informeVentas.cshtml" />
+    <Content Include="Views\FacturaClientes\ResumenVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

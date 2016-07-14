@@ -1,0 +1,128 @@
+﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
+@using Microsoft.AspNet.Identity
+
+@{
+
+    string Nick = "";
+    int IndexNick = 0;
+    string NewNick = "";
+}
+
+@if (Request.IsAuthenticated)
+{
+    if (User.Identity.GetUserName() != "")
+    {
+        Nick = User.Identity.GetUserName();
+        IndexNick = Nick.IndexOf("@");
+
+        NewNick = Nick.Substring(0, IndexNick);
+    }
+}
+
+
+@{
+    ViewBag.Title = "Resumen de Ventas";
+    ViewBag.Usuario = NewNick;
+    Layout = "~/Views/Shared/_PdfLayout.cshtml";
+    var monto = 0;
+}
+
+<paragraph style="font-family:Helvetica;font-size:18px;font-style:italic;">
+    <chunk red="255" green="0" blue="0">@ViewBag.Title</chunk>
+</paragraph>
+<paragraph style="font-family:Helvetica;font-size:9px;">
+    <chunk style="font-family:Helvetica;font-weight:bold;">Fecha de reporte: </chunk>
+    <chunk style="font-family:Helvetica;">@DateTime.Now.ToString("MM/dd/yyyy")</chunk>
+</paragraph>
+<paragraph style="font-family:Helvetica;font-size:9px;">
+    <chunk style="font-family:Helvetica;font-weight:bold;">Hora de reporte: </chunk>
+    <chunk style="font-family:Helvetica;">@DateTime.Now.ToString("HH:mm:ss")</chunk>
+</paragraph>
+<paragraph style="font-family:Helvetica;font-size:9px;">
+    <chunk style="font-family:Helvetica;font-weight:bold;">Usuario: </chunk>
+    <chunk style="font-family:Helvetica;">@ViewBag.Usuario</chunk>
+</paragraph>
+
+
+
+<table columns="4" cellpadding="1" width="100%" align="Center" cellspacing="1" widths="20,25,30,25" borderwidth="1" left="true" right="true" top="true" bottom="true" red="0" green="20" blue="100">
+    <row>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    Fecha
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    Numero de Factura
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    Cliente
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    Monto
+                </chunk>
+            </phrase>
+        </cell>
+    </row>
+    @foreach (var item in Model)
+    {
+        monto += item.TotalPagado;
+        <row>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.Fecha)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="left">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @item.NumeroFactura
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @item.Cliente.RazonSocial
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Right" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Right">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:C}", item.TotalPagado)
+                    </chunk>
+                </phrase>
+            </cell>
+        </row>
+    }
+<row>
+
+    <cell borderwidth="0.5" left="false" right="false" top="false" bottom="false" horizontalalign="Right" verticalalign="Center" colspan="3" rowspan="3" leading="18.0">
+        <paragraph leading="18.0" font="unknown" align="right">
+            Total:
+        </paragraph>
+    </cell>
+    <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Right" verticalalign="Center" rowspan="3" leading="18.0">
+        <paragraph leading="18.0" font="unknown" align="right">
+            <paragraph style="font-family:Helvetica;font-size:10px;font-style:italic;">
+                <chunk red="255" green="0" blue="0">@String.Format("{0:C}", monto)</chunk>
+            </paragraph>
+        </paragraph>
+    </cell>
+</row>
+</table>

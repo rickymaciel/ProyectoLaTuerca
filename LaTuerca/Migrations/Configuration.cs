@@ -24,7 +24,8 @@ namespace LaTuerca.Migrations
                   Name = "Administrador",
                   Description = "Modulo Administrador",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -33,7 +34,8 @@ namespace LaTuerca.Migrations
                   Name = "Compras",
                   Description = "Modulo Compras",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -42,7 +44,8 @@ namespace LaTuerca.Migrations
                   Name = "Informes",
                   Description = "Modulo Informes",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -51,7 +54,8 @@ namespace LaTuerca.Migrations
                   Name = "Ventas",
                   Description = "Modulo Ventas",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -60,7 +64,8 @@ namespace LaTuerca.Migrations
                   Name = "Stock",
                   Description = "Stock",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -69,7 +74,8 @@ namespace LaTuerca.Migrations
                   Name = "Caja",
                   Description = "Caja",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -78,7 +84,8 @@ namespace LaTuerca.Migrations
                   Name = "Bancos",
                   Description = "Bancos",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -87,7 +94,8 @@ namespace LaTuerca.Migrations
                   Name = "Configuración",
                   Description = "Configuraciones del sistema",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -96,7 +104,8 @@ namespace LaTuerca.Migrations
                   Name = "Menús",
                   Description = "Menús",
                   Action = "Index",
-                  Controller = "Menus"
+                  Controller = "Menus",
+                  Active = true
               },
               new Models.Menu
               {
@@ -105,7 +114,8 @@ namespace LaTuerca.Migrations
                   Name = "Empresas",
                   Description = "Empresas",
                   Action = "Index",
-                  Controller = "Empresas"
+                  Controller = "Empresas",
+                  Active = true
               },
               new Models.Menu
               {
@@ -114,7 +124,8 @@ namespace LaTuerca.Migrations
                   Name = "Proveedores",
                   Description = "Proveedores",
                   Action = "Index",
-                  Controller = "Proveedores"
+                  Controller = "Proveedores",
+                  Active = true
               },
               new Models.Menu
               {
@@ -123,7 +134,8 @@ namespace LaTuerca.Migrations
                   Name = "Facturas",
                   Description = "Facturas Proveedor",
                   Action = "Facturados",
-                  Controller = "FacturaProveedors"
+                  Controller = "FacturaProveedors",
+                  Active = true
               },
               new Models.Menu
               {
@@ -132,7 +144,8 @@ namespace LaTuerca.Migrations
                   Name = "Mantenimiento",
                   Description = "Mantenimiento de Marcas | Categorias | Modelos",
                   Action = "",
-                  Controller = ""
+                  Controller = "",
+                  Active = true
               },
               new Models.Menu
               {
@@ -141,7 +154,8 @@ namespace LaTuerca.Migrations
                   Name = "Marcas",
                   Description = "Mantenimiento de Marcas",
                   Action = "Index",
-                  Controller = "Marcas"
+                  Controller = "Marcas",
+                  Active = true
               },
               new Models.Menu
               {
@@ -150,7 +164,8 @@ namespace LaTuerca.Migrations
                   Name = "Modelos",
                   Description = "Mantenimiento de Modelos",
                   Action = "Index",
-                  Controller = "Modelos"
+                  Controller = "Modelos",
+                  Active = true
               },
               new Models.Menu
               {
@@ -159,7 +174,8 @@ namespace LaTuerca.Migrations
                   Name = "Categorias",
                   Description = "Mantenimiento de Categorias",
                   Action = "Index",
-                  Controller = "Categorias"
+                  Controller = "Categorias",
+                  Active = true
               },
               new Models.Menu
               {
@@ -168,7 +184,8 @@ namespace LaTuerca.Migrations
                   Name = "Repuestos",
                   Description = "Repuestos",
                   Action = "Index",
-                  Controller = "Repuestos"
+                  Controller = "Repuestos",
+                  Active = true
               },
               new Models.Menu
               {
@@ -177,7 +194,8 @@ namespace LaTuerca.Migrations
                   Name = "Presupuesto Venta",
                   Description = "Presupuestos Cliente",
                   Action = "Presupuestos",
-                  Controller = "FacturaClientes"
+                  Controller = "FacturaClientes",
+                  Active = true
               },
               new Models.Menu
               {
@@ -186,7 +204,8 @@ namespace LaTuerca.Migrations
                   Name = "Factura Venta",
                   Description = "Facturas Cliente",
                   Action = "Facturados",
-                  Controller = "FacturaClientes"
+                  Controller = "FacturaClientes",
+                  Active = true
               },
               new Models.Menu
               {
@@ -195,7 +214,8 @@ namespace LaTuerca.Migrations
                   Name = "Clientes",
                   Description = "Clientes",
                   Action = "Index",
-                  Controller = "Clientes"
+                  Controller = "Clientes",
+                  Active = true
               },
               new Models.Menu
               {
@@ -204,7 +224,8 @@ namespace LaTuerca.Migrations
                   Name = "Bancos",
                   Description = "Bancos",
                   Action = "Index",
-                  Controller = "Bancos"
+                  Controller = "Bancos",
+                  Active = true
               },
               new Models.Menu
               {
@@ -213,7 +234,8 @@ namespace LaTuerca.Migrations
                   Name = "Cheques",
                   Description = "Cheques",
                   Action = "Index",
-                  Controller = "Cheques"
+                  Controller = "Cheques",
+                  Active = true
               },
               new Models.Menu
               {
@@ -222,7 +244,8 @@ namespace LaTuerca.Migrations
                   Name = "Caja",
                   Description = "Modulo Caja",
                   Action = "Index",
-                  Controller = "Cajas"
+                  Controller = "Cajas",
+                  Active = true
               },
               new Models.Menu
               {
@@ -231,7 +254,8 @@ namespace LaTuerca.Migrations
                   Name = "Informe de Movimientos",
                   Description = "Informe de Movimientos de Caja",
                   Action = "InformeMovimientos",
-                  Controller = "Cajas"
+                  Controller = "Cajas",
+                  Active = true
               }
             );
 

@@ -4,56 +4,55 @@
     ViewBag.Title = "Eliminar";
 }
 
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+<div class="pad margin" id="">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="pull-">
+                    <button type="submit" class="btn btn-primary btn-block btn hidden-lg tip" title="Eliminar">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <button type="submit" class="btn btn-danger btn btn-block visible-lg tip" title="Eliminar">
+                        <i class="fa fa-trash"></i> <b>  ¿Está seguro de que desea eliminar permanentemente?</b>
+                    </button>
+                </div>
+            }
+</div>
+
 <section class="content">
     <div class="row">
-        @if (!Html.ViewData.ModelState.IsValid)
-        {
-            <div class="col-lg-12" id="mensaje">
-                <div class="callout callout-success">
-                    @Html.ValidationSummary()
-                </div>
-            </div>
-        }
-        <div class="col-lg-2">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Submenú</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class='box-header with-border'>
+                    <div class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                        <span class='description'>@ViewBag.Title</span>
+
+                    </div>
+                    <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Index", "Empresas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Empresas">
+                            <i class="fa fa-building"></i>
+                        </a>
+                        <a href="@Url.Action("Index", "Empresas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Empresas">
+                            <i class="fa fa-building"></i> <b>Ver Empresas</b>
+                        </a>
+                        <a href="@Url.Action("Create", "Empresas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Empresa">
+                            <i class="fa fa-plus-sign2"></i>
+                        </a>
+                        <a href="@Url.Action("Create", "Empresas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Empresa">
+                            <i class="fa fa-plus-sign2"></i> <b>Nueva Empresa</b>
+                        </a>
                     </div>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li>
-                            <a href="@Url.Action("Create", "Menus")">
-                                <i class="im-plus"></i> Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Menus")">
-                                <i class="im-menu2"></i> Ver todo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Edit", "Menus", new { id = Model.Id })">
-                                <i class="im-pencil2"></i> Modificar
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /. box -->
-        </div>
-        <!-- left column -->
-        <div class="col-lg-10">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <i class="im-menu"></i> @ViewBag.Title
-                    </h3>
-                </div><!-- /.box-header -->
                 <div class="box-body">
                     <dl class="dl-horizontal">
                         <dt>
@@ -143,18 +142,7 @@
                         <dd>
                             @Html.DisplayFor(model => model.Estado)
                         </dd>
-
                     </dl>
-
-                </div>
-                <div class="box-footer">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-social btn-danger pull-right">
-                            <i class="im-close"></i> Eliminar Empresa
-                        </button>
-                    }
                 </div>
             </div>
         </div>

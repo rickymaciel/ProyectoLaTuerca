@@ -4,113 +4,89 @@
     ViewBag.Title = "Modificar";
 }
 
-<section class="content">
-    <div class="row">
-
-
-
-        @if (!Html.ViewData.ModelState.IsValid)
-        {
-            <div class="col-lg-12" id="mensaje">
-                <div class="callout callout-success">
-                    @Html.ValidationSummary()
-                </div>
-            </div>
-        }
-        <div class="col-lg-2">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Submenú</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li>
-                            <a href="@Url.Action("Create", "Proveedores")">
-                                <i class="im-plus"></i> Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Proveedores")">
-                                <i class="im-menu2"></i> Ver todo
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /. box -->
-        </div>
-        <!-- left column -->
-        <div class="col-lg-10">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <i class="im-menu"></i> @ViewBag.Title
-                    </h3>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <form role="form" class="form-horizontal">
-                        <div class="box-body">
-                            @Html.HiddenFor(model => model.Id)
-                            <div class="form-group col-lg-12">
-                                @Html.LabelFor(model => model.RazonSocial, htmlAttributes: new { @class = "control-label" })
-
-                                @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
-
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                @Html.LabelFor(model => model.Ruc, htmlAttributes: new { @class = "control-label" })
-                               
-                                    @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
-                               
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label" })
-
-                                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
-
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label" })
-
-                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                @Html.LabelFor(model => model.Celular, htmlAttributes: new { @class = "control-label" })
-
-                                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
-
-                            </div>
-
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-social btn-success pull-right">
-                                    <i class="im-checkbox-checked"></i> Guardar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                }
-            </div><!-- /.box -->
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
         </div>
     </div>
+}
+<section class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <span class='description'>@ViewBag.Title</span>
+                        </div>
+                        <div class='box-tools btn-group'>
+                            <a href="@Url.Action("Create", "Proveedores")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nuevo Proveedor">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
+                            <a href="@Url.Action("Create", "Proveedores")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nuevo Proveedor">
+                                <i class="fa fa-user-plus"></i> <b>Nuevo Proveedor</b>
+                            </a>
+                            <button href="" id="" class="btn btn-success btn-sm tip pull-right visible-lg" title="Guardar" type="submit" name="" value="Guardar">
+                                <i class="br-floppy"></i>  <b>Guardar</b>
+                            </button>
+                            <button href="" id="" class="btn btn-success hidden-lg btn-sm tip pagar pull-right" title="Guardar" type="submit" name="" value="Guardar">
+                                <i class="br-floppy"></i>
+                            </button>
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body'>
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-group col-lg-12">
+                            @Html.LabelFor(model => model.RazonSocial, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            @Html.LabelFor(model => model.Ruc, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Ruc, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ruc, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            @Html.LabelFor(model => model.Celular, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </section>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

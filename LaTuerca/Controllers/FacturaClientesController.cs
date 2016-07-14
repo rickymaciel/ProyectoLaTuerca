@@ -23,24 +23,24 @@ namespace LaTuerca.Controllers
             return View(facturaClientes.ToList());
         }
 
-
-        public ActionResult Pdf()
+        public ActionResult InformeVentas()
         {
-            List<FacturaCliente> customers = new List<FacturaCliente>();
-
-            for (int i = 1; i <= 10; i++)
-            {
-                FacturaCliente customer = new FacturaCliente
-                {
-                    Id = i,
-                    NumeroFactura = i,
-                    TotalPagado = i*i
-                };
-                customers.Add(customer);
-            }
-
-            return new RazorPDF.PdfResult(customers, "Pdf");
+            return View(db.FacturaClientes.ToList().Where(w => w.Pagado == true && w.TotalPagado > 0));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResumenVentas(DateTime from, DateTime to)
+        {
+            var fromDate = from;
+            var toDate = to;
+
+            var resumen = db.FacturaClientes.Where(x => x.Pagado == true).Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+
+            return new PdfResult(resumen, "ResumenVentas");
+        }
+
+
         public ActionResult PrintFactura(int? id)
         {
             if (id == null)
