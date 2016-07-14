@@ -13,6 +13,7 @@
 html,
 body {
   min-height: 100%;
+  background-image: url('img/background.jpg') no-repeat fixed;
 }
 .layout-boxed html,
 .layout-boxed body {
@@ -20,6 +21,7 @@ body {
 }
 body {
   -webkit-font-smoothing: antialiased;
+  background-image: url('img/background.jpg') no-repeat fixed;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -48,7 +50,7 @@ body {
   position: relative;
 }
 .layout-boxed {
-  background: url('../img/boxed-bg.jpg') repeat fixed;
+  background: url('img/boxed-bg.jpg') repeat fixed;
 }
 /*
  * Content Wrapper - contains the main content
@@ -96,7 +98,11 @@ body {
 .content-wrapper,
 .right-side {
   min-height: 100%;
-  background-color: #ecf0f5;
+  /*background-color: rgba(236, 240, 245, 0.85);
+  background-color: #ecf0f5;*/
+  background-image: url('img/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   z-index: 800;
 }
 .main-footer {
@@ -1527,7 +1533,7 @@ a:focus {
 .box {
   position: relative;
   border-radius: 3px;
-  background: #ffffff;
+  background: rgba(254, 255, 255, 0.8);
   border-top: 3px solid #d2d6de;
   margin-bottom: 20px;
   width: 100%;

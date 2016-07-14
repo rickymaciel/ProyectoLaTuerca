@@ -1,0 +1,190 @@
+﻿@model IEnumerable<LaTuerca.Models.Caja>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Informe de Movimientos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Nick = "";
+    int IndexNick = 0;
+    string NewNick = "";
+}
+
+@if (Request.IsAuthenticated)
+{
+    if (User.Identity.GetUserName() != "")
+    {
+        Nick = User.Identity.GetUserName();
+        IndexNick = Nick.IndexOf("@");
+
+        NewNick = Nick.Substring(0, IndexNick);
+    }
+}
+
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+<section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <span class='description'>@ViewBag.Title</span>
+                        </div>
+                        <div class='box-tools btn-group'>
+                        @if (TempData["Fecha_Apertura"] != null)
+                        { 
+                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i>
+                            </a>
+                            <a href="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                                <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
+                            </a>
+                        }
+                        
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body '>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="col-lg-2 control-label">Movimiento de Cajas</h4>
+                                @using (Html.BeginForm(new { Action = "MovimientoCaja" }))
+                                {
+                                    @Html.AntiForgeryToken()
+    <div class="form-horizontal ">
+        <div class="form-group col-lg-4">
+            <div class="col-lg-12">
+                <div class='input-group date' id=''>
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    <input class="form-control text-box single-line from" placeholder="Desde" data-val="false" required data-val-date="The field Desde  must be a date." data-val-required="La Fecha de Apertura es requerida" id="from" name="from" type="datetime" />
+                    <span class="field-validation-valid text-danger" data-valmsg-for="from" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-lg-4">
+            <div class="col-lg-12">
+                <div class='input-group date' id=''>
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    <input class="form-control text-box single-line to" placeholder="Hasta" data-val="false" required data-val-date="The field Hasta  must be a date." data-val-required="La Fecha de Apertura es requerida" id="to" name="to" type="datetime" />
+                    <span class="field-validation-valid text-danger" data-valmsg-for="to" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-default enviar col-lg-1 pull-right" id="informe" formtarget="_blank" title="Generar informe de movimientos" data-loading-text="<i class='ion-load-c fa-spin'></i> Generando">
+                                            <i class="fa fa-filter"></i> Generar
+                                        </button>
+    </div>
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="col-lg-2 control-label">Por usuario</h4>
+                                @using (Html.BeginForm(new { Action = "MovimientoUsuario" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-horizontal">
+                                        <div class="form-group col-lg-3">
+                                            <div class="col-lg-12">
+                                                <div class='input-group' id=''>
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-user"></span>
+                                                    </span>
+                                                    @Html.DropDownList("Usuarios", null, htmlAttributes: new { @class = "form-control" })
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Usuarios" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <div class="col-lg-12">
+                                                <div class='input-group date' id=''>
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                    <input class="form-control text-box single-line from" placeholder="Desde" data-val="false" required data-val-date="The field Desde  must be a date." data-val-required="La Fecha de Apertura es requerida" id="desde" name="from" type="datetime" />
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="from" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <div class="col-lg-12">
+                                                <div class='input-group date' id=''>
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                    <input class="form-control text-box single-line to" placeholder="Hasta" data-val="false" required data-val-date="The field Hasta  must be a date." data-val-required="La Fecha de Apertura es requerida" id="hasta" name="to" type="datetime" />
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="to" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-default col-lg-1 pull-right enviar" id="informeUsuario" formtarget="_blank" title="Generar informe de movimientos" data-loading-text="<i class='ion-load-c fa-spin'></i> Generando">
+                                            <i class="fa fa-filter"></i> Generar
+                                        </button>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#informe, #informeUsuario').on('click', function () {
+                var $this = $(this);
+                $this.button('loading');
+                setTimeout(function () {
+                    $this.button('reset');
+                }, 4000);
+            });
+            
+            $('#from, #desde').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                },
+                locale: 'es',
+                format: 'DD/MM/YYYY HH:mm:ss',
+            });
+            $('#to, #hasta').datetimepicker({
+                useCurrent: false,
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                },
+                locale: 'es',
+                format: 'DD/MM/YYYY HH:mm:ss',
+            });
+            $("#from ,#desde").on("dp.change", function (e) {
+                $('#to, #hasta').data("DateTimePicker").minDate(e.date);
+            });
+            $("#to, #hasta").on("dp.change", function (e) {
+                $('#from, #desde').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+}

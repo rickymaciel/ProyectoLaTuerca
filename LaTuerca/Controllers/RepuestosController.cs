@@ -39,13 +39,12 @@ namespace LaTuerca.Controllers
         // GET: Repuestos/Create
         public ActionResult Create()
         {
-            var repuesto = new Repuesto();
-            var modelos = db.Modeloes.ToList();
-            var categorias = db.Categorias.ToList();
-            var proveedores = db.Proveedors.ToList();
-            var repuestoModelView = new RepuestoViewModel(repuesto, modelos, categorias, proveedores);
+            Repuesto repuesto = new Repuesto();
+            ViewBag.ModeloId = new SelectList(db.Modeloes, "Id", "NombreModelo");
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial");
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nombre");
 
-            return View(repuestoModelView);
+            return View(repuesto);
         }
 
         // POST: Repuestos/Create
@@ -53,38 +52,22 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Repuesto repuesto, int Modelo, int Categoria, int Proveedor)
+        public ActionResult Create(Repuesto repuesto)
         {
             if (ModelState.IsValid)
             {
-                var proveedor = db.Proveedors.Single(p => p.Id == Proveedor);
-                var modelo = db.Modeloes.Single(p => p.Id == Modelo);
-                var categoria = db.Categorias.Single(p => p.Id == Categoria);
-
-
-                if (repuesto != null && modelo != null && categoria != null && proveedor != null)
-                {
-                    repuesto.ModeloId = modelo.Id;
-                    repuesto.ProveedorId = proveedor.Id;
-                    repuesto.CategoriaId = categoria.Id;
-                    db.Repuestoes.Add(repuesto);
-                    db.SaveChanges();
-                    //string url = Url.Action("Index", "Repuestos", new { m = "ok" });
-                    //return Json(new { success = true, url = url });
-                    TempData["notice"] = "El producto ha sido guardado!";
-                    return RedirectToAction("Create", "Repuestos");
-                }
-                else
-                {
-                    TempData["notice"] = "Ocurrio un error1!";
-                    return RedirectToAction("Create", "Repuestos");
-                }
-
-
+                ViewBag.ModeloId = new SelectList(db.Modeloes, "Id", "NombreModelo", repuesto.ModeloId);
+                ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", repuesto.ProveedorId);
+                ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nombre", repuesto.CategoriaId);
+                
+                db.Repuestoes.Add(repuesto);
+                db.SaveChanges();
+                TempData["notice"] = "El producto ha sido guardado!";
+                return RedirectToAction("Create", "Repuestos");
             }
             else
             {
-                TempData["notice"] = "Ocurrio un error2!";
+                TempData["notice"] = "Ocurrio un error!";
                 return RedirectToAction("Create", "Repuestos");
             }
 
@@ -98,15 +81,15 @@ namespace LaTuerca.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Repuesto repuesto = db.Repuestoes.Find(id);
-            var modelos = db.Modeloes.ToList();
-            var proveedores = db.Proveedors.ToList();
-            var categorias = db.Categorias.ToList();
-            var repuestoModelView = new RepuestoViewModel(repuesto, modelos, categorias, proveedores);
+            var repuestoModelView = new RepuestoViewModel(repuesto);
             if (repuesto == null)
             {
                 return HttpNotFound();
             }
-            return View(repuestoModelView);
+            ViewBag.ModeloId = new SelectList(db.Modeloes, "Id", "NombreModelo", repuesto.ModeloId);
+            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", repuesto.ProveedorId);
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nombre", repuesto.CategoriaId);
+            return View(repuesto);
         }
 
         // POST: Repuestos/Edit/5
@@ -114,18 +97,25 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Repuesto repuesto, int Proveedor, int Modelo, int Categoria)
+        public ActionResult Edit(Repuesto repuesto)
         {
             if (ModelState.IsValid)
             {
-                var modelo = db.Modeloes.Single(m => m.Id == Modelo);
-                var proveedor = db.Proveedors.Single(p => p.Id == Proveedor);
-                var categoria = db.Categorias.Single(p => p.Id == Categoria);
-                repuesto.ModeloId = modelo.Id;
-                repuesto.ProveedorId = proveedor.Id;
-                repuesto.CategoriaId = categoria.Id;
-                db.Entry(repuesto).State = EntityState.Modified;
+                Repuesto r = db.Repuestoes.Find(repuesto.Id);
+                r.ModeloId = repuesto.ModeloId;
+                r.ProveedorId = repuesto.ProveedorId;
+                r.CategoriaId = repuesto.CategoriaId;
+                r.Nombre = repuesto.Nombre;
+                r.PrecioCosto = repuesto.PrecioCosto;
+                r.PrecioVenta1 = repuesto.PrecioVenta1;
+                r.PrecioVenta2 = repuesto.PrecioVenta2;
+                r.PrecioVenta3 = repuesto.PrecioVenta3;
+                r.Stock = repuesto.Stock;
+                r.StockMaximo = repuesto.StockMaximo;
+                r.StockMinimo = repuesto.StockMinimo;
+                db.Entry(r).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["notice"] = "El producto ha sido modificado!";
                 return RedirectToAction("Index");
             }
             return View(repuesto);
@@ -154,6 +144,7 @@ namespace LaTuerca.Controllers
             Repuesto repuesto = db.Repuestoes.Find(id);
             db.Repuestoes.Remove(repuesto);
             db.SaveChanges();
+            TempData["notice"] = "El producto " + repuesto.Nombre + " ha sido eliminado!";
             return RedirectToAction("Index");
         }
 

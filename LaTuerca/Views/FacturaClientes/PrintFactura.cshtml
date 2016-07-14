@@ -1,0 +1,169 @@
+﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
+
+@{
+    ViewBag.Title = "Factura";
+    Layout = "~/Views/Shared/_PdfLayout.cshtml";
+}
+
+
+<paragraph style="font-family:Helvetica;font-size:18px;font-style:italic;">
+    <chunk red="255" green="0" blue="0">@ViewBag.Title</chunk>
+</paragraph>
+<paragraph>
+    <chunk style="font-family:Times;font-weight:bold;">Fecha de reporte: </chunk>
+    <chunk style="font-family:Times;">@DateTime.Now.ToString("MM/dd/yyyy")</chunk>
+</paragraph>
+<paragraph>
+    <chunk style="font-family:Times;font-weight:bold;">Hora de reporte: </chunk>
+    <chunk style="font-family:Times;">@DateTime.Now.ToString("hh:mm tt")</chunk>
+</paragraph>
+
+<table columns="9" cellpadding="1" width="100%" align="Center" cellspacing="1" widths="11.111111;11.111111;11.111111;11.111111;11.111111;11.111111;11.111111;11.111111;11.111111" borderwidth="1.0" left="true" right="true" top="true" bottom="true" red="0" green="0" blue="0">
+
+    <row>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Fecha_Apertura)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Inicial)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Entrada)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Salida)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Operaciones)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Fecha_Cierre)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Cierre)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </chunk>
+            </phrase>
+        </cell>
+        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+            <phrase leading="18.0" font="unknown" align="Center">
+                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </chunk>
+            </phrase>
+        </cell>
+    </row>
+    @foreach (var item in Model)
+    {
+
+        <row>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Apertura)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:C}", item.Inicial)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:C}", item.Entrada)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:C}", item.Salida)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @item.Operaciones
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Cierre)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @String.Format("{0:C}", item.Cierre)
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @item.Usuario
+                    </chunk>
+                </phrase>
+            </cell>
+            <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+                <phrase leading="18.0" font="unknown" align="Center">
+                    <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                        @{
+        var estado = "";
+        if (item.Estado == true)
+        {
+            estado = "Cerrado";
+        }
+        else
+        {
+            estado = "Cerrado";
+        }
+                        }
+                        @estado
+
+                    </chunk>
+                </phrase>
+            </cell>
+        </row>
+    }
+</table>

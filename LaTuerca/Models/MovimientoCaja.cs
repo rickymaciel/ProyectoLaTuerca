@@ -13,6 +13,14 @@ namespace LaTuerca.Models
         [HiddenInput(DisplayValue = true)]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "La Fecha es requerida")]
+        [Display(Name = "Fecha: ")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [Column(TypeName = "DateTime")]
+        public DateTime Fecha { get; set; }
+
+
         [Required(ErrorMessage = "Debe especificar una caja")]
         [Display(Name = "Caja: ")]
         public int CajaId { get; set; }

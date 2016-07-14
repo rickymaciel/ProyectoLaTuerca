@@ -7,6 +7,7 @@
     string Nick = "";
     int IndexNick = 0;
     string NewNick = "";
+    string Name = "";
 }
 @if (Request.IsAuthenticated)
 {
@@ -16,6 +17,7 @@
         IndexNick = Nick.IndexOf("@");
 
         NewNick = Nick.Substring(0, IndexNick);
+        Name = User.Identity.Name;
     }
 }
 <!DOCTYPE html>
@@ -23,7 +25,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mundo Tuerca</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -33,8 +35,9 @@
         <header class="main-header">
             <!-- Logo -->
             <a href="http://localhost:53172/" class="logo">
-                <span class="logo-mini"><b>M</b>T</span>
-                <span class="logo-lg"><b>MUNDO</b>TUERCA</span>
+                <i class="fa-adjust fa-wrench"></i>
+                <span class="logo-l" id="NombreEmpresa"></span>
+                <span class="logo-mini" id="NombreCorto"></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -43,7 +46,7 @@
                 @Html.Partial("_LoginPartial")
             </nav>
         </header>
-    @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated)
         {
             <aside class="main-sidebar">
                 <section class="sidebar">
@@ -54,7 +57,7 @@
                         </div>
                         <div class="pull-left info">
                             <p>@ViewBag.Title</p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                            <a href="#"><i class="fa fa-circle text-success"></i><span class="text-uppercase text-gray">@NewNick</span> </a>
                         </div>
                     </div>
                     <ul class="sidebar-menu">
@@ -69,9 +72,9 @@
         </div>
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 2.3.0
+                <img src="~/Content/img/mu.png" height="30" />
             </div>
-            <strong>Copyright &copy; @DateTime.Now.Year - La Tuerca.</strong> All rights reserved.
+            <strong>Copyright &copy; @DateTime.Now.Year - </strong><strong id="NombreFooter"></strong>.   Todos los derechos reservados.
         </footer>
         <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
@@ -80,50 +83,8 @@
     @RenderSection("scripts", required: false)
     <script>
         $(function () {
-
-            //$("#ProveedorId").val("");
             load_marcas();
             load_clientes();
-            load_proveedores();
-            function load_proveedores() {
-                var RazonSocialProveedor = {
-                    url: "/FacturaProveedors/getProveedores",
-                    getValue: "RazonSocial",
-                    list: {
-                        match: {
-                            enabled: true
-                        },
-                        maxNumberOfElements: 8,
-                        sort: {
-                            enabled: true
-                        },
-                        onSelectItemEvent: function () {
-                            var ProveedorId = $(".RazonSocial").getSelectedItemData().Id;
-                            var RazonSocial = $(".RazonSocial").getSelectedItemData().RazonSocial;
-                            var Ruc = $(".RazonSocial").getSelectedItemData().Ruc;
-                            //var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
-                            var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
-
-                            $("#ProveedorId").val(ProveedorId).trigger("change");
-                            //$("#RazonSocial").val(RazonSocial).trigger("change");
-                            //$("#Ruc").val(Ruc).trigger("change");
-                            //$("#Telefono").val(Telefono).trigger("change");
-                            //$("#Direccion").val(Direccion).trigger("change");
-                            $("#saveInvoiceBtn").removeClass('disabled');
-                            $("#InfoProveedor").val(RazonSocial + ' - R.U.C.: ' + Ruc + ' - Direccion:' + Direccion).trigger("change");
-                            //$("#addRowBtn").removeClass('disabled');
-                        },
-                    },
-                    //theme: "plate-dark",
-                    //theme: "square"
-                    //theme: "funky"
-                    //theme: "round"
-                };
-                $("input#RazonSocial").easyAutocomplete(RazonSocialProveedor);
-                $(".easy-autocomplete-container").addClass("text-danger");
-
-            }
-
             function load_clientes() {
                 var RazonSocialClientes = {
                     url: "/FacturaClientes/getClientes",
@@ -183,69 +144,6 @@
                 $("input.Marca").easyAutocomplete(codigoArticulo);
                 $(".easy-autocomplete-container").addClass("text-danger");
 
-            }
-
-            function load_cli() {
-                $('#RazonSocialCliente').autocomplete({
-                    source: function (request, response) {
-                        $.post('/FacturaClientes/BusquedaCliente', { term: request.term },
-                            function (data) {
-                                var json = [];
-                                if (data) {
-                                    $(data).each(function (i, item) {
-                                        json.push({
-                                            label: item.RazonSocial,
-                                            value: item.RazonSocial,
-                                            ProveedorId: item.Id,
-                                            Documento: item.Documento,
-                                            Telefono: item.Telefono,
-                                            Direccion: item.Direccion
-                                        });
-                                    });
-                                }
-                                return response(json);
-                            }, 'json');
-                    },
-                    delay: 100,
-                    minLength: 1,
-                    select: function (e, data) {
-                        $('#ClienteId').val(data.item.ClienteId);
-                        $('#Documento').val(data.item.Documento);
-                        $('#Telefono').val(data.item.Telefono);
-                        $('#Direccion').val(data.item.Direccion);
-                    }
-                });
-            };
-            function load_pro() {
-                $('#RazonSocial').autocomplete({
-                    source: function (request, response) {
-                        $.post('/FacturaProveedors/BusquedaProveedor', { term: request.term },
-                            function (data) {
-                                var json = [];
-                                if (data) {
-                                    $(data).each(function (i, item) {
-                                        json.push({
-                                            label: item.RazonSocial,
-                                            value: item.RazonSocial,
-                                            ProveedorId: item.Id,
-                                            Ruc: item.Ruc,
-                                            Telefono: item.Telefono,
-                                            Direccion: item.Direccion
-                                        });
-                                    });
-                                }
-                                return response(json);
-                            }, 'json');
-                    },
-                    delay: 100,
-                    minLength: 1,
-                    select: function (e, data) {
-                        $('#ProveedorId').val(data.item.ProveedorId);
-                        $('#Ruc').val(data.item.Ruc);
-                        $('#Telefono').val(data.item.Telefono);
-                        $('#Direccion').val(data.item.Direccion);
-                    }
-                });
             };
 
             var serviceURL = 'http://localhost:53172/Cajas/ObtenerUltimoCajaAbierto';
@@ -268,42 +166,53 @@
                     $("li#openCaja").removeClass("hidden");
                     $("i#idcaja").html(data);
                 }
-            }
+            };
             function errorFunc() {
                 alert('error');
-            }
-            var oTable = $('table.tabledata').DataTable({
-                "bProcessing": true,
-                "sPaginationType": "full_numbers",
-                "paging": true,
-                "iDisplayLength": 10,
-                "bPaginate": true,
-                "bSort": true,
-                "oLanguage": {
-                    "oPaginate": {
-                        "sPrevious": "←",
-                        "sNext": "→",
-                        "sLast": "»",
-                        "sFirst": "«"
-                    },
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                }
+            };
+
+
+            var empresaURL = 'http://localhost:53172/Empresas/getEmpresa';
+
+            $.ajax({
+                type: "POST",
+                url: empresaURL,
+                data: param = "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc2,
+                error: errorFunc2
             });
+
+            function successFunc2(data, status) {
+                $.each(data, function (index) {
+                    var nombre = data[index].Nombre;
+                    var nombrecorto = data[index].NombreCorto;
+                    var Ruc = data[index].Ruc;
+                    var Email = data[index].Email;
+                    var Pais = data[index].Pais;
+                    var Ciudad = data[index].Ciudad;
+                    var Departamento = data[index].Departamento;
+                    var Web = data[index].Web;
+                    var Telefono = data[index].Telefono;
+                    var Direccion = data[index].Direccion;
+                    $("#NombreFooter").append(nombre);
+                    $("#NombreEmpresa").append(nombre);
+                    $("#NombreCorto").append(nombrecorto);
+                    $("#Ruc").append(Ruc);
+                    $("#Email").append(Email);
+                    $("#Pais").append(Pais);
+                    $("#Departamento").append(Departamento);
+                    $("#Web").append(Web);
+                    $("#Ciudad").append(Ciudad);
+                    $("#Telefono").append(Telefono);
+                    $("#Direccion").append(Direccion);
+                })
+            };
+
+            function errorFunc2() {
+                alert('error');
+            };
             var oTable = $('#tablaMenu').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
@@ -367,61 +276,6 @@
             $(".tipR").tooltip({ placement: 'right' });
             $(".tipB").tooltip({ placement: 'bottom' });
             $(".tipL").tooltip({ placement: 'left' });
-            $('#ProveedorI').selectize({
-                labelField: 'model',
-                valueField: 'id',
-                optgroupField: 'make',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                lockOptgroupOrder: true,
-                searchField: ['model'],
-                plugins: ['optgroup_columns'],
-                openOnFocus: true
-            });
-            $('#select-marca').selectize({
-                labelField: 'model',
-                valueField: 'id',
-                optgroupField: 'make',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                lockOptgroupOrder: true,
-                searchField: ['model'],
-                plugins: ['optgroup_columns'],
-                openOnFocus: true
-            });
-            $('#select-modelo').selectize({
-                labelField: 'model',
-                valueField: 'id',
-                optgroupField: 'make',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                lockOptgroupOrder: true,
-                searchField: ['model'],
-                plugins: ['optgroup_columns'],
-                openOnFocus: true
-            });
-            $('#select-categoria').selectize({
-                labelField: 'model',
-                valueField: 'id',
-                optgroupField: 'make',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                lockOptgroupOrder: true,
-                searchField: ['model'],
-                plugins: ['optgroup_columns'],
-                openOnFocus: true
-            });
-            $('#select-proveedor').selectize({
-                labelField: 'model',
-                valueField: 'id',
-                optgroupField: 'make',
-                optgroupLabelField: 'name',
-                optgroupValueField: 'id',
-                lockOptgroupOrder: true,
-                searchField: ['model'],
-                plugins: ['optgroup_columns'],
-                openOnFocus: true
-            });
             //$('#preciocosto').val('');
             $("#nombre").removeClass('has-error');
             $("#guardar").click(function () {

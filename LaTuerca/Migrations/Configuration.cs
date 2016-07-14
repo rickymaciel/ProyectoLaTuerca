@@ -223,6 +223,15 @@ namespace LaTuerca.Migrations
                   Description = "Modulo Caja",
                   Action = "Index",
                   Controller = "Cajas"
+              },
+              new Models.Menu
+              {
+                  //24
+                  ParentId = 3,
+                  Name = "Informe de Movimientos",
+                  Description = "Informe de Movimientos de Caja",
+                  Action = "InformeMovimientos",
+                  Controller = "Cajas"
               }
             );
 
@@ -386,6 +395,24 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 540000,
                     PrecioVenta2 = 607500,
                     PrecioVenta3 = 630000,
+                }
+            );
+            context.Users.AddOrUpdate(
+                p => p.Email,
+                new Models.ApplicationUser
+                {
+                    Id = "3dfd1c4e-2ba1-47c8-83a8-1ee3019c6b30",
+                    Email = "rmacielb3@gmail.com",
+                    EmailConfirmed = false,
+                    PasswordHash = "AGgI66nvc6RQweHG2a6HE8c0qCamjXOZgcGjV+x5ClqhxH4F5W6jz7Djs5VLJIbmDQ==",
+                    SecurityStamp = "5bba54eb-d535-4e3e-b77a-7fca50bf7ed8",
+                    PhoneNumber = null,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEndDateUtc = null,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    UserName = "rmacielb3@gmail.com"
                 }
             );
         }

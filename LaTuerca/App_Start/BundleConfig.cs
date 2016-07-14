@@ -69,7 +69,7 @@ namespace LaTuerca
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/dataTables.bootstrap4.min.css",
-                      "~/Content/AdminLTE.min.css",
+                      "~/Content/AdminLTE.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/buttons.dataTables.min.css",
                       "~/Content/skins/_all-skins.min.css",

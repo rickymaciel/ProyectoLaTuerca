@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
 using Microsoft.AspNet.Identity;
+using RazorPDF;
 
 namespace LaTuerca.Controllers
 {
@@ -20,6 +21,42 @@ namespace LaTuerca.Controllers
         {
             var facturaClientes = db.FacturaClientes.Include(f => f.Cliente);
             return View(facturaClientes.ToList());
+        }
+
+
+        public ActionResult Pdf()
+        {
+            List<FacturaCliente> customers = new List<FacturaCliente>();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                FacturaCliente customer = new FacturaCliente
+                {
+                    Id = i,
+                    NumeroFactura = i,
+                    TotalPagado = i*i
+                };
+                customers.Add(customer);
+            }
+
+            return new RazorPDF.PdfResult(customers, "Pdf");
+        }
+        public ActionResult PrintFactura(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FacturaCliente venta = db.FacturaClientes.Find(id);
+            if (venta == null)
+            {
+                return HttpNotFound();
+            }
+
+            var detalleVenta = from c in db.DetallesFacturaClientes where c.FacturaClienteId == venta.Id select c;
+
+            return new RazorPDF.PdfResult(detalleVenta, "PrintFactura");
+
         }
 
 
@@ -152,15 +189,22 @@ namespace LaTuerca.Controllers
                 {
                     try
                     {
-                        GuardarFactura(facturaCliente);
-                        GuardarFacturaDetalles(facturaCliente);
                         if(facturaCliente.Pagado == true){
+                            GuardarFactura(facturaCliente);
+                            GuardarFacturaDetalles(facturaCliente);
                             ActualizarStock(facturaCliente);
                             ActualizarCaja(facturaCliente);
                             GuardarMovimiento(facturaCliente);
+                            TempData["notice"] = "La Factura Número: " + facturaCliente.NumeroFactura + " fue generada correctamente! ";
+                        }
+                        else
+                        {
+                            GuardarFactura(facturaCliente);
+                            GuardarFacturaDetalles(facturaCliente);
+                            TempData["notice"] = "El Presupuesto Número: " + facturaCliente.NumeroFactura + " fue guardado correctamente! ";
+
                         }
                         dbTran.Commit();
-                        TempData["notice"] = "El Presupuesto Número: " + facturaCliente.NumeroFactura + " fue guardado correctamente! ";
                     }
                     catch (Exception ex)
                     {
@@ -284,6 +328,7 @@ namespace LaTuerca.Controllers
             {
                 var movimiento = new MovimientoCaja
                 {
+                    Fecha = DateTime.Now,
                     CajaId = ObtenerUltimoCajaAbierto(),
                     Concepto = "Factura Venta Nº: " + facturaCliente.NumeroFactura,
                     Movimiento = "Entrada",
@@ -515,6 +560,7 @@ namespace LaTuerca.Controllers
                 db.Clientes.Add(cliente);
                 db.SaveChanges();
             }
+            TempData["notice"] = "El cliente " + cliente.RazonSocial + " fue guardado correctamente! ";
             return RedirectToAction("Factura", "FacturaClientes");
         }
 

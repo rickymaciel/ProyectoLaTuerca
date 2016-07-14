@@ -4,26 +4,32 @@
     ViewBag.Title = "Detalles de Caja";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string estado = "";
-    string bgfechacierre = "";
+    string cerrar = "";
+    //string bgfechacierre = "";
     if (Model.Estado == true)
     {
         estado = "Caja Cerrada";
-        bgfechacierre = "bg-green";
+        //bgfechacierre = "bg-green";
+        cerrar = "ion-ios-locked";
     }
     else
     {
         estado = "Caja Abierta";
-        bgfechacierre = "bg-red";
+        //bgfechacierre = "bg-aqua";
+        cerrar = "ion-ios-unlocked";
     }
 
     var bgcolor = "";
+    var saldo = "";
     if (Model.Inicial + (int) Model.Cierre > 0)
     {
         bgcolor = "bg-green";
+        saldo = "Saldo positivo";
     }
     else
     {
         bgcolor = "bg-red";
+        saldo = "Saldo negativo";
     }
 }
 
@@ -43,16 +49,16 @@
                 <span class="info-box-icon bg-green"><i class="fa-calendar fa"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Apertura)</span>
-                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Apertura)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", Model.Fecha_Apertura)</span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div>
         <div class="col-lg-3">
             <div class="info-box">
-                <span class="info-box-icon @bgfechacierre"><i class="fa fa-calendar"></i></span>
+                <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
-                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy hh:mm:ss}", Model.Fecha_Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", Model.Fecha_Cierre)</span>
                 </div>
             </div>
         </div>
@@ -102,7 +108,7 @@
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="info-box bg-red">
+            <div class="info-box bg-yellow">
                 <span class="info-box-icon"><i class="fa fa-cloud-upload"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Salida)</span>
@@ -118,100 +124,126 @@
         </div>
         <div class="col-lg-3">
             <a href="@Url.Action("Edit", "Cajas", new { id = Model.Id })" class="info-box bg-red tip" title="Cerrar Caja">
-                <span class="info-box-icon"><i class="ion-ios-locked"></i></span>
+                <span class="info-box-icon"><i class="@cerrar"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Cerrar Caja</span>
                     <span class="info-box-number">
-                        @Html.DisplayNameFor(model => model.Estado)
-                        @estado
+                        @saldo
                     </span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
+                        @estado
                     </span>
                 </div>
             </a>
         </div>
         <div class="col-lg-12">
             <div class="box box-primary">
-                <div class='box-header with-border'>
-                    <div class="user-block">
-                        <span class='text-muted'>Caja Nº <b class="text-primary">@Html.DisplayFor(model => model.Id)</b>  |  
-                          @Html.DisplayNameFor(model => model.Operaciones) <b class="text-primary">@Html.DisplayFor(model => model.Operaciones)</b>  |
-                          @Html.DisplayNameFor(model => model.Estado) <b class="text-primary">@Html.DisplayFor(model => model.Estado)  @estado</b>
-                        </span>
-                    </div>
-                    <div class='box-tools btn-group'>
-                        <a href="@Url.Action("Index", "Cajas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Cajas">
-                            <i class="fa fa-inbox"></i>
-                        </a>
-                        <a href="@Url.Action("Index", "Cajas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Cajas">
-                            <i class="fa fa-inbox"></i> <b>Ver Cajas</b>
-                        </a>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class=" table-responsive">
-                        <table class="table table-condensed table-hover table-striped table-inverse" id="tablaMenu">
-                            <thead>
-                                <tr class="">
-                                    <th class="col-lg-4">
-                                        Concepto
-                                    </th>
-                                    <th class="col-lg-2">
-                                        Movimiento
-                                    </th>
-                                    <th class="col-lg-2">
-                                        Ingreso
-                                    </th>
-                                    <th class="col-lg-2">
-                                        Egreso
-                                    </th>
-                                    <th class="col-lg-2">
-                                        Saldo
-                                    </th>
-                                </tr>
-                            </thead>
-                            @if (Model != null && Model.detallesCaja != null && Model.detallesCaja.Count > 0)
-                            {
-                                foreach (var item in Model.detallesCaja)
-                                {
-                                    string bg = "";
-                                    if (item.Movimiento == "Salida")
-                                    {
-                                        bg = "danger";
-                                    }
-                                    else
-                                    {
-                                        bg = "success";
-                                    }
-                                    <tbody>
-                                        <tr class="@bg">
-                                            <th class="col-lg-4">
-                                                @item.Concepto
+                        <div class='box-header with-border'>
+                            <div class="user-block">
+                                <span class='text-muted'>
+                                    Caja Nº <b class="text-primary">@Html.DisplayFor(model => model.Id)</b>  |
+                                    @Html.DisplayNameFor(model => model.Operaciones) <b class="text-primary">@Html.DisplayFor(model => model.Operaciones)</b>  |
+                                    @Html.DisplayNameFor(model => model.Estado) <b class="text-primary">@Html.DisplayFor(model => model.Estado)  @estado</b>
+                                </span>
+                            </div>
+                            <div class='box-tools btn-group'>
+                                <a href="@Url.Action("Index", "Cajas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Cajas">
+                                    <i class="fa fa-inbox"></i>
+                                </a>
+                                <a href="@Url.Action("Index", "Cajas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Cajas">
+                                    <i class="fa fa-inbox"></i> <b>Ver Cajas</b>
+                                </a>
+                                <a href="@Url.Action("ReporteMovimientoCaja", "Cajas", new { id = Model.Id })" target="_blank" class="btn btn-link btn-sm visible-lg tip" title="Ver Cajas">
+                                    <i class="fa fa-download-alt"></i> <b>Exportar</b>
+                                </a>
+                                <button type="button" class="btn btn-default btn-sm visible-lg " id="informe" title="Informe de movimientos" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Generando"><i class="fa fa-filter"></i> Generar informe</button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class=" table-responsive">
+                                <table class="table table-condensed table-hover table-striped table-inverse" id="tablaMenu">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="col-lg-2">
+                                                Fecha
                                             </th>
                                             <th class="col-lg-2">
-                                                @item.Movimiento
+                                                Concepto
                                             </th>
                                             <th class="col-lg-2">
-                                                @String.Format("{0:C}", item.Ingreso)
+                                                Movimiento
                                             </th>
                                             <th class="col-lg-2">
-                                                @String.Format("{0:C}", item.Egreso)
+                                                Ingreso
                                             </th>
                                             <th class="col-lg-2">
-                                                @String.Format("{0:C}", item.Saldo)
+                                                Egreso
+                                            </th>
+                                            <th class="col-lg-2">
+                                                Saldo
                                             </th>
                                         </tr>
-                                    </tbody>
-                                }
-                            }
-                        </table>
+                                    </thead>
+                                    @if (Model != null && Model.detallesCaja != null && Model.detallesCaja.Count > 0)
+                                    {
+                                        foreach (var item in Model.detallesCaja)
+                                        {
+                                            string bg = "";
+                                            if (item.Movimiento == "Salida")
+                                            {
+                                                bg = "danger";
+                                            }
+                                            else
+                                            {
+                                                bg = "success";
+                                            }
+                                            <tbody>
+                                                <tr class="@bg">
+                                                    <th class="col-lg-2">
+                                                        @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.Fecha)
+                                                    </th>
+                                                    <th class="col-lg-2">
+                                                        @item.Concepto
+                                                    </th>
+                                                    <th class="col-lg-2">
+                                                        @item.Movimiento
+                                                    </th>
+                                                    <th class="col-lg-2">
+                                                        @String.Format("{0:C}", item.Ingreso)
+                                                    </th>
+                                                    <th class="col-lg-2">
+                                                        @String.Format("{0:C}", item.Egreso)
+                                                    </th>
+                                                    <th class="col-lg-2">
+                                                        @String.Format("{0:C}", item.Saldo)
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>        
 </section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#informe').on('click', function () {
+                var $this = $(this);
+                $this.button('loading');
+                setTimeout(function () {
+                    $this.button('reset');
+                }, 8000);
+                window.location = '../InformeMovimientos'
+            });
+        });
+    </script>
+}

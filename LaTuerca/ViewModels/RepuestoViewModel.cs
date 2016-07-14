@@ -16,12 +16,9 @@ namespace LaTuerca.ViewModels
           public Modelo Modelo { get; set; }
           public Categoria Categoria { get; set; }
 
-          public RepuestoViewModel(Repuesto _repuesto, List<Modelo> _modelos, List<Categoria> _categorias, List<Proveedor> _proveedores)
+          public RepuestoViewModel(Repuesto _repuesto)
           {
             Repuesto = _repuesto;
-            Modelos = _modelos;
-            Categorias = _categorias;
-            Proveedores = _proveedores;
             Modelo = new Modelo();
             Categoria = new Categoria();
             Proveedor = new Proveedor();

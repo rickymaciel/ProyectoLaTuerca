@@ -1,150 +1,331 @@
-﻿@model LaTuerca.ViewModels.RepuestoViewModel
+﻿@model LaTuerca.Models.Repuesto
+
 @{
-    ViewBag.Title = "Nuevo Repuesto";
+    ViewBag.Title = "Crear Repuesto";
 }
-<section class="content-header">
-    <h1>
-        <i class="im-menu"></i> @ViewBag.Title
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
-    </ol>
-</section>
+
+
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
 <section class="content">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <span class="btn-group">
-                            <a href="@Url.Action("Index", "Repuestos")" class="btn btn-primary">
-                                <i class="im-menu"></i> Ver todo
-                            </a>
-                        </span>
-                    </h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearMarca"><i class="im-plus"></i> Crear Marca</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearModelo"><i class="im-plus"></i> Crear Modelo</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearCategoria"><i class="im-plus"></i> Crear Categoria</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearProveedor"><i class="im-plus"></i> Crear Proveedor</a></li>
-                                <li class="divider"></li>
-                            </ul>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-primary">
+                    <div class='box-header with-border'>
+                        <div class="user-block">
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <span class='description'>@ViewBag.Title</span>
                         </div>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <form role="form" class="form-horizontal" id="formulario">
-                        <div class="box-body">
-                            @if (TempData["notice"] != null)
-                            {
-                                <div class="col-lg-12" id="mensaje">
-                                    <div class="callout callout-success">
-                                        @TempData["notice"]
-                                    </div>
-                                </div>
-                            }
-                            <div class="form-group has-feedback col-lg-3" id="div-nombre">
-                                @Html.LabelFor(model => model.Repuesto.Nombre, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.Nombre, new { htmlAttributes = new { @class = "form-control", @id = "nombre", length = "3", placeholder = "Nombre del producto", @required = "true", aria_required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.Nombre, "", new { @class = "text-danger" })
+                        <div class='box-tools btn-group'>
+                            <a href="@Url.Action("Index", "Repuestos")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Repuestos">
+                                <i class="fa fa-files-o"></i>
+                            </a>
+                            <a href="@Url.Action("Index", "Repuestos")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Repuestos">
+                                <i class="fa fa-files-o"></i> <b>Ver Repuestos</b>
+                            </a>
+                            <button href="" id="" class="btn btn-success btn-sm tip pull-right visible-lg" title="Guardar" type="submit" name="" value="Guardar">
+                                <i class="br-floppy"></i>  <b>Guardar</b>
+                            </button>
+                            <button href="" id="" class="btn btn-success hidden-lg btn-sm tip pull-right" title="Guardar" type="submit" name="" value="Guardar">
+                                <i class="br-floppy"></i>
+                            </button>
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body'>
+                        <div class="col-lg-9">
+                            <div class="form-group has-feedback col-lg-8" id="div-nombre">
+                                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @id = "nombre", length = "3", placeholder = "Nombre del producto", @required = "true", aria_required = "true" } })
+                                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-3" id="div-select-modelo">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", @id = "stock", placeholder = "Stock", @required = "true", @readonly = "true" } })
+                                @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.StockMinimo, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.StockMinimo, new { htmlAttributes = new { @class = "form-control", @id = "stockminimo", min = "1", max = "100", placeholder = "Stock mínimo", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.StockMinimo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.StockMaximo, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.StockMaximo, new { htmlAttributes = new { @class = "form-control", @id = "stockmaximo", min = "1", max = "100", placeholder = "Stock máximo", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.StockMaximo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4" id="preciocoste">
+                                @Html.LabelFor(model => model.PrecioCosto, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.PrecioCosto, new { htmlAttributes = new { @class = "form-control", @id = "preciocosto", min = "0", autocomplete = "off", placeholder = "Precio de coste", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.PrecioCosto, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PrecioVenta1, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.PrecioVenta1, new { htmlAttributes = new { @class = "form-control", @id = "precioventa1", min = "0", autocomplete = "off", placeholder = "Precio de venta 1", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.PrecioVenta1, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PrecioVenta2, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.PrecioVenta2, new { htmlAttributes = new { @class = "form-control", @id = "precioventa2", min = "0", autocomplete = "off", placeholder = "Precio de venta2", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.PrecioVenta2, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PrecioVenta3, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.PrecioVenta3, new { htmlAttributes = new { @class = "form-control", @id = "precioventa3", min = "0", autocomplete = "off", placeholder = "Precio de venta3", @required = "true" } })
+                                @Html.ValidationMessageFor(model => model.PrecioVenta3, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group col-lg-12" id="div-select-modelo">
                                 <a href="@Url.Action("Index", "Modelos")" class="tip" title="Ir a Modelo">
-                                    @Html.LabelFor(model => model.Repuesto.Modelo, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
+                                    @Html.LabelFor(model => model.ModeloId, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearModelo" title="Crear Modelo">
                                     <i class="en-plus2" id="icon1"></i>
                                 </a>
-                                @Html.DropDownList("Modelo", new SelectList(Model.Modelos, "Id", "NombreModelo"), "Seleccione un modelo", new { @id = "select-modelo", @class = "demo-animals", placeholder = "Seleccione un Modelo", style = "width: 100%;", @required = "true" })
-                                @Html.ValidationMessageFor(model => model.Repuesto.Modelo, "", new { @class = "text-danger" })
+                                @Html.DropDownList("ModeloId", null, "Seleccione un modelo", htmlAttributes: new { @class = "", @id = "select-modelo" })
+                                @Html.ValidationMessageFor(model => model.ModeloId, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-3" id="div-select-categoria">
+                            <div class="form-group col-lg-12" id="div-select-categoria">
                                 <a href="@Url.Action("Index", "Categorias")" class="tip" title="Ir a Categoria">
-                                    @Html.LabelFor(model => model.Repuesto.Categoria, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
+                                    @Html.LabelFor(model => model.CategoriaId, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearCategoria" title="Crear Categoria">
                                     <i class="en-plus2" id="icon1"></i>
                                 </a>
-                                @Html.DropDownList("Categoria", new SelectList(Model.Categorias, "Id", "Nombre"), "Seleccione una Categoria", new { @id = "select-categoria", @class = "demo-animals", placeholder = "Seleccione una Categoria", style = "width: 100%;", @required = "true" })
-                                @Html.ValidationMessageFor(model => model.Categorias, "", new { @class = "text-danger" })
+                                @Html.DropDownList("CategoriaId", null, "Seleccione una categoria", htmlAttributes: new { @class = "", @id = "select-categoria" })
+                                @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-group col-lg-3" id="div-select-proveedor">
+                            <div class="form-group col-lg-12" id="div-select-proveedor">
                                 <a href="@Url.Action("Index", "Proveedores")" class="tip" title="Ir a Proveedor">
-                                    @Html.LabelFor(model => model.Repuesto.Proveedor, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
+                                    @Html.LabelFor(model => model.ProveedorId, htmlAttributes: new { @class = "control-label", style = "cursor:pointer;" })
                                 </a>
                                 <a class="pull-right tip btn btn-default btn-xs" data-toggle="modal" data-target="#crearProveedor" title="Crear Proveedor">
                                     <i class="en-plus2" id="icon1"></i>
                                 </a>
-                                @Html.DropDownList("Proveedor", new SelectList(Model.Proveedores, "Id", "RazonSocial"), "Seleccione un Proveedor", new { @id = "select-proveedor", @class = "demo-animals", placeholder = "Seleccione un Proveedor", style = "width: 100%;", @required = "true" })
-                                @Html.ValidationMessageFor(model => model.Proveedores, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.Stock, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.Stock, new { htmlAttributes = new { @class = "form-control", @id = "stock", placeholder = "Stock", @required = "true", @readonly = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.Stock, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.StockMinimo, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.StockMinimo, new { htmlAttributes = new { @class = "form-control", @id = "stockminimo", min = "1", max = "100", placeholder = "Stock mínimo", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.StockMinimo, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.StockMaximo, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.StockMaximo, new { htmlAttributes = new { @class = "form-control", @id = "stockmaximo", min = "1", max = "100", placeholder = "Stock máximo", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.StockMaximo, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3" id="preciocoste">
-                                @Html.LabelFor(model => model.Repuesto.PrecioCosto, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.PrecioCosto, new { htmlAttributes = new { @class = "form-control", @id = "preciocosto", min = "0", autocomplete = "off", placeholder = "Precio de coste", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioCosto, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.PrecioVenta1, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.PrecioVenta1, new { htmlAttributes = new { @class = "form-control", @id = "precioventa1", min = "0", autocomplete = "off", placeholder = "Precio de venta 1", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta1, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.PrecioVenta2, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.PrecioVenta2, new { htmlAttributes = new { @class = "form-control", @id = "precioventa2", min = "0", autocomplete = "off", placeholder = "Precio de venta2", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta2, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-lg-3">
-                                @Html.LabelFor(model => model.Repuesto.PrecioVenta3, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Repuesto.PrecioVenta3, new { htmlAttributes = new { @class = "form-control", @id = "precioventa3", min = "0", autocomplete = "off", placeholder = "Precio de venta3", @required = "true" } })
-                                @Html.ValidationMessageFor(model => model.Repuesto.PrecioVenta3, "", new { @class = "text-danger" })
+                                @Html.DropDownList("ProveedorId", null, "Seleccione un proveedor", htmlAttributes: new { @class = "", @id = "select-proveedor" })
+                                @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <div class="pull-right">
-                                <button id="guardar" type="submit" class="btn btn-social btn-success">
-                                    <i class="im-checkbox-checked"></i> Guardar
-                                </button>
-                            </div>
-                            <button type="reset" class="btn btn-social btn-default">
-                                <i class="im-remove"></i> Cancelar
-                            </button>
-                        </div>
-                    </form>
-                }
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </section>
-@Html.Partial("_create_modelo", Model.Modelo)
-@Html.Partial("_create_categoria", Model.Categoria)
-@Html.Partial("_create_proveedor", Model.Proveedor)
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#select-proveedor').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-marca').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-modelo').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+            $('#select-categoria').selectize({
+                labelField: 'model',
+                valueField: 'id',
+                optgroupField: 'make',
+                optgroupLabelField: 'name',
+                optgroupValueField: 'id',
+                lockOptgroupOrder: true,
+                searchField: ['model'],
+                plugins: ['optgroup_columns'],
+                openOnFocus: true
+            });
+        });
+    </script>
+}
+
+
+<div class="modal" id="crearModelo" tabindex="-1" role="dialog">
+    <form action="/Modelos/AjaxCreate" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#Modelo" id="form0" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="im-plus"></span>
+                        Crear Modelo
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input name="__RequestVerificationToken" type="hidden" value="G_780vsh20UkXFw_mPeIz9r7yaT2Yhw8odmjpL3u5NAjH3VCIkzcRoZWrxdyJrs-oN3OARhZnH-zZqBbRhI662TlIVVwU4TREMOobAgPI2IEEjnHRH18UxHqBGlcTp5-OHODfoUhotaiKiFdsgq1zA2" />
+
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="NombreModelo">Modelo</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-length="El campo Modelo debe ser una cadena con una longitud mínima de 3 y una longitud máxima de 60." data-val-length-max="60" data-val-length-min="3" data-val-required="El nombre es requerido" id="NombreModelo" name="NombreModelo" placeholder="Nombre" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="NombreModelo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="MarcaId">MarcaId</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Marca must be a number." data-val-required="La marca es requerida" id="MarcaId" name="MarcaId" type="hidden" value="" />
+                                <input class="Marca form-control" placeholder="Buscar" title="Buscar Marca" required>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="MarcaId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Estado">Estado</label>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <input checked="checked" class="check-box" data-val="true" data-val-required="El campo Estado es obligatorio." id="Estado" name="Estado" type="checkbox" value="true" /><input name="Estado" type="hidden" value="" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Estado" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
+
+<div class="modal" id="crearCategoria" tabindex="-1" role="dialog">
+    <form action="/Categorias/AjaxCreate" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#Categoria" id="form1" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="im-plus"></span>
+                        Crear Categoria
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input name="__RequestVerificationToken" type="hidden" value="FpJGJKZ3GEFOH9qNOm5eZNJty-EB1jy6MXK03bagn-nMmhhgJolI3mzhOhqgZsBn30Uopqlk0fSOW4kPX2kEzrzNxa2l_mnBmZnoePb12tRcIb7g1lbxN1KvENkN0aAdzzXgbR0WDtU9-ArGj9LuDg2" />
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Nombre">Nombre</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-length="El campo Nombre debe ser una cadena con una longitud mínima de 3 y una longitud máxima de 60." data-val-length-max="60" data-val-length-min="3" data-val-required="Debe ingresar un nombre" id="Nombre" name="Nombre" placeholder="Nombre" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Nombre" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
+
+<div class="modal" id="crearProveedor" tabindex="-1" role="dialog">
+    <form action="/Proveedores/AjaxCreate" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#Proveedor" id="form2" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="im-plus"></span>
+                        Crear Proveedor
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <input name="__RequestVerificationToken" type="hidden" value="scEw4FVSpx14SoxexdU89N17lozEMe7Jylzq-CAAijMYonIbza91wnOO6Pmr4Iu14y5FQ2SAsPIGoh2mt7M-Kw2k5LPGoXXZq-GGBJkVp1MIHP8fnd4ktVolRKFNM4R5U3-D1J0nY5KeF3KT28xz2g2" />
+                    <input id="action" name="action" type="hidden" value="Edit" />
+                    <input id="controller" name="controller" type="hidden" value="Repuestos" />
+                    <div class="form-horizontal">
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="RazonSocial">Raz&#243;n Social</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-length="El campo Razón Social debe ser una cadena con una longitud mínima de 3 y una longitud máxima de 60." data-val-length-max="60" data-val-length-min="3" data-val-required="Debe ingresar la razon social" id="RazonSocial" name="RazonSocial" placeholder="Razón social" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="RazonSocial" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Ruc">R.U.C.</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-length="El campo R.U.C. debe ser una cadena con una longitud mínima de 9 y una longitud máxima de 10." data-val-length-max="10" data-val-length-min="9" data-val-required="Debe ingresar el RUC" id="Ruc" name="Ruc" placeholder="R.U.C" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Ruc" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Direccion">Direccion</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe ingresar la dirección" id="Direccion" name="Direccion" placeholder="Dirección" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Direccion" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Telefono">Telefono</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe ingresar teléfono" id="Telefono" name="Telefono" placeholder="Teléfono" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Telefono" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Celular">Celular</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe ingresar celular" id="Celular" name="Celular" placeholder="Celular" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Celular" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div>

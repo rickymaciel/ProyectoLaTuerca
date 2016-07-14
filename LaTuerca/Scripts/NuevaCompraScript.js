@@ -2,7 +2,7 @@
 var lookupSelector = '#Nombre'; // The ID selector to use for the autocomplete function
 var lookupInput = $(lookupSelector);
 
-var itemQtyPriceSelectors = '#Cantidad, #PrecioVenta1'; // The ID's used for the Price and Qty binding for updating price
+var itemQtyPriceSelectors = '#Cantidad, #PrecioCosto'; // The ID's used for the Price and Qty binding for updating price
 var filePath;
 
 /*
@@ -36,7 +36,7 @@ $.ui.autocomplete.prototype._renderItem = function (ul, item) {
             "<span class='additionalInfoColor'>" +
             "<div><h4 class='text-info'>Repuesto Informaci&oacute;n</h4></div>" +
             "<div><strong>En stock: </strong> " + item.Stock + "</div>" +
-            "<div><strong>Precio: </strong> Gs. " + item.PrecioVenta1 + "</div>" +
+            "<div><strong>Precio de compra: </strong> Gs. " + item.PrecioCosto + "</div>" +
             "</span> </a>")
 
         .appendTo(ul);
@@ -110,7 +110,7 @@ $(document).bind('keydown', function (e) {
  Update invoice total when item Qty or Price inputs have been updated
  */
 //$(itemQtyPriceSelectors).on('keyup click focus', function () {
-$(itemQtyPriceSelectors).on('keyup click focus mouseover hover change  blur', function () {
+$(itemQtyPriceSelectors).on('keyup click focus mouseover keydown hover change  blur', function () {
     mioInvoice.updatePrice(this);
 });
 
@@ -118,7 +118,7 @@ $(itemQtyPriceSelectors).on('keyup click focus mouseover hover change  blur', fu
  Update invoice total when invoice tax input has changed
  */
 //$("input#Cantidad").on('click', function (e) {
-$("input#Cantidad").on('keyup click focus hover mouseover change blur', function (e) {
+$("input#Cantidad").on('keyup click focus change  blur', function (e) {
     $("select#Metodo").prop('disabled', false);
     mioInvoice.updatePrice("#itemQtyPriceSelectors");
     mioInvoice.updateTotal();

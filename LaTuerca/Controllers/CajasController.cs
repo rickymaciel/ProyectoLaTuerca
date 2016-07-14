@@ -8,12 +8,88 @@ using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
 using Microsoft.AspNet.Identity;
+using RazorPDF;
 
 namespace LaTuerca.Controllers
 {
     public class CajasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult ReporteCaja()
+        {
+            try
+            {
+
+                var cajas = db.Cajas.ToList();
+                return new PdfResult(cajas, "ReporteCaja");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        public ActionResult ReporteMovimientoCaja(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Caja caja = db.Cajas.Find(id);
+                if (caja == null)
+                {
+                    return HttpNotFound();
+                }
+                //return View(caja);
+                return new PdfResult(caja, "ReporteMovimientoCaja");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MovimientoCaja(DateTime from, DateTime to)
+        {
+            var fromDate = from;
+            var toDate = to;
+            var movimientos = db.MovimientoCajas.Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+
+            //ViewData["fechas"] = "Desde: " + from + " - Hasta: " + to;
+            return new PdfResult(movimientos, "MovimientoCaja");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MovimientoUsuario(DateTime from, DateTime to, String Usuarios)
+        {
+            var fromDate = from;
+            var toDate = to;
+            var usuario = Usuarios;
+
+            string Nick = "";
+            int IndexNick = 0;
+            string NewNick = "";
+            Nick = usuario;
+
+            IndexNick = Nick.IndexOf("@");
+            NewNick = Nick.Substring(0, IndexNick);
+
+            var movimientos = db.MovimientoCajas.Where(x => x.Caja.Usuario == NewNick).Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+
+            ViewBag.Usuarios = new SelectList(db.Users, "Email", "Email");
+            //ViewData["fechas"] = "Desde: " + from + " - Hasta: " + to;
+            return new PdfResult(movimientos, "MovimientoUsuario");
+        }
+
 
         // GET: Cajas
         public ActionResult Index()
@@ -38,6 +114,14 @@ namespace LaTuerca.Controllers
                 TempData["Fecha_Apertura"] = null;
             }
             return View(db.Cajas.ToList().Where(c => c.Usuario == usuario).OrderByDescending(c => c.Id));
+        }
+
+
+        // GET: Cajas
+        public ActionResult InformeMovimientos()
+        {
+            ViewBag.Usuarios = new SelectList(db.Users, "Email", "Email");
+            return View(db.Cajas.ToList());
         }
 
 
@@ -84,7 +168,7 @@ namespace LaTuerca.Controllers
                     Fecha_Apertura = caja.Fecha_Apertura,
                     Inicial = caja.Inicial,
                     Entrada = caja.Entrada,
-                    Salida = caja.Salida,
+                    Salida = 0,
                     Fecha_Cierre = caja.Fecha_Cierre,
                     Cierre = caja.Cierre,
                     Operaciones = caja.Operaciones,
@@ -103,6 +187,7 @@ namespace LaTuerca.Controllers
                 var idmax = ObtenerUltimoCajaAbierto();
                 var movimiento = new MovimientoCaja
                 {
+                    Fecha = DateTime.Now,
                     CajaId = idmax,
                     Concepto = "Apertura de caja",
                     Movimiento = "Entrada",
@@ -134,8 +219,8 @@ namespace LaTuerca.Controllers
         public ActionResult Create()
         {
             var caja = new Caja();
-            string fecha = DateTime.Now.ToString("{0:yyyy-MM-dd hh:mm:ss}");
-            DateTime Fecha = DateTime.ParseExact(fecha, "{0:yyyy-MM-dd hh:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
+            string fecha = DateTime.Now.ToString("{0:yyyy-MM-dd HH:mm:ss}");
+            DateTime Fecha = DateTime.ParseExact(fecha, "{0:yyyy-MM-dd HH:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
             caja.Fecha_Apertura = Fecha;
             caja.Operaciones = 0;
             return View(caja);
@@ -195,9 +280,8 @@ namespace LaTuerca.Controllers
             {
                 return HttpNotFound();
             }
-
-            string fecha = DateTime.Now.ToString("{0:yyyy-MM-dd hh:mm:ss}");
-            DateTime Fecha = DateTime.ParseExact(fecha, "{0:yyyy-MM-dd hh:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
+            string fecha = DateTime.Now.ToString("{0:dd/MM/yyyy HH:mm:ss}");
+            DateTime Fecha = DateTime.ParseExact(fecha, "{0:dd/MM/yyyy HH:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
             caja.Fecha_Cierre = Fecha;
             return View(caja);
         }
@@ -207,12 +291,13 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Fecha_Apertura,Inicial,Fecha_Cierre,Cierre,Operaciones,Usuario,Estado")] Caja caja)
+        public ActionResult Edit([Bind(Include = "Id,Fecha_Apertura,Inicial,Entrada,Salida,Fecha_Cierre,Cierre,Operaciones,Usuario,Estado")] Caja caja)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(caja).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["notice"] = "Caja cerrada con: " + caja.Cierre + "!";
                 return RedirectToAction("Index");
             }
             return View(caja);
@@ -241,7 +326,23 @@ namespace LaTuerca.Controllers
             Caja caja = db.Cajas.Find(id);
             db.Cajas.Remove(caja);
             db.SaveChanges();
+            TempData["notice"] = "Caja Nº: " + caja.Id + " fue eliminada!";
             return RedirectToAction("Index");
+        }
+
+
+
+        public ActionResult Search(string term)
+        {
+            var routeList = db.Users.Where(r => r.Email == term).Take(1)
+                    .Select(r => new { r.Id, r.UserName});
+            return Json(routeList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getUsers()
+        {
+            var query = from c in db.Users select new { c.Id, c.Email};
+            return Json(query, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

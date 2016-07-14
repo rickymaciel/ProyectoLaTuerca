@@ -1,0 +1,28 @@
+﻿@model List<LaTuerca.Models.FacturaCliente>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pdf</title>
+</head>
+<body>
+    <h2>Html List in PDF</h2>
+    <table width="100">
+        <tr>
+            <td>First Name</td>
+
+            <td>Last Name</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NumeroFactura</td>
+
+                <td>@item.TotalPagado</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

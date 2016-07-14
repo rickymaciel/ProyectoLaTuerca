@@ -42,6 +42,19 @@ namespace LaTuerca.Controllers
             return View();
         }
 
+
+        public String getNombreEmpresa()
+        {
+            var ultimoabierto = db.Empresas.Where(c => c.Id == 1).Select(c => c.Nombre).First();
+            return ultimoabierto;
+        }
+
+        public JsonResult getEmpresa()
+        {
+            var query = from c in db.Empresas.Where(c => c.Estado == true) select new { c.Id, c.Nombre, c.NombreCorto, c.Ruc, c.Email, c.Pais, c.Ciudad, c.Departamento, c.Web, c.Telefono, c.Direccion };
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Empresas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

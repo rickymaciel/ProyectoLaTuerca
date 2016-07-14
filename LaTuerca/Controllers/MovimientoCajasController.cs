@@ -39,7 +39,7 @@ namespace LaTuerca.Controllers
         // GET: MovimientoCajas/Create
         public ActionResult Create()
         {
-            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Usuario");
+            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Id");
             return View();
         }
 
@@ -48,7 +48,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
+        public ActionResult Create([Bind(Include = "Id,Fecha,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace LaTuerca.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Usuario", movimientoCaja.CajaId);
+            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Fecha", movimientoCaja.CajaId);
             return View(movimientoCaja);
         }
 
@@ -73,7 +73,7 @@ namespace LaTuerca.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Usuario", movimientoCaja.CajaId);
+            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Fecha", movimientoCaja.CajaId);
             return View(movimientoCaja);
         }
 
@@ -82,7 +82,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
+        public ActionResult Edit([Bind(Include = "Id,Fecha,CajaId,Concepto,Movimiento,Ingreso,Egreso,Saldo")] MovimientoCaja movimientoCaja)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace LaTuerca.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Usuario", movimientoCaja.CajaId);
+            ViewBag.CajaId = new SelectList(db.Cajas, "Id", "Fecha", movimientoCaja.CajaId);
             return View(movimientoCaja);
         }
 

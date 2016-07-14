@@ -67,10 +67,10 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-12">
-                                        <textarea type="text" class="form-control input-sm InfoProveedor" placeholder="Información del Proveedor" rows="2" id="InfoProveedor" readonly required ></textarea>
+                                        <textarea type="text" class="form-control input-sm InfoProveedor" placeholder="Información del Proveedor" rows="4" id="InfoProveedor" readonly required ></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group hidden">
                                     <div class="col-lg-12">
                                         @Html.LabelFor(model => model.Pagado, htmlAttributes: new { @class = "" })
                                         @Html.EditorFor(model => model.Pagado, "", new { @required = "true" })
@@ -142,7 +142,7 @@
                                 <thead>
                                     <tr class="">
                                         <th class="col-lg-1">
-                                            <a href="" id="addRowBtn" class="btn btn-default btn-xs btn-flat btn-block tipB" title="Agregar nueva línea">
+                                            <a href="" id="addRowBtn" class="btn btn-flat btn-default btn-block tipB" title="Agregar nueva línea">
                                                 <i class="fa fa-plus-sign"></i> Agregar
                                             </a>
                                         </th>
@@ -171,7 +171,7 @@
                                             <input type="number" name="detallesFacturaProveedor[0].Cantidad" value="1" min="1" max="100" class="form-control input-sm" id="Cantidad" placeholder="Cantidad" required />
                                         </td>
                                         <td class="col-lg-2">
-                                            <input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioVenta1" type="text" required>
+                                            <input name="detallesFacturaProveedor[0].Precio" class="form-control input-sm" placeholder="Precio" id="PrecioCosto" type="text" required>
                                         </td>
                                         <td class="col-lg-2">
                                                 <input  class="form-control input-sm" id="TotalLineaNeto" placeholder="Neto" type="text" readonly="readonly" required>
@@ -220,7 +220,82 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryCompra")
     <script>
-    $(function () {
+        $(function () {
+
+            var oTable = $('table.tabledata').DataTable({
+                "bProcessing": true,
+                "sPaginationType": "full_numbers",
+                "paging": true,
+                "iDisplayLength": 10,
+                "bPaginate": true,
+                "bSort": true,
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious": "←",
+                        "sNext": "→",
+                        "sLast": "»",
+                        "sFirst": "«"
+                    },
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+            load_proveedores();
+            function load_proveedores() {
+                var RazonSocialProveedor = {
+                    url: "/FacturaProveedors/getProveedores",
+                    getValue: "RazonSocial",
+                    list: {
+                        match: {
+                            enabled: true
+                        },
+                        maxNumberOfElements: 8,
+                        sort: {
+                            enabled: true
+                        },
+                        onSelectItemEvent: function () {
+                            var ProveedorId = $(".RazonSocial").getSelectedItemData().Id;
+                            var RazonSocial = $(".RazonSocial").getSelectedItemData().RazonSocial;
+                            var Ruc = $(".RazonSocial").getSelectedItemData().Ruc;
+                            //var Telefono = $(".RazonSocial").getSelectedItemData().Telefono;
+                            var Direccion = $(".RazonSocial").getSelectedItemData().Direccion;
+
+                            $("#ProveedorId").val(ProveedorId).trigger("change");
+                            //$("#RazonSocial").val(RazonSocial).trigger("change");
+                            //$("#Ruc").val(Ruc).trigger("change");
+                            //$("#Telefono").val(Telefono).trigger("change");
+                            //$("#Direccion").val(Direccion).trigger("change");
+                            $("#saveInvoiceBtn").removeClass('disabled');
+                            $("#InfoProveedor").val(RazonSocial + ' - R.U.C.: ' + Ruc + ' - Direccion:' + Direccion).trigger("change");
+                            $("#InfoProveedor").css('border', '1px solid rgba(0, 99, 0, 0.4)');
+                            //$("#addRowBtn").removeClass('disabled');
+                        },
+                    },
+                    //theme: "plate-dark",
+                    //theme: "square"
+                    //theme: "funky"
+                    //theme: "round"
+                };
+                $("input#RazonSocial").easyAutocomplete(RazonSocialProveedor);
+                $(".easy-autocomplete-container").addClass("text-danger");
+
+            };
+            $("#InfoProveedor").css('border', '1px solid rgba(255, 0, 0, 0.4)');
         $("select#Metodo").prop('disabled', true);
         $("#TotalPagado").attr('readonly', true);
         $("#TotalPagado").val(0);

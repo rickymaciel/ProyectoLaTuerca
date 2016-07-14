@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - LA TUERCA</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -17,8 +17,8 @@
     <div class="login-box">
         <div class="login-logo">
             <a href="http://localhost:53172/" class="logo">
-                <i class="fa-adjust fa-wrench"></i> 
-                <span class="logo-lg"><b>MUNDO</b>TUERCA</span>
+                <i class="fa-adjust fa-wrench"></i>
+                <span class="logo-lg" id="Nombre"></span>
             </a>
         </div>
         <!-- /.login-logo -->
@@ -78,6 +78,33 @@
                 radioClass: 'icheckbox_minimal-blue',
                 increaseArea: '20%' // optional
             });
+
+
+
+            var serviceURL = 'http://localhost:53172/Empresas/getEmpresa';
+
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: param = "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+                $.each(data, function (index) {
+                    var nombre = data[index].Nombre;
+                    var nombrecorto = data[index].NombreCorto;
+                    $("#Nombre").append(nombre);
+                    $("#NombreCorto").append(nombrecorto);
+                })
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
         });
     </script>
 </body>

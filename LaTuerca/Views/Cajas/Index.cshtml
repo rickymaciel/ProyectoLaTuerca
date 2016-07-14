@@ -8,8 +8,8 @@
     string Nick = "";
     int IndexNick = 0;
     string NewNick = "";
-
 }
+
 @if (Request.IsAuthenticated)
 {
     if (User.Identity.GetUserName() != "")
@@ -30,18 +30,18 @@
     </div>
 }
 <section class="content">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="box box-primary">
-                    <div class='box-header with-border'>
-                        <div class="user-block">
-                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                            <span class='description'>@ViewBag.Title</span>
-                        </div>
-                        <div class='box-tools btn-group'>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class='box-header with-border'>
+                    <div class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
+                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                        <span class='description'>@ViewBag.Title</span>
+                    </div>
+                    <div class='box-tools btn-group'>
                         @if (TempData["Fecha_Apertura"] != null)
-                        { 
+                        {
                             <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
                                 <i class="fa fa-folder-open"></i>
                             </a>
@@ -49,133 +49,149 @@
                                 <i class="fa fa-folder-open"></i> <b>Abrir Caja</b>
                             </a>
                         }
-                        
-                        </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class='box-body'>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table table-condensed table-hover table-striped" id="tablaMenu">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Caja Nº:
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Fecha_Apertura)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Inicial)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Entrada)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Salida)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Operaciones)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Fecha_Cierre)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Cierre)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Usuario)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Estado)
-                                                </th>
-                                                <th class="col-lg-1"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                        <button type="button" class="btn btn-default btn-sm visible-lg " id="informe" title="Informe de movimientos" data-loading-text="<i class='ion-load-c fa-spin'></i> Redirigiendo"><i class="fa fa-filter"></i> Informe </button>
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class='box-body'>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-condensed table-hover table-striped" id="tablaMenu">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Caja Nº:
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Fecha_Apertura)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Inicial)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Entrada)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Salida)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Operaciones)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Fecha_Cierre)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Cierre)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Usuario)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Estado)
+                                            </th>
+                                            <th class="col-lg-1"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                            @foreach (var item in Model) {
-                                                string bg = "";
-                                                    if (item.Estado == false)
-                                                    {
-                                                        bg = "danger";
+                                        @foreach (var item in Model)
+                                        {
+                                            string bg = "";
+                                            if (item.Estado == false)
+                                            {
+                                                bg = "danger";
+                                            }
+                                            else
+                                            {
+                                                bg = "success";
+                                            }
+                                            <tr class="@bg">
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Id)
+                                                </td>
+                                                <td>
+                                                    @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.Fecha_Apertura)
+                                                </td>
+                                                <td>
+                                                    @String.Format("{0:C}", item.Inicial)
+                                                </td>
+                                                <td>
+                                                    @String.Format("{0:C}", item.Entrada)
+                                                </td>
+                                                <td>
+                                                    @String.Format("{0:C}", item.Salida)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Operaciones)
+                                                </td>
+                                                <td>
+                                                    @String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.Fecha_Cierre)
+                                                </td>
+                                                <td>
+                                                    @{
+                                            var cierre = "";
+                                            if (item.Cierre >= 0)
+                                            {
+                                                cierre = "label label-success";
+                                            }
+                                            else
+                                            {
+                                                cierre = "label label-danger";
+                                            }
                                                     }
-                                                    else
-                                                    {
-                                                        bg = "success";
-                                                    }
-                                                <tr class="@bg">
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Id)
-                                                    </td>
-                                                    <td>
-                                                        @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Apertura)
-                                                    </td>
-                                                    <td>
-                                                        @String.Format("{0:C}", item.Inicial)
-                                                    </td>
-                                                    <td>
-                                                        @String.Format("{0:C}", item.Entrada)
-                                                    </td>
-                                                    <td>
-                                                        @String.Format("{0:C}", item.Salida)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Operaciones)
-                                                    </td>
-                                                    <td>
-                                                       @String.Format("{0:dd/MM/yyyy hh:mm:ss}", item.Fecha_Cierre)
-                                                    </td>
-                                                    <td>
+                                                    <span class="@cierre">
                                                         @String.Format("{0:C}", item.Cierre)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Usuario)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Estado)
-                                                    </td>
-                                                    <td class="col-lg-1">
-                                                        <div class="btn-group">
-                                                            @{
-                                                                if (item.Estado == false)
-                                                                {
-                                                                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs fa fa-lock", @title = "Cerrar" })
-                                                                }
-                                                                else
-                                                                {
-
-                                                                }
-                                                             }
-                                                            @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs fa fa-eye", @title = "Ver Detalles" })
-                                                           <!-- 
-                                                               @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs fa fa-times", @title = "Eliminar" })
-                                                            -->
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Usuario)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Estado)
+                                                </td>
+                                                <td class="col-lg-1">
+                                                    <div class="btn-group">
+                                                        @{
+                                                            if (item.Estado == false)
+                                                            {
+                                                                @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs fa fa-lock", @title = "Cerrar" })
+                                                            }
+                                                        }
+                                                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-xs fa fa-eye", @title = "Ver Detalles" })
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
+            $('#informe').on('click', function () {
+                var $this = $(this);
+                $this.button('loading');
+                setTimeout(function () {
+                    $this.button('reset');
+                }, 8000);
+                window.location = 'InformeMovimientos'
+            });
             $("input#Inicial").on('keyup click focus change  blur', function () {
                 var cierre = $("input#Inicial").val();
                 $("input#Cierre").val(cierre);
                 $("input#Entrada").val(cierre);
             });
                 $('#Fecha_Apertura').attr("readonly", true);
-                $('#Fecha_Cierre').attr("readonly", true);
+                $('#abrir').attr("readonly", true);
                 $('#Cierre').attr("readonly", true);
                 $('#Operaciones').attr("readonly", true);
 
@@ -191,6 +207,26 @@
                 $('#Estado').attr('aria-checked', 'false');
                 $(".icheckbox_minimal-blue").removeClass("checked disabled");
 
+                $('#from').datetimepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    },
+                    locale: 'es',
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
+                $('#to').datetimepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    },
+                    locale: 'es',
+                    format: 'DD/MM/YYYY HH:mm:ss'
+                });
                 $('#abrir').datetimepicker({
                     icons: {
                         time: "fa fa-clock-o",
@@ -199,13 +235,36 @@
                         down: "fa fa-arrow-down"
                     },
                     locale: 'es',
-                    format: 'DD/MM/YYYY hh:mm:ss'
+                    format: 'DD/MM/YYYY HH:mm:ss'
                 });
                 $("#Usuario").val('@NewNick');
                 $("#Usuario").attr('readonly', true);
 
                 $("#UsuarioModal").val('@NewNick');
                 $("#UsuarioModal").attr('readonly', true);
+
+                $('#informe').click(function (e) {
+                    e.preventDefault();
+                    // add loading image to div
+                    $('#loading').html('<img src="http://preloaders.net/preloaders/287/Filling%20broken%20ring.gif"> loading...');
+
+                    // run ajax request
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: "https://api.github.com/users/jveldboom",
+                        success: function (d) {
+                            // replace div's content with returned data
+                            // $('#loading').html('<img src="'+d.avatar_url+'"><br>'+d.login);
+                            // setTimeout added to show loading
+                            setTimeout(function () {
+                                $('#loading').html('<img src="' + d.avatar_url + '"><br>' + d.login);
+                            }, 2000);
+                        }
+                    });
+                });
+
+
             });
     </script>
 }
@@ -241,7 +300,7 @@
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
-                                    <input class="form-control text-box single-line" data-val="true" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
+                                    <input class="form-control text-box single-line" data-val="false" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
                                     <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
                                 </div>
                             </div>

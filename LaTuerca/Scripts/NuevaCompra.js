@@ -29,7 +29,7 @@ var mioInvoice = {
                 //$itemRow.find('#Id').val(ui.item.Id); // Hidden input on form
                 $itemRow.find('#RepuestoId').val(ui.item.Id);
                 $itemRow.find('#Nombre').val(ui.item.Nombre);
-                $itemRow.find('#PrecioVenta1').val(ui.item.PrecioVenta1);
+                $itemRow.find('#PrecioCosto').val(ui.item.PrecioCosto);
                 $itemRow.find('#Stock').val(ui.item.Stock);
 
                 // Give focus to the next input field to receive input from user
@@ -47,7 +47,7 @@ var mioInvoice = {
     updatePrice: function ($this) {
         var $itemRow = $($this).closest('tr');
         // Calculate the price of the row.  Remove any $ so the calculation doesn't break
-        var price = $itemRow.find('#PrecioVenta1').val() * $itemRow.find('#Cantidad').val();
+        var price = $itemRow.find('#PrecioCosto').val() * $itemRow.find('#Cantidad').val();
         //price = this.roundNumber(price, 0);
         isNaN(price) ? $itemRow.find('#TotalLinea').val("N/A") : $itemRow.find('#TotalLinea').val(price);
 
@@ -115,7 +115,7 @@ var mioInvoice = {
     '<td class="col-lg-3"><input id="RepuestoId" name="detallesFacturaProveedor[' + i + '].RepuestoId" type="hidden" class="form-control input-sm" placeholder="RepuestoId" value="" readonly="readonly"   />',
     '<div class="has-feedback"><input id="Nombre" name="detallesFacturaProveedor[' + i + '].Nombre" type="text" class="form-control input-sm" value="" placeholder="Buscar Repuesto" /><span class="glyphicon glyphicon-search form-control-feedback text-muted"></span></div></td>',
     '<td class="col-lg-1"><input id="Cantidad" name="detallesFacturaProveedor[' + i + '].Cantidad" type="number" class="form-control input-sm" placeholder="Cantidad" value="0" min="1" max="100" required /></td>',
-    '<td class="col-lg-2"><input id="PrecioVenta1" name="detallesFacturaProveedor[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></td>',
+    '<td class="col-lg-2"><input id="PrecioCosto" name="detallesFacturaProveedor[' + i + '].Precio" class="form-control input-sm" placeholder="Precio" type="text"></td>',
     '<td class="col-lg-2"><input id="TotalLineaNeto" class="form-control input-sm" placeholder="Neto" type="text" readonly="readonly" required></td>',
     '<td class="col-lg-1"><input id="TotalLineaIva"  class="form-control input-sm" placeholder="Iva" type="text" readonly="readonly" required></td>',
     '<td class="col-lg-2"><input id="TotalLinea" name="detallesFacturaProveedor[' + i + '].Total" class="form-control input-sm" type="text" placeholder="Total" readonly="readonly"></td>',

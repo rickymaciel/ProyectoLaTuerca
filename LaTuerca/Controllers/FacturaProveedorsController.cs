@@ -227,6 +227,7 @@ namespace LaTuerca.Controllers
                 var idmax = ObtenerUltimoCajaAbierto();
                 var movimiento = new MovimientoCaja
                 {
+                    Fecha = DateTime.Now,
                     CajaId = idmax,
                     Concepto = "Factura Compra Nº: "+facturaProveedor.NumeroFactura,
                     Movimiento = "Salida",
@@ -271,13 +272,6 @@ namespace LaTuerca.Controllers
             return sumaIngreso;
         }
 
-        public void EditarRepuesto(Repuesto repuestos)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(repuestos).State = EntityState.Modified;
-            }
-        }
 
         // GET: FacturaProveedors/Details/5
         public ActionResult Details(int? id)
@@ -294,76 +288,6 @@ namespace LaTuerca.Controllers
             return View(facturaProveedor);
         }
 
-        // GET: FacturaProveedors/Create
-        public ActionResult Create()
-        {
-            var facturaProveedor = new FacturaProveedor();
-
-            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            facturaProveedor.Fecha = Fecha;
-            facturaProveedor.FechaPago = DateTime.Now.AddDays(30); //30 dias
-
-            if (!facturaProveedor.Pagado == true)
-            {
-                //se genera el proximo numero de factura
-                var proximo = (from inv in db.FacturaProveedors orderby inv.NumeroFactura descending select inv).FirstOrDefault();
-
-                if (proximo != null)
-                {
-                    facturaProveedor.NumeroFactura = proximo.NumeroFactura + 1;
-                }
-                else
-                {
-                    facturaProveedor.NumeroFactura = 1000000;
-                }
-            }
-
-            return View(facturaProveedor);
-        }
-
-        // POST: FacturaProveedors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(FacturaProveedor facturaProveedor)
-        {
-            ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
-            if (ModelState.IsValid)
-            {
-                using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        db.FacturaProveedors.Add(facturaProveedor);
-
-                        db.SaveChanges();
-
-                        //commit transaction
-                        dbTran.Commit();
-                        TempData["notice"] = "Factura guadada con exito!";
-                    }
-                    catch (Exception ex)
-                    {
-                        //Rollback transaction if exception occurs
-                        dbTran.Rollback();
-                        //Console.WriteLine("\nMessage ---\n{0}", ex.Message);
-                        TempData["notice"] = "Rollback transaction if exception occurs!" + ex.Message;
-                        return View(facturaProveedor);
-                    }
-
-                }
-
-                //TempData["notice"] = "Error desconocido!";
-                return View(facturaProveedor);
-            }
-
-            TempData["notice"] = "Error validaciones!";
-            return View(facturaProveedor);
-
-        }
 
         // GET: FacturaProveedors/Edit/5
         public ActionResult Pagar(int? id)
@@ -412,6 +336,7 @@ namespace LaTuerca.Controllers
                 db.Proveedors.Add(proveedor);
                 db.SaveChanges();
             }
+            TempData["notice"] = "Se creo un nuevo proveedor con éxito!";
             return RedirectToAction("Factura", "FacturaProveedors");
         }
 
@@ -443,6 +368,7 @@ namespace LaTuerca.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            TempData["notice"] = "Se modifico la factura con éxito!";
             return View(facturaProveedor);
         }
 
@@ -492,7 +418,7 @@ namespace LaTuerca.Controllers
             }
             else
             {
-                var data = new { repuesto.Id, repuesto.Nombre, repuesto.PrecioVenta1, repuesto.Stock };
+                var data = new { repuesto.Id, repuesto.Nombre, repuesto.PrecioCosto, repuesto.Stock };
                 repuestoslist.Add(data);
                 return Json(repuestoslist, JsonRequestBehavior.AllowGet);
             }
@@ -502,7 +428,7 @@ namespace LaTuerca.Controllers
         public ActionResult Search(string term)
         {
             var routeList = db.Repuestoes.Where(r => r.Nombre.Contains(term)).Take(10)
-                    .Select(r => new { r.Id, r.Nombre, r.PrecioVenta1, r.Stock });
+                    .Select(r => new { r.Id, r.Nombre, r.PrecioCosto, r.Stock });
             return Json(routeList, JsonRequestBehavior.AllowGet);
         }
 
