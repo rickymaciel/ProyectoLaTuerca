@@ -1,7 +1,19 @@
 ﻿@model LaTuerca.Models.Marca
-
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 @{
     ViewBag.Title = "Eliminar";
+}
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
 }
 <div class="pad margin" id="">
     @using (Html.BeginForm())
@@ -24,22 +36,22 @@
             <div class="box box-primary">
                 <div class='box-header with-border'>
                     <div class="user-block">
-                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
                         <span class='description'>@ViewBag.Title</span>
 
                     </div>
                     <div class='box-tools btn-group'>
-                        <a href="@Url.Action("Index", "Marcas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Marca">
+                        <a href="@Url.Action("Index", "Marcas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Marcas">
                             <i class="fa fa-building"></i>
                         </a>
-                        <a href="@Url.Action("Index", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Marca">
-                            <i class="fa fa-building"></i> <b>Ver Marcas</b>
+                        <a href="@Url.Action("Index", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Marcas">
+                            <i class="fa fa-building"></i> <b>Ver Menus</b>
                         </a>
                         <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Marca">
                             <i class="fa fa-plus-sign2"></i>
                         </a>
-                        <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Marcas>
+                        <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Marca">
                             <i class="fa fa-plus-sign2"></i> <b>Nueva Marca</b>
                         </a>
                     </div>
@@ -53,9 +65,14 @@
                         <dd>
                             @Html.DisplayFor(model => model.Nombre)
                         </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Imagen)
+                        </dt>
 
+                        <dd>
+                            <img class="img-md img-thumbnail tip" width="30" title="@Model.Nombre" src="@Url.Content("~/Content/img/Uploads/" + Model.Imagen)" />
+                        </dd>
                     </dl>
-
                 </div>
             </div>
         </div>

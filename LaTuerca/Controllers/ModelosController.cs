@@ -67,7 +67,6 @@ namespace LaTuerca.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult AjaxCreate(Modelo modelo)
         {
             if (ModelState.IsValid)

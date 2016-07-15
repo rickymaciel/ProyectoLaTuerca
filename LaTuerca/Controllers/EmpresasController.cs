@@ -45,8 +45,23 @@ namespace LaTuerca.Controllers
 
         public String getNombreEmpresa()
         {
-            var ultimoabierto = db.Empresas.Where(c => c.Id == 1).Select(c => c.Nombre).First();
-            return ultimoabierto;
+            var mostrar = db.Empresas.Where(c => c.Estado == true).Select(c => c.Nombre).FirstOrDefault();
+            return mostrar;
+        }
+        public String getWebEmpresa()
+        {
+            var mostrar = db.Empresas.Where(c => c.Estado == true).Select(c => c.Web).FirstOrDefault();
+            return mostrar;
+        }
+        public String getEmailEmpresa()
+        {
+            var mostrar = db.Empresas.Where(c => c.Estado == true).Select(c => c.Email).FirstOrDefault();
+            return mostrar;
+        }
+        public String getNombreCortoEmpresa()
+        {
+            var mostrar = db.Empresas.Where(c => c.Estado == true).Select(c => c.NombreCorto).FirstOrDefault();
+            return mostrar;
         }
 
         public JsonResult getEmpresa()

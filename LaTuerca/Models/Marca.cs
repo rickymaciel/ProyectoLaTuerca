@@ -22,6 +22,9 @@ namespace LaTuerca.Models
         [StringLength(60, MinimumLength = 3)]
         public string Nombre { get; set; }
 
+        [DataType(DataType.ImageUrl)]
+        public string Imagen { get; set; } 
+
         public virtual ICollection<Repuesto> Repuestos { get; set; }
 
         public virtual ICollection<Modelo> Modelos { get; set; }

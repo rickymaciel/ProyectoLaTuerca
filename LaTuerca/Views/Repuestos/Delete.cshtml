@@ -1,4 +1,9 @@
 ﻿@model LaTuerca.Models.Repuesto
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 @{
     ViewBag.Title = "Eliminar";
 }
@@ -11,14 +16,29 @@
         </div>
     </div>
 }
+
+<div class="pad margin" id="">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="pull-">
+            <button type="submit" class="btn btn-primary btn-block btn hidden-lg tip" title="Eliminar">
+                <i class="fa fa-times"></i>
+            </button>
+            <button type="submit" class="btn btn-danger btn btn-block visible-lg tip" title="Eliminar">
+                <i class="fa fa-trash"></i> <b>  ¿Está seguro de que desea eliminar permanentemente?</b>
+            </button>
+        </div>
+    }
+</div>
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class='box-header with-border'>
                     <div class="user-block">
-                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
                         <span class='description'>@ViewBag.Title</span>
                     </div>
                     <div class='box-tools btn-group'>
@@ -39,14 +59,7 @@
                         </a>
                         <a href="@Url.Action("Create", "Repuestos")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nuevo Repuesto">
                             <i class="fa fa-automobile "></i> <b>Nuevo Repuesto</b>
-                        </a>                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-danger pull-right btn-sm visible-lg tip" title="Eliminar">
-                                <i class="fa fa-times "></i> <b>Eliminar</b>
-                            </button>
-                        }
-
+                        </a>
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class='box-body'>
@@ -93,6 +106,13 @@
                                 </dt>
                                 <dd>
                                     @Html.DisplayFor(model => model.Stock)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Imagen)
+                                </dt>
+
+                                <dd>
+                                    <img class="img-md img-thumbnail tip" title="@Model.Nombre" width="30" src="@Url.Content("~/Content/img/Uploads/Repuestos/" + Model.Imagen)" />
                                 </dd>
                             </dl>
                         </div>

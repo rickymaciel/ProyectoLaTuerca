@@ -1,23 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
+@using LaTuerca.Controllers
+
 @if (!Request.IsAuthenticated)
 {
     Response.Redirect("Account/Login");
 }
 @{
-    string Nick = "";
-    int IndexNick = 0;
-    string NewNick = "";
-    string Name = "";
-}
-@if (Request.IsAuthenticated)
-{
-    if (User.Identity.GetUserName() != "")
+    string Use = "";
+    int IndexUse = 0;
+    string NewUse = "";
+    if (Request.IsAuthenticated)
     {
-        Nick = User.Identity.GetUserName();
-        IndexNick = Nick.IndexOf("@");
 
-        NewNick = Nick.Substring(0, IndexNick);
-        Name = User.Identity.Name;
+        EmpresasController empresa = new EmpresasController();
+        ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+        ViewBag.NombreCortoEmpresa = empresa.getNombreCortoEmpresa();
+        ViewBag.WebEmpresa = empresa.getWebEmpresa();
+        if (User.Identity.GetUserName() != "")
+        {
+            Use = User.Identity.GetUserName();
+            IndexUse = Use.IndexOf("@");
+            NewUse = Use.Substring(0, IndexUse);
+        }
     }
 }
 <!DOCTYPE html>
@@ -25,9 +29,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title | @ViewBag.NombreEmpresa</title>
+            @Styles.Render("~/Content/css")
+            @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body class="sidebar-mini skin-blue">
@@ -35,9 +39,9 @@
         <header class="main-header">
             <!-- Logo -->
             <a href="http://localhost:53172/" class="logo">
-                <i class="fa-adjust fa-wrench"></i>
-                <span class="logo-l" id="NombreEmpresa"></span>
-                <span class="logo-mini" id="NombreCorto"></span>
+                
+                <span class="logo-lg"><i class="fa-adjust fa-wrench"></i> @ViewBag.NombreEmpresa</span>
+                <span class="logo-mini">@ViewBag.NombreCortoEmpresa</span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -57,7 +61,7 @@
                         </div>
                         <div class="pull-left info">
                             <p>@ViewBag.Title</p>
-                            <a href="#"><i class="fa fa-circle text-success"></i><span class="text-uppercase text-gray">@NewNick</span> </a>
+                            <a href="#"><i class="fa fa-circle text-success"></i><span class="text-uppercase text-gray">@NewUse</span> </a>
                         </div>
                     </div>
                     <ul class="sidebar-menu">
@@ -74,15 +78,20 @@
             <div class="pull-right hidden-xs">
                 <img src="~/Content/img/mu.png" height="30" />
             </div>
-            <strong>Copyright &copy; @DateTime.Now.Year - </strong><strong id="NombreFooter"></strong>.   Todos los derechos reservados. <small class="text-right" id="Web"></small>
+            <strong>Copyright &copy; @DateTime.Now.Year - </strong> <a href="#" class="tip" title="@ViewBag.NombreEmpresa | @ViewBag.WebEmpresa"> @ViewBag.NombreEmpresa. </a>  Todos los derechos reservados.
         </footer>
         <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
         $(function () {
+            $("#Imagen").fileinput({
+                theme: "fa",
+                allowedFileExtensions: ["jpg", "png", "gif"],
+                maxFileCount: 1
+            });
             load_marcas();
             load_clientes();
             function load_clientes() {
@@ -139,79 +148,14 @@
                         },
                     },
                     //theme: "plate-dark",
-                    theme: "square"
+                    //theme: "square"
+                    theme: "round"
                 };
                 $("input.Marca").easyAutocomplete(codigoArticulo);
                 $(".easy-autocomplete-container").addClass("text-danger");
 
             };
 
-            var serviceURL = 'http://localhost:53172/Cajas/ObtenerUltimoCajaAbierto';
-            $.ajax({
-                type: "POST",
-                url: serviceURL,
-                data: param = "",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc
-            });
-
-            function successFunc(data, status) {
-                //alert(data);
-                if (data == 0) {
-                    $("li#closeCaja").removeClass("hidden");
-                }
-                else {
-                    $("li#openCaja").removeClass("hidden");
-                    $("i#idcaja").html(data);
-                }
-            };
-            function errorFunc() {
-                alert('error');
-            };
-
-
-            var empresaURL = 'http://localhost:53172/Empresas/getEmpresa';
-
-            $.ajax({
-                type: "POST",
-                url: empresaURL,
-                data: param = "",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: successFunc2,
-                error: errorFunc2
-            });
-
-            function successFunc2(data, status) {
-                $.each(data, function (index) {
-                    var nombre = data[index].Nombre;
-                    var nombrecorto = data[index].NombreCorto;
-                    var Ruc = data[index].Ruc;
-                    var Email = data[index].Email;
-                    var Pais = data[index].Pais;
-                    var Ciudad = data[index].Ciudad;
-                    var Departamento = data[index].Departamento;
-                    var Web = data[index].Web;
-                    var Telefono = data[index].Telefono;
-                    var Direccion = data[index].Direccion;
-                    $("#NombreFooter").append("<a target='_blank' href='" + Web + "'>" + nombre + "</a>");
-                    $("#NombreEmpresa").append(nombre);
-                    $("#NombreCorto").append(nombrecorto);
-                    $("#Ruc").append(Ruc);
-                    $("#Email").append(Email);
-                    $("#Pais").append(Pais);
-                    $("#Departamento").append(Departamento);
-                    $("#Ciudad").append(Ciudad);
-                    $("#Telefono").append(Telefono);
-                    $("#Direccion").append(Direccion);
-                })
-            };
-
-            function errorFunc2() {
-                alert('error');
-            };
             var oTable = $('#tablaMenu').DataTable({
                 dom: 'Bfrtip',
                 buttons: [

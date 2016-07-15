@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
+using System.IO;
 
 namespace LaTuerca.Controllers
 {
@@ -46,24 +47,51 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre")] Marca marca)
+        public ActionResult Create([Bind(Include = "Id,Nombre,ImagenUrl")] Marca marca, HttpPostedFileBase Imagen)
         {
             if (ModelState.IsValid)
             {
+
+                if (Imagen != null)
+                {
+                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    Imagen.SaveAs(path);
+                    marca.Imagen = fileName;
+                }
+                else
+                {
+                    var fileName = Path.GetFileName("Default.jpg");
+                    marca.Imagen = fileName;
+                }
+
                 db.Marcas.Add(marca);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(marca);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AjaxCreate(Marca marca)
+        public ActionResult AjaxCreate(Marca marca, HttpPostedFileBase Imagen)
         {
             if (ModelState.IsValid)
             {
+
+                if (Imagen != null)
+                {
+                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    Imagen.SaveAs(path);
+                    marca.Imagen = fileName;
+                }
+                else
+                {
+                    var fileName = Path.GetFileName("Default.jpg");
+                    marca.Imagen = fileName;
+                }
+
                 db.Marcas.Add(marca);
                 db.SaveChanges();
             }
@@ -89,10 +117,23 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre")] Marca marca)
+        public ActionResult Edit([Bind(Include = "Id,Nombre,ImagenUrl")] Marca marca, HttpPostedFileBase Imagen)
         {
             if (ModelState.IsValid)
             {
+                if (Imagen != null)
+                {
+                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    Imagen.SaveAs(path);
+                    marca.Imagen = fileName;
+                }
+                else
+                {
+                    var fileName = Path.GetFileName("Default.jpg");
+                    marca.Imagen = fileName;
+                }
+
                 db.Entry(marca).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

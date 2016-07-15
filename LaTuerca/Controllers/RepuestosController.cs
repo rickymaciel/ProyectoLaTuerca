@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
 using LaTuerca.ViewModels;
+using System.IO;
 
 namespace LaTuerca.Controllers
 {
@@ -52,14 +53,26 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Repuesto repuesto)
+        public ActionResult Create(Repuesto repuesto, HttpPostedFileBase Imagen)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.ModeloId = new SelectList(db.Modeloes, "Id", "NombreModelo", repuesto.ModeloId);
                 ViewBag.ProveedorId = new SelectList(db.Proveedors, "Id", "RazonSocial", repuesto.ProveedorId);
                 ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nombre", repuesto.CategoriaId);
-                
+
+                if (Imagen != null)
+                {
+                    var fileName = Path.GetFileName(repuesto.Nombre + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Repuestos/"), fileName);
+                    Imagen.SaveAs(path);
+                    repuesto.Imagen = fileName;
+                }
+                else
+                {
+                    var fileName = Path.GetFileName("Default.jpg");
+                    repuesto.Imagen = fileName;
+                }
                 db.Repuestoes.Add(repuesto);
                 db.SaveChanges();
                 TempData["notice"] = "El producto ha sido guardado!";
@@ -97,7 +110,7 @@ namespace LaTuerca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Repuesto repuesto)
+        public ActionResult Edit(Repuesto repuesto, HttpPostedFileBase Imagen)
         {
             if (ModelState.IsValid)
             {
@@ -113,6 +126,19 @@ namespace LaTuerca.Controllers
                 r.Stock = repuesto.Stock;
                 r.StockMaximo = repuesto.StockMaximo;
                 r.StockMinimo = repuesto.StockMinimo;
+
+                if (Imagen != null)
+                {
+                    var fileName = Path.GetFileName(repuesto.Nombre + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Repuestos/"), fileName);
+                    Imagen.SaveAs(path);
+                    r.Imagen = fileName;
+                }
+                else
+                {
+                    var fileName = Path.GetFileName("Default.jpg");
+                    r.Imagen = fileName;
+                }
                 db.Entry(r).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["notice"] = "El producto ha sido modificado!";

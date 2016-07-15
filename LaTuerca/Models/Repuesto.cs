@@ -61,5 +61,9 @@ namespace LaTuerca.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "El precio no puede tener valor negativo")]
         public float PrecioVenta3 { get; set; }
 
+
+        [DataType(DataType.ImageUrl)]
+        public string Imagen { get; set; } 
+
     }
 }

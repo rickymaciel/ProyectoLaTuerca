@@ -228,10 +228,17 @@ namespace LaTuerca.Controllers
 
         public int ObtenerUltimoCajaAbierto()
         {
-            var Nick = User.Identity.GetUserName();
-            var IndexNick = Nick.IndexOf("@");
-            var usuario = Nick.Substring(0, IndexNick);
-            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuario).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            var U = User.Identity.GetUserName();
+            var IndexU = U.IndexOf("@");
+            var usuari = U.Substring(0, IndexU);
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == usuari).Select(c => c.Id).DefaultIfEmpty(0).Max();
+            return ultimoabierto;
+        }
+
+
+        public int ObtenerUltimoCajaAbiertoUsuario(String us)
+        {
+            var ultimoabierto = db.Cajas.Where(c => c.Estado == false && c.Usuario == us).Select(c => c.Id).DefaultIfEmpty(0).Max();
             return ultimoabierto;
         }
         // POST: Cajas/Create

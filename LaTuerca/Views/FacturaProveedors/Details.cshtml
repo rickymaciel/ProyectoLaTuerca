@@ -1,4 +1,10 @@
 ﻿@model LaTuerca.Models.FacturaProveedor
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
+
 
 @{
     ViewBag.Title = "Factura Nº " + @Html.DisplayFor(model => model.NumeroFactura);
@@ -18,9 +24,9 @@
             <div class="col-xs-12">
                 <h2 class="page-header box-header">
                     <small class="user-block">
-                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
-                        <span class='description'>Factura Proveedor</span>
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
+                        <span class='description'>@ViewBag.Title</span>
                     </small>
                     <span class='box-tools btn-group'>
                         <a href="@Url.Action("Factura", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Factura">

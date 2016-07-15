@@ -229,6 +229,14 @@
     <Compile Include="Migrations\201607131412045_Update.Designer.cs">
       <DependentUpon>201607131412045_Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607151653206_AddImagenMarcas.cs" />
+    <Compile Include="Migrations\201607151653206_AddImagenMarcas.Designer.cs">
+      <DependentUpon>201607151653206_AddImagenMarcas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607151754363_AddImagenRepuesto.cs" />
+    <Compile Include="Migrations\201607151754363_AddImagenRepuesto.Designer.cs">
+      <DependentUpon>201607151754363_AddImagenRepuesto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
@@ -259,6 +267,14 @@
   <ItemGroup>
     <Content Include="Content\AdminLTE.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.min.css" />
+    <Content Include="Content\bootstrap-fileinput\img\loading-sm.gif" />
+    <Content Include="Content\bootstrap-fileinput\img\loading.gif" />
+    <Content Include="Content\bootstrap-fileinput\themes\fa\theme.js" />
+    <Content Include="Content\bootstrap-fileinput\themes\gly\theme.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
@@ -321,6 +337,7 @@
     <Content Include="Content\img\icons.png" />
     <Content Include="Content\img\mu.png" />
     <Content Include="Content\img\mundo.jpeg" />
+    <Content Include="Content\img\Uploads\Default.jpg" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -399,8 +416,13 @@
     <Content Include="fonts\meteo.woff" />
     <Content Include="fonts\steadysets.eot" />
     <Content Include="fonts\steadysets.ttf" />
+    <Content Include="Scripts\fileinput.js" />
+    <Content Include="Scripts\fileinput.min.js" />
     <Content Include="Scripts\input-mask\phone-codes\phone-be.json" />
     <Content Include="Scripts\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
@@ -440,12 +462,48 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\locales\ar.js" />
+    <Content Include="Scripts\locales\bg.js" />
+    <Content Include="Scripts\locales\ca.js" />
+    <Content Include="Scripts\locales\cr.js" />
+    <Content Include="Scripts\locales\cz.js" />
+    <Content Include="Scripts\locales\da.js" />
+    <Content Include="Scripts\locales\de.js" />
+    <Content Include="Scripts\locales\el.js" />
+    <Content Include="Scripts\locales\es.js" />
+    <Content Include="Scripts\locales\fa.js" />
+    <Content Include="Scripts\locales\fi.js" />
+    <Content Include="Scripts\locales\fr.js" />
+    <Content Include="Scripts\locales\hu.js" />
+    <Content Include="Scripts\locales\id.js" />
+    <Content Include="Scripts\locales\it.js" />
+    <Content Include="Scripts\locales\ja.js" />
+    <Content Include="Scripts\locales\LANG.js" />
+    <Content Include="Scripts\locales\nl.js" />
+    <Content Include="Scripts\locales\pl.js" />
+    <Content Include="Scripts\locales\pt-BR.js" />
+    <Content Include="Scripts\locales\pt.js" />
+    <Content Include="Scripts\locales\ro.js" />
+    <Content Include="Scripts\locales\ru.js" />
+    <Content Include="Scripts\locales\sk.js" />
+    <Content Include="Scripts\locales\th.js" />
+    <Content Include="Scripts\locales\tr.js" />
+    <Content Include="Scripts\locales\uk.js" />
+    <Content Include="Scripts\locales\zh-TW.js" />
+    <Content Include="Scripts\locales\zh.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Moment.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\NuevaCompra.js" />
     <Content Include="Scripts\NuevaCompraScript.js" />
     <Content Include="Scripts\NuevaVenta.js" />
     <Content Include="Scripts\NuevaVentaScript.js" />
+    <Content Include="Scripts\plugins\canvas-to-blob.js" />
+    <Content Include="Scripts\plugins\canvas-to-blob.min.js" />
+    <Content Include="Scripts\plugins\purify.js" />
+    <Content Include="Scripts\plugins\purify.min.js" />
+    <Content Include="Scripts\plugins\sortable.js" />
+    <Content Include="Scripts\plugins\sortable.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.js" />
@@ -603,6 +661,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\Repuestos\" />
     <Folder Include="Scripts\lib\" />
     <Folder Include="Scripts\locale\" />
   </ItemGroup>
@@ -643,6 +702,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607131412045_Update.resx">
       <DependentUpon>201607131412045_Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607151653206_AddImagenMarcas.resx">
+      <DependentUpon>201607151653206_AddImagenMarcas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607151754363_AddImagenRepuesto.resx">
+      <DependentUpon>201607151754363_AddImagenRepuesto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

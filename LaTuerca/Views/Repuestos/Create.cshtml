@@ -1,4 +1,9 @@
 ﻿@model LaTuerca.Models.Repuesto
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Crear Repuesto";
@@ -14,7 +19,7 @@
     </div>
 }
 <section class="content">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Repuestos", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row">
@@ -22,8 +27,8 @@
                 <div class="box box-primary">
                     <div class='box-header with-border'>
                         <div class="user-block">
-                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                            <span class="username"><a href="#">Mundo Tuerca, Inc</a></span>
+                            <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                            <span class="username"><a href="#">@ViewBag.NombreEmpresa</a></span>
                             <span class='description'>@ViewBag.Title</span>
                         </div>
                         <div class='box-tools btn-group'>
@@ -82,6 +87,11 @@
                                 @Html.LabelFor(model => model.PrecioVenta3, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.PrecioVenta3, new { htmlAttributes = new { @class = "form-control", @id = "precioventa3", min = "0", autocomplete = "off", placeholder = "Precio de venta3", @required = "true" } })
                                 @Html.ValidationMessageFor(model => model.PrecioVenta3, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Imagen, new { htmlAttributes = new { @class = "file-loading", type = "file", autocomplete = "off", placeholder = "Imagen", @required = "true", @multiple = "true", @data_show_upload = "false", @data_show_caption = "true" } })
+                                @Html.ValidationMessageFor(model => model.Imagen, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -187,8 +197,7 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <input name="__RequestVerificationToken" type="hidden" value="G_780vsh20UkXFw_mPeIz9r7yaT2Yhw8odmjpL3u5NAjH3VCIkzcRoZWrxdyJrs-oN3OARhZnH-zZqBbRhI662TlIVVwU4TREMOobAgPI2IEEjnHRH18UxHqBGlcTp5-OHODfoUhotaiKiFdsgq1zA2" />
-
+                    
                     <div class="form-horizontal">
 
                         <div class="form-group">
@@ -200,11 +209,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="MarcaId">MarcaId</label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Marca must be a number." data-val-required="La marca es requerida" id="MarcaId" name="MarcaId" type="hidden" value="" />
-                                <input class="Marca form-control" placeholder="Buscar" title="Buscar Marca" required>
-                                <span class="field-validation-valid text-danger" data-valmsg-for="MarcaId" data-valmsg-replace="true"></span>
+                            <label class="control-label col-lg-2" for="Marca">Marca</label>
+                            <div class="col-lg-2">
+                                <a href="" class="btn btn-default btn-sm tip" title="Crear Nueva Marca" data-toggle="modal" data-target="#crearMarca">
+                                    <i class="fa fa-user-plus"></i>
+                                </a>
+                            </div>
+                            <div class="col-lg-8 has-feedback ">
+                                    <input class="Marca form-control" placeholder="Buscar" title="Buscar Marca" required>
+                                   <input class="form-control text-box single-line" data-val="true" data-val-number="The field Marca must be a number." data-val-required="La marca es requerida" id="MarcaId" name="MarcaId" type="hidden" value="" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="MarcaId" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -228,6 +242,44 @@
     </form>
 </div><!-- /.modal -->
 
+<div class="modal" id="crearMarca" tabindex="-1" role="dialog">
+    <form action="/Marcas/AjaxCreate" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#Marca" id="form1" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <span class="im-plus"></span>
+                        Crear Marca
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Nombre">Nombre</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-length="El campo Nombre debe ser una cadena con una longitud mínima de 3 y una longitud máxima de 60." data-val-length-max="60" data-val-length-min="3" data-val-required="Debe ingresar un nombre" id="Nombre" name="Nombre" placeholder="Nombre" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Nombre" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Imagen">Imagen</label>
+                            <div class="col-md-10">
+                                <input class=" text-box single-line" type="file" data-val="true" data-val-length="El campo Nombre debe ser una cadena con una longitud mínima de 3 y una longitud máxima de 100." data-val-length-max="100" data-val-length-min="3" data-val-required="Debe ingresar una Imagen" id="Image" name="Imagen" placeholder="Imagen" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Imagen" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success"><i class="en-add-to-list"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
 <div class="modal" id="crearCategoria" tabindex="-1" role="dialog">
     <form action="/Categorias/AjaxCreate" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#Categoria" id="form1" method="post">
         <div class="modal-dialog">
@@ -240,7 +292,6 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <input name="__RequestVerificationToken" type="hidden" value="FpJGJKZ3GEFOH9qNOm5eZNJty-EB1jy6MXK03bagn-nMmhhgJolI3mzhOhqgZsBn30Uopqlk0fSOW4kPX2kEzrzNxa2l_mnBmZnoePb12tRcIb7g1lbxN1KvENkN0aAdzzXgbR0WDtU9-ArGj9LuDg2" />
                     <div class="form-horizontal">
 
                         <div class="form-group">
@@ -275,7 +326,6 @@
                 <div class="modal-body">
 
 
-                    <input name="__RequestVerificationToken" type="hidden" value="scEw4FVSpx14SoxexdU89N17lozEMe7Jylzq-CAAijMYonIbza91wnOO6Pmr4Iu14y5FQ2SAsPIGoh2mt7M-Kw2k5LPGoXXZq-GGBJkVp1MIHP8fnd4ktVolRKFNM4R5U3-D1J0nY5KeF3KT28xz2g2" />
                     <input id="action" name="action" type="hidden" value="Edit" />
                     <input id="controller" name="controller" type="hidden" value="Repuestos" />
                     <div class="form-horizontal">

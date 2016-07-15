@@ -1,4 +1,9 @@
 ﻿@model LaTuerca.Models.FacturaProveedor
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 @{
     ViewBag.Title = "Factura Nº " + @Html.DisplayFor(model => model.NumeroFactura);
     Layout = "~/Views/Shared/_LayoutPrint.cshtml";
@@ -12,8 +17,8 @@
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                     <address class="user-block page-header">
-                        <img class="img-circle" src="~/Content/img/mundo.jpeg" width="50" title="Mundo Tuerca" alt="Mundo Tuerca">
-                        <strong class="username"><a href="#">Mundo Tuerca, Inc</a></strong>
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
                         <small class="description">Mcal. Estigarribia c/ Artigas, Zona Alta</small>
                         <small class="description">Encarnación, Itapúa</small>
                         <small class="description">Telefono: (071) 243-345</small>

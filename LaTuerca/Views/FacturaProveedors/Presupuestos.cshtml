@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<LaTuerca.Models.FacturaProveedor>
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Presupuestos";
-    IFormatProvider formatProvider = new System.Globalization.CultureInfo("es-PY");
 }
 
 

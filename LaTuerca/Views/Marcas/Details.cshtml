@@ -1,51 +1,50 @@
 ﻿@model LaTuerca.Models.Marca
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Detalle";
 }
 
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
+
+
 <section class="content">
     <div class="row">
-        <div class="col-lg-2">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Submenú</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class='box-header with-border'>
+                    <div class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
+                        <span class='description'>@ViewBag.Title</span>
+
+                    </div>
+                    <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Index", "Marcas")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Marcas">
+                            <i class="fa fa-barcode"></i>
+                        </a>
+                        <a href="@Url.Action("Index", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Marcas">
+                            <i class="fa fa-barcode"></i> <b>Ver Marcas</b>
+                        </a>
+                        <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Marca">
+                            <i class="fa fa-plus-sign2"></i>
+                        </a>
+                        <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Marca">
+                            <i class="fa fa-plus-sign2"></i> <b>Nueva Marca</b>
+                        </a>
                     </div>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li>
-                            <a href="@Url.Action("Create", "Marcas")">
-                                <i class="im-plus"></i> Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Marcas")">
-                                <i class="im-menu2"></i> Ver todo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Edit", "Marcas", new { id = Model.Id })">
-                                <i class="im-pencil2"></i> Modificar
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /. box -->
-        </div>
-        <!-- left column -->
-        <div class="col-lg-10">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <i class="im-menu"></i> @ViewBag.Title
-                    </h3>
-                </div><!-- /.box-header -->
                 <div class="box-body">
                     <dl class="dl-horizontal">
                         <dt>
@@ -55,7 +54,13 @@
                         <dd>
                             @Html.DisplayFor(model => model.Nombre)
                         </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Imagen)
+                        </dt>
 
+                        <dd>
+                            <img class="img-lg img-thumbnail tip" width="100" title="@Model.Nombre" src="@Url.Content("~/Content/img/Uploads/" + Model.Imagen)" />
+                        </dd>
                     </dl>
                 </div>
             </div>

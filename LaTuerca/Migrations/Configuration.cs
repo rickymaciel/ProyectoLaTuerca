@@ -263,27 +263,33 @@ namespace LaTuerca.Migrations
                 p => p.Nombre,
                 new Models.Marca
                 {
-                    Nombre = "GENÉRICO"
+                    Nombre = "GENÉRICO",
+                    Imagen = "Default.jpg"
                 },
                 new Models.Marca
                 {
-                    Nombre = "TOYOTA"
+                    Nombre = "TOYOTA",
+                    Imagen = "Default.jpg"
                 },
                 new Models.Marca
                 {
-                    Nombre = "MERCEDEZ BENZ"
+                    Nombre = "MERCEDEZ BENZ",
+                    Imagen = "Default.jpg"
                 },
                 new Models.Marca
                 {
-                    Nombre = "HONDA"
+                    Nombre = "HONDA",
+                    Imagen = "Default.jpg"
                 },
                 new Models.Marca
                 {
-                    Nombre = "CHEVROLET"
+                    Nombre = "CHEVROLET",
+                    Imagen = "Default.jpg"
                 },
                 new Models.Marca
                 {
-                    Nombre = "SUZUKI"
+                    Nombre = "SUZUKI",
+                    Imagen = "Default.jpg"
                 }
             );
 
@@ -391,6 +397,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 912000,
                     PrecioVenta2 = 1026000,
                     PrecioVenta3 = 1064000,
+                    Imagen = "Default.jpg"
                 },
                 new Models.Repuesto
                 {
@@ -405,6 +412,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 444000,
                     PrecioVenta2 = 499500,
                     PrecioVenta3 = 518000,
+                    Imagen = "Default.jpg"
                 },
                 new Models.Repuesto
                 {
@@ -419,6 +427,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 540000,
                     PrecioVenta2 = 607500,
                     PrecioVenta3 = 630000,
+                    Imagen = "Default.jpg"
                 }
             );
             context.Users.AddOrUpdate(

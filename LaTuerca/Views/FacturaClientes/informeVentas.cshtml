@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<LaTuerca.Models.FacturaCliente>
 @using Microsoft.AspNet.Identity
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Informe de Ventas";

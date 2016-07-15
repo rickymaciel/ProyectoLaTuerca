@@ -1,8 +1,21 @@
 ﻿@using Microsoft.AspNet.Identity
 @{
-        string Name = "";
-        Name = User.Identity.Name;
-        string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+    string Name = "";
+    Name = User.Identity.Name;
+
+    string Use = "";
+    int IndexUse = 0;
+    string NewUse = "";
+    Use = User.Identity.GetUserName();
+    if (Use != "")
+    {
+        IndexUse = Use.IndexOf("@");
+        NewUse = Use.Substring(0, IndexUse);
+    }
+    
+    string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+    LaTuerca.Controllers.CajasController caja = new LaTuerca.Controllers.CajasController();
+    ViewBag.EstadoCaja = caja.ObtenerUltimoCajaAbiertoUsuario(NewUse);
 }
 @if (Request.IsAuthenticated)
 {
@@ -13,19 +26,27 @@
         @Html.AntiForgeryToken()
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown notifications-menu hidden" id="openCaja">
-                    <a href="@Url.Action("Index", "Cajas")" class="" title="Nº de Caja">
-                        <i class="fa fa-folder-open-alt"></i>
-                        <span class="label label-warning">
-                            <i class="" id="idcaja"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="dropdown notifications-menu hidden" id="closeCaja">
-                    <a href="#" class="tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
-                        <i class="fa fa-folder-close-alt"></i> Abrir caja para continuar
-                    </a>
-                </li>
+                @{
+        if (ViewBag.EstadoCaja == 0)
+        {
+            <li class="dropdown notifications-menu">
+                <a href="#" class="tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                    <i class="fa fa-folder-close-alt"></i> Abrir caja para continuar
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="dropdown notifications-menu">
+                <a href="@Url.Action("Index", "Cajas")" class="" title="Nº de Caja">
+                    <i class="fa fa-folder-open-alt"></i>
+                    <span class="label label-warning">
+                        @ViewBag.EstadoCaja
+                    </span>
+                </a>
+            </li>
+        }
+                }
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <i class="fa fa-cart-plus"></i>

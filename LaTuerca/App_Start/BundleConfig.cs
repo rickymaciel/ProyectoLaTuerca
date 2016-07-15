@@ -27,7 +27,6 @@ namespace LaTuerca
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/app.js",
@@ -64,6 +63,7 @@ namespace LaTuerca
                       "~/Scripts/jquery.easy-autocomplete.min.js",
                       "~/Scripts/jquery-ui.min.js",
                       "~/Scripts/selectize.js",
+                      "~/Scripts/fileinput.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -88,6 +88,10 @@ namespace LaTuerca
                       "~/Content/jquery-ui.theme.css",
                       "~/Content/print.css",
                       "~/Content/jquery-ui-1.10.3.custom.css",
+                      "~/Content/bootstrap-fileinput/css/fileinput.css",
+                      "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/fa/theme.js",
+                      "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/gly/theme.js",
+                      "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/gly/theme.js",
                       "~/Content/font-awesome.min.css"));
         }
     }

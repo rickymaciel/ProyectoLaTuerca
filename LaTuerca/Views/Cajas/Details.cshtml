@@ -1,4 +1,9 @@
 ﻿@model LaTuerca.Models.Caja
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Detalles de Caja";

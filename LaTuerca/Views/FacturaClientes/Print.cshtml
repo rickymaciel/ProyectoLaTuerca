@@ -1,4 +1,9 @@
 ﻿@model LaTuerca.Models.FacturaCliente
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 @{
     ViewBag.Title = "Factura Nº " + @Html.DisplayFor(model => model.NumeroFactura);
     Layout = "~/Views/Shared/_LayoutPrint.cshtml";
