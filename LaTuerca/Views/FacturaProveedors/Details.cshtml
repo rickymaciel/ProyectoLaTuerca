@@ -121,11 +121,11 @@
                     <table class="table">
                         <tr>
                             <th class="text-right">Subtotal:</th>
-                            <td class="text-right">@neto</td>
+                            <td class="text-right">@String.Format("{0:n2}", neto)</td>
                         </tr>
                         <tr>
                             <th class="text-right">Iva (10%)</th>
-                            <td class="text-right">@iva</td>
+                            <td class="text-right">@String.Format("{0:n2}", iva)</td>
                         </tr>
                         <tr>
                             <th class="text-right">Total:</th>

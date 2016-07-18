@@ -1,8 +1,11 @@
 ﻿@using LaTuerca.Models
+@using LaTuerca.Controllers
 @model RegisterViewModel
 @{
     Layout = null;
     ViewBag.Title = "Registrar nuevo usuario";
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
 }
 <!DOCTYPE html>
 <html>
@@ -18,7 +21,20 @@
         <div class="login-logo">
             <a href="http://localhost:53172/" class="logo">
                 <i class="fa-adjust fa-wrench"></i>
-                <span class="logo-lg" id="Nombre"></span>
+                <span class="logo-lg">
+                    @{
+                        String nombre = "";
+                        if ((ViewBag.NombreEmpresa != "") && (ViewBag.NombreEmpresa != null))
+                        {
+                            nombre = ViewBag.NombreEmpresa;
+                        }
+                        else
+                        {
+                            nombre = "[Configurar Empresa]";
+                        }
+                    }
+                    @nombre
+                </span>
             </a>
         </div>
         <!-- /.login-logo -->
@@ -27,7 +43,7 @@
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-small callout callout-danger" })
                 <div class="form-group has-feedback">
                     <div class="col-md-12">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email", @required = "true" })

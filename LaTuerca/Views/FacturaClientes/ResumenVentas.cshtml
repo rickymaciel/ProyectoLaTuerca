@@ -27,7 +27,15 @@
     var monto = 0;
 }
 
-<paragraph style="font-family:Helvetica;font-size:18px;font-style:italic;">
+
+<image url="@Context.Server.MapPath("~/Content/img/mundoi.png")" />
+
+<paragraph style="font-family:Helvetica;font-size:18px;font-style:italic">
+    <chunk red="255" green="255" blue="255">
+        -
+    </chunk>
+</paragraph>
+<paragraph style="font-family:Helvetica;font-size:18px;font-style:italic">
     <chunk red="255" green="0" blue="0">@ViewBag.Title</chunk>
 </paragraph>
 <paragraph style="font-family:Helvetica;font-size:9px;">
@@ -42,35 +50,43 @@
     <chunk style="font-family:Helvetica;font-weight:bold;">Usuario: </chunk>
     <chunk style="font-family:Helvetica;">@ViewBag.Usuario</chunk>
 </paragraph>
+<paragraph style="font-family:Helvetica;font-size:9px;">
+    <chunk style="font-family:Helvetica;font-weight:bold;" red="50" green="50" blue="50">Desde: </chunk>
+    <chunk style="font-family:Helvetica;" red="100" green="100" blue="100">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", ViewBag.Desde)</chunk>
+</paragraph>
+<paragraph style="font-family:Helvetica;font-size:9px;">
+    <chunk style="font-family:Helvetica;font-weight:bold;" red="50" green="50" blue="50">Hasta: </chunk>
+    <chunk style="font-family:Helvetica;" red="100" green="100" blue="100">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", ViewBag.Hasta)</chunk>
+</paragraph>
 
 
 
-<table columns="4" cellpadding="1" width="100%" align="Center" cellspacing="1" widths="20,25,30,25" borderwidth="1" left="true" right="true" top="true" bottom="true" red="0" green="20" blue="100">
+<table columns="4" cellpadding="1" width="100%" align="Center" left="true" right="true" top="true" bottom="true" red="0" green="0" blue="0">
     <row>
-        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+        <cell backgroundcolor="#BDBDBD" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
             <phrase leading="18.0" font="unknown" align="Center">
-                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                <chunk font="Helvetica" size="10.0" fontstyle="normal" red="0" green="0" blue="0">
                     Fecha
                 </chunk>
             </phrase>
         </cell>
-        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+        <cell backgroundcolor="#BDBDBD" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
             <phrase leading="18.0" font="unknown" align="Center">
-                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                <chunk font="Helvetica" size="10.0" fontstyle="normal" red="0" green="0" blue="0">
                     Numero de Factura
                 </chunk>
             </phrase>
         </cell>
-        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+        <cell backgroundcolor="#BDBDBD" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
             <phrase leading="18.0" font="unknown" align="Center">
-                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                <chunk font="Helvetica" size="10.0" fontstyle="normal" red="0" green="0" blue="0">
                     Cliente
                 </chunk>
             </phrase>
         </cell>
-        <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
+        <cell backgroundcolor="#BDBDBD" left="true" right="true" top="true" bottom="true" horizontalalign="Center" verticalalign="Center" leading="18.0">
             <phrase leading="18.0" font="unknown" align="Center">
-                <chunk font="Helvetica" size="8.0" fontstyle="normal" red="0" green="0" blue="0">
+                <chunk font="Helvetica" size="10.0" fontstyle="normal" red="0" green="0" blue="0">
                     Monto
                 </chunk>
             </phrase>

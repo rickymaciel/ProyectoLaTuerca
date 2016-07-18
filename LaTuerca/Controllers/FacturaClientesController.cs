@@ -30,7 +30,86 @@ namespace LaTuerca.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ResumenVentas(DateTime from, DateTime to)
+        public ActionResult ConfimarPago(int? id)
+        {
+            //ViewBag.ClienteId = new SelectList(db.Proveedors, "Id", "RazonSocial", facturaProveedor.ProveedorId);
+            if (ModelState.IsValid)
+            {
+                FacturaCliente f = db.FacturaClientes.Find(id);
+                using (System.Data.Entity.DbContextTransaction dbTran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ActualizarFactura(id);
+                        ActualizarStock(f);
+                        ActualizarCaja(f);
+                        GenerarMovimiento(id);
+                        dbTran.Commit();
+                        TempData["notice"] = "La Factura Número: " + f.NumeroFactura + " fue guardada correctamente!";
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
+                        return RedirectToAction("Factura");
+                    }
+
+                }
+                return RedirectToAction("Details/" + ObtenerIdMax());
+            }
+            TempData["notice"] = "Error";
+            return RedirectToAction("Factura");
+        }
+        public void ActualizarFactura(int? id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+                DateTime FechadePago = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                FacturaCliente factura = db.FacturaClientes.Find(id);
+                var newfactura = new FacturaCliente
+                {
+                    Id = factura.Id,
+                    ClienteId = factura.ClienteId,
+                    Fecha = factura.Fecha,
+                    FechaPago = FechadePago,
+                    Metodo = "Contado",
+                    NumeroFactura = factura.NumeroFactura,
+                    Pagado = true,
+                    Total = factura.Total,
+                    TotalPagado = factura.Total
+                };
+                context.FacturaClientes.Add(newfactura);
+                context.Entry(newfactura).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+
+        public void GenerarMovimiento(int? id)
+        {
+            FacturaCliente factura = db.FacturaClientes.Find(id);
+            using (var context = new ApplicationDbContext())
+            {
+                var movimiento = new MovimientoCaja
+                {
+                    Fecha = DateTime.Now,
+                    CajaId = ObtenerUltimoCajaAbierto(),
+                    Concepto = "Factura Venta Nº: " + factura.NumeroFactura,
+                    Movimiento = "Entrada",
+                    Ingreso = factura.Total,
+                    Egreso = 0,
+                    Saldo = (int)ObtenerSaldoUltimoCajaAbierto()
+                };
+                context.MovimientoCajas.Add(movimiento);
+                context.SaveChanges();
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResumenVenta(DateTime from, DateTime to)
         {
             var fromDate = from;
             var toDate = to;
@@ -40,6 +119,19 @@ namespace LaTuerca.Controllers
             return new PdfResult(resumen, "ResumenVentas");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public object ResumenVentas(DateTime from, DateTime to)
+        {
+            var fromDate = from;
+            var toDate = to;
+            var resumen = db.FacturaClientes.Where(x => x.Pagado == true).Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+            var pdf = new RazorPDF.PdfResult(resumen, "ResumenVentas");
+            pdf.ViewBag.Title = "Titulo del Reporte";
+            pdf.ViewBag.Desde = from;
+            pdf.ViewBag.Hasta = to;
+            return pdf;
+        }
 
         public ActionResult PrintFactura(int? id)
         {
@@ -127,7 +219,7 @@ namespace LaTuerca.Controllers
                     }
 
                 }
-                return RedirectToAction("Pagar/" + facturaCliente.Id);
+                return RedirectToAction("Details/" + facturaCliente.Id);
             }
             TempData["notice"] = "Todos los campos son requeridos!";
             return View(facturaCliente);
@@ -210,11 +302,11 @@ namespace LaTuerca.Controllers
                     {
                         dbTran.Rollback();
                         TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
-                        return View(facturaCliente);
+                        return RedirectToAction("Factura");
                     }
 
                 }
-                return RedirectToAction("Pagar/"+ObtenerIdMax());
+                return RedirectToAction("Details/"+ObtenerIdMax());
             }
 
             TempData["notice"] = "Todos los campos son requeridos!";
@@ -300,8 +392,8 @@ namespace LaTuerca.Controllers
             {
                 Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
                 int cantOperaciones = (int)c.Operaciones + 1;
-                int sumaEntrada = (int)c.Entrada + facturaCliente.TotalPagado;
-                int cierre = (int)c.Cierre + facturaCliente.TotalPagado;
+                int sumaEntrada = (int)c.Entrada + facturaCliente.Total;
+                int cierre = (int)c.Cierre + facturaCliente.Total;
                 var caja = new Caja
                 {
                     Id = c.Id,
@@ -332,7 +424,7 @@ namespace LaTuerca.Controllers
                     CajaId = ObtenerUltimoCajaAbierto(),
                     Concepto = "Factura Venta Nº: " + facturaCliente.NumeroFactura,
                     Movimiento = "Entrada",
-                    Ingreso = facturaCliente.TotalPagado,
+                    Ingreso = facturaCliente.Total,
                     Egreso = 0,
                     Saldo = (int)ObtenerSaldoUltimoCajaAbierto()
                 };

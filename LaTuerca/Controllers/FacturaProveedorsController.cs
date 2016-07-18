@@ -109,7 +109,7 @@ namespace LaTuerca.Controllers
                     {
                         dbTran.Rollback();
                         TempData["notice"] = "No se pudo realizar la transacción!" + ex.Message;
-                        return View(facturaProveedor);
+                        return RedirectToAction("Factura");
                     }
 
                 }

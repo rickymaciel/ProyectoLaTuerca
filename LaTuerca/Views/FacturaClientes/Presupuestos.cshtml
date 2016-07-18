@@ -85,9 +85,14 @@
                                                 <tr>
                                                     <td class="col-lg-1">
                                                         <div class="btn-group btn-group-justified">
-                                                            <a href="@Url.Action("Pagar", "FacturaClientes", new { id = item.Id })" class="btn btn-success btn-flat btn-xs" title="Realizar Pago">
-                                                                <i class="fa fa-paper-clip"></i> Aprobar
-                                                            </a>
+                                                                    <span class="form-actions no-color">
+                                                                        <a href="@Url.Action("Details", "FacturaClientes", new { id = item.Id })" class="btn btn-success btn-xs btn-flat tip visible-lg" title="Aprobar Presupuesto" type="submit">
+                                                                            <i class="fa fa-paper-clip"></i>  <b>Aprobar</b>
+                                                                        </a>
+                                                                        <a href="@Url.Action("Details", "FacturaClientes", new { id = item.Id })" class="btn btn-success btn-xs btn-flat hidden-lg btn-sm tip" title="Aprobar Presupuesto" type="submit">
+                                                                            <i class="fa fa-paper-clip"></i>
+                                                                        </a>
+                                                                    </span>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -115,7 +120,7 @@
                                                         @Html.DisplayFor(modelItem => item.Pagado)
                                                     </td>
                                                 </tr>
-                                        }
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

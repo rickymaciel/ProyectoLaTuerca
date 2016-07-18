@@ -337,6 +337,7 @@
     <Content Include="Content\img\icons.png" />
     <Content Include="Content\img\mu.png" />
     <Content Include="Content\img\mundo.jpeg" />
+    <Content Include="Content\img\mundoi.png" />
     <Content Include="Content\img\Uploads\Default.jpg" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-ui-1.10.3.custom.css" />

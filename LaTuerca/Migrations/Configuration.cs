@@ -90,11 +90,11 @@ namespace LaTuerca.Migrations
               new Models.Menu
               {
                   //8
-                  ParentId = 0,
-                  Name = "Configuración",
-                  Description = "Configuraciones del sistema",
-                  Action = "",
-                  Controller = "",
+                  ParentId = 3,
+                  Name = "Ventas",
+                  Description = "Resumen de Ventas",
+                  Action = "InformeVentas",
+                  Controller = "FacturaClientes",
                   Active = true
               },
               new Models.Menu
@@ -251,7 +251,7 @@ namespace LaTuerca.Migrations
               {
                   //24
                   ParentId = 3,
-                  Name = "Informe de Movimientos",
+                  Name = "Movimientos",
                   Description = "Informe de Movimientos de Caja",
                   Action = "InformeMovimientos",
                   Controller = "Cajas",
@@ -354,6 +354,20 @@ namespace LaTuerca.Migrations
                     Direccion = "Ruta 6 Km. 48",
                     Telefono = "(021) 582-750",
                     Celular = "(0975) 582-750"
+                }
+            );
+
+
+
+            context.Clientes.AddOrUpdate(
+                p => p.RazonSocial,
+                new Models.Cliente
+                {
+                    RazonSocial = "CHACOMER AUTOMOTORES",
+                    Documento = "3452943",
+                    Direccion = "Avda. Eusebio Ayala Nº 3321 c/ Rca. Argentina",
+                    Telefono = "(021) 518-000",
+                    Celular = "(0981) 621-230"
                 }
             );
 

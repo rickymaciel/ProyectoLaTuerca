@@ -1,9 +1,25 @@
 ﻿@model LaTuerca.Models.FacturaProveedor
+@using Microsoft.AspNet.Identity
 @using LaTuerca.Controllers
+
 @{
-    EmpresasController empresa = new EmpresasController();
-    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+    string Use = "";
+    int IndexUse = 0;
+    string NewUse = "";
+    if (Request.IsAuthenticated)
+    {
+
+        EmpresasController empresa = new EmpresasController();
+        ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+        if (User.Identity.GetUserName() != "")
+        {
+            Use = User.Identity.GetUserName();
+            IndexUse = Use.IndexOf("@");
+            NewUse = Use.Substring(0, IndexUse);
+        }
+    }
 }
+
 @{
     ViewBag.Title = "Presupuesto";
 }
@@ -219,6 +235,18 @@
         </div>
     }
 </section>
+@{
+    if (Request.IsAuthenticated)
+    {
+
+        CajasController caja = new CajasController();
+        ViewBag.Ultimo = caja.ObtenerUltimoCajaAbiertoUsuario(NewUse);
+        if ((ViewBag.Ultimo == 0))
+        {
+            Response.Redirect("http://localhost:53172/Cajas/Index");
+        }
+    }
+}
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryCompra")
