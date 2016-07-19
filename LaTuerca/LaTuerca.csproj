@@ -670,6 +670,7 @@
     <Content Include="Views\FacturaClientes\informeVentas.cshtml" />
     <Content Include="Views\FacturaClientes\ResumenVentas.cshtml" />
     <Content Include="Views\Repuestos\BajaExistencia.cshtml" />
+    <Content Include="Views\Repuestos\ControlStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

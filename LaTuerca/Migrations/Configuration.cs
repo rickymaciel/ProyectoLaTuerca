@@ -259,11 +259,21 @@ namespace LaTuerca.Migrations
               },
               new Models.Menu
               {
-                  //24
+                  //25
                   ParentId = 5,
                   Name = "Baja existencia",
                   Description = "Repuestos con Baja existencia",
                   Action = "BajaExistencia",
+                  Controller = "Repuestos",
+                  Active = true
+              },
+              new Models.Menu
+              {
+                  //26
+                  ParentId = 5,
+                  Name = "Control Stock",
+                  Description = "Control de Stock",
+                  Action = "ControlStock",
                   Controller = "Repuestos",
                   Active = true
               }

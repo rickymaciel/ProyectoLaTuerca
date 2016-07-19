@@ -129,7 +129,7 @@
                 locale: 'es',
                 format: 'DD/MM/YYYY HH:mm:ss'
             });
-
+            
             $('#Fecha_Apertura').attr("readonly", true);
             $('#abrir').attr("readonly", true);
             $('#Cierre').attr("readonly", true);
@@ -139,7 +139,7 @@
             //$("#Estado").prop('disabled', true);
 
             $("#Imagen").fileinput({
-                theme: "gly",
+                theme: "fa",
                 allowedFileExtensions: ["jpg", "png", "gif"],
                 maxFileCount: 1
             });
@@ -162,16 +162,16 @@
                             $("#MarcaId").val(MarcaId).trigger("change");
                         },
                     },
-                    //theme: "plate-dark",
+                    theme: "plate-dark",
                     //theme: "square"
-                    theme: "round"
+                    //theme: "round"
                 };
                 $("input.Marca").easyAutocomplete(codigoArticulo);
                 $(".easy-autocomplete-container").addClass("text-danger");
 
             };
 
-            var oTable = $('#tablaMenu').DataTable({
+            var oTable = $('#tablaMenu,#tablaMenu1,#tablaMenu2').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'copyHtml5',

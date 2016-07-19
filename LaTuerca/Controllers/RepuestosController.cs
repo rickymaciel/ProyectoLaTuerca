@@ -21,6 +21,10 @@ namespace LaTuerca.Controllers
         {
             return View(db.Repuestoes.ToList());
         }
+        public ActionResult ControlStock()
+        {
+            return View(db.Repuestoes.ToList());
+        }
 
 
         public ActionResult BajaExistencia()
