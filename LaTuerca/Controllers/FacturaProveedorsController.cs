@@ -67,8 +67,9 @@ namespace LaTuerca.Controllers
         {
             var facturaProveedor = new FacturaProveedor();
 
-            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            //string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+            //DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime Fecha = DateTime.Now;
             facturaProveedor.Fecha = Fecha;
             facturaProveedor.FechaPago = DateTime.Now.AddDays(30); //30 dias
             var proximo = (from inv in db.FacturaProveedors orderby inv.NumeroFactura descending select inv).FirstOrDefault();

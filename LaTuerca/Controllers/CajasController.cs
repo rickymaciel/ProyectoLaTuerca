@@ -95,7 +95,7 @@ namespace LaTuerca.Controllers
         public ActionResult Index()
         {
             var caja = new Caja();
-            DateTime Fecha = DateTime.Now;
+            String Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             var usuario = "";
             if (User.Identity.GetUserName() != "")
             {
@@ -218,8 +218,7 @@ namespace LaTuerca.Controllers
         public ActionResult Create()
         {
             var caja = new Caja();
-            string fecha = DateTime.Now.ToString("{0:yyyy-MM-dd HH:mm:ss}");
-            DateTime Fecha = DateTime.ParseExact(fecha, "{0:yyyy-MM-dd HH:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
+            DateTime Fecha = DateTime.Now;
             caja.Fecha_Apertura = Fecha;
             caja.Operaciones = 0;
             return View(caja);
@@ -286,8 +285,7 @@ namespace LaTuerca.Controllers
             {
                 return HttpNotFound();
             }
-            string fecha = DateTime.Now.ToString("{0:dd/MM/yyyy HH:mm:ss}");
-            DateTime Fecha = DateTime.ParseExact(fecha, "{0:dd/MM/yyyy HH:mm:ss}", System.Globalization.CultureInfo.GetCultureInfo("es-PY"));
+            DateTime Fecha = DateTime.Now;
             caja.Fecha_Cierre = Fecha;
             return View(caja);
         }

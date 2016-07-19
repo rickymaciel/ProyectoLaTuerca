@@ -20,18 +20,18 @@ namespace LaTuerca.Models
 
         [Required(ErrorMessage = "La Fecha de Apertura es requerida")]
         [Display(Name = "Fecha de Apertura: ")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
         public DateTime Fecha_Apertura { get; set; }
 
         [Display(Name = "Monto Inicial")]
-        [Range(-100000000000000000, 100000000000000000, ErrorMessage = "El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000")]
+        [Range(0, 100000000000000000, ErrorMessage = "El monto inicial debe ser un número entre 0 y 100.000.000.000.000.000")]
         [Required(ErrorMessage = "Debe ingresar el monto inicial")]
         public int Inicial { get; set; }
 
         [Display(Name = "Fecha de Cierre: ")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
         public DateTime? Fecha_Cierre { get; set; }

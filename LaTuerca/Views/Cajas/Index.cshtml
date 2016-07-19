@@ -47,7 +47,7 @@
                     <div class='box-tools btn-group'>
                         @if (TempData["Fecha_Apertura"] != null)
                         {
-                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
+                            <a href="" id="apertura" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
                                 <i class="fa fa-folder-open"></i>
                             </a>
                             <a href="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#abrirCaja" title="Abrir Caja">
@@ -181,7 +181,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+
         $(function () {
+            $("#apertura").click();
             $('#informe').on('click', function () {
                 var $this = $(this);
                 $this.button('loading');
@@ -195,13 +197,6 @@
                 $("input#Cierre").val(cierre);
                 $("input#Entrada").val(cierre);
             });
-                $('#Fecha_Apertura').attr("readonly", true);
-                $('#abrir').attr("readonly", true);
-                $('#Cierre').attr("readonly", true);
-                $('#Operaciones').attr("readonly", true);
-
-                $("#Estado").attr('readonly', true);
-                $("#Estado").prop('disabled', true);
                 $("input[name=Estado]").attr('checked', false);
                 $("input[name=Estado]").val("false");
 
@@ -212,36 +207,6 @@
                 $('#Estado').attr('aria-checked', 'false');
                 $(".icheckbox_minimal-blue").removeClass("checked disabled");
 
-                $('#from').datetimepicker({
-                    icons: {
-                        time: "fa fa-clock-o",
-                        date: "fa fa-calendar",
-                        up: "fa fa-arrow-up",
-                        down: "fa fa-arrow-down"
-                    },
-                    locale: 'es',
-                    format: 'DD/MM/YYYY HH:mm:ss'
-                });
-                $('#to').datetimepicker({
-                    icons: {
-                        time: "fa fa-clock-o",
-                        date: "fa fa-calendar",
-                        up: "fa fa-arrow-up",
-                        down: "fa fa-arrow-down"
-                    },
-                    locale: 'es',
-                    format: 'DD/MM/YYYY HH:mm:ss'
-                });
-                $('#abrir').datetimepicker({
-                    icons: {
-                        time: "fa fa-clock-o",
-                        date: "fa fa-calendar",
-                        up: "fa fa-arrow-up",
-                        down: "fa fa-arrow-down"
-                    },
-                    locale: 'es',
-                    format: 'DD/MM/YYYY HH:mm:ss'
-                });
                 $("#Usuario").val('@NewNick');
                 $("#Usuario").attr('readonly', true);
 

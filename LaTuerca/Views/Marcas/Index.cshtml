@@ -30,10 +30,10 @@
                     </div>
                     <div class='box-tools btn-group'>
                         <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Marca">
-                            <i class="fa fa-barcode"></i>
+                            <i class="fa fa-certificate"></i>
                         </a>
                         <a href="@Url.Action("Create", "Marcas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Marca">
-                            <i class="fa fa-barcode"></i> <b>Nueva Marca</b>
+                            <i class="fa fa-certificate"></i> <b>Nueva Marca</b>
                         </a>
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
@@ -62,7 +62,7 @@
                                                     @Html.DisplayFor(modelItem => item.Nombre)
                                                 </td>
                                                 <td>
-                                                    <img class="img-md img-thumbnail tip" title="@item.Nombre" width="30" src="@Url.Content("~/Content/img/Uploads/" + item.Imagen)" />
+                                                    <img class="img-md img-thumbnail tip" title="@item.Nombre" width="30" src="@Url.Content("~/Content/img/Uploads/Marcas/" + item.Imagen)" />
                                                 </td>
                                                 <td class="col-lg-1">
                                                     <div class="btn-group btn-group-justified">

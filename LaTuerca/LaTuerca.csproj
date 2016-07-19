@@ -338,7 +338,17 @@
     <Content Include="Content\img\mu.png" />
     <Content Include="Content\img\mundo.jpeg" />
     <Content Include="Content\img\mundoi.png" />
-    <Content Include="Content\img\Uploads\Default.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Chevrolet.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Default.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Generico.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Honda.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Mercedez-benz.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Suzuki.jpg" />
+    <Content Include="Content\img\Uploads\Marcas\Toyota.jpg" />
+    <Content Include="Content\img\Uploads\Repuestos\Amortiguador.jpg" />
+    <Content Include="Content\img\Uploads\Repuestos\Bujia.jpg" />
+    <Content Include="Content\img\Uploads\Repuestos\Default.jpg" />
+    <Content Include="Content\img\Uploads\Repuestos\Eje.jpg" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -659,10 +669,10 @@
     <Content Include="Views\Shared\_PdfLayout.cshtml" />
     <Content Include="Views\FacturaClientes\informeVentas.cshtml" />
     <Content Include="Views\FacturaClientes\ResumenVentas.cshtml" />
+    <Content Include="Views\Repuestos\BajaExistencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\Repuestos\" />
     <Folder Include="Scripts\lib\" />
     <Folder Include="Scripts\locale\" />
   </ItemGroup>

@@ -191,7 +191,7 @@ namespace LaTuerca.Migrations
               {
                   //18
                   ParentId = 4,
-                  Name = "Presupuesto Venta",
+                  Name = "Presupuestos",
                   Description = "Presupuestos Cliente",
                   Action = "Presupuestos",
                   Controller = "FacturaClientes",
@@ -201,7 +201,7 @@ namespace LaTuerca.Migrations
               {
                   //19
                   ParentId = 4,
-                  Name = "Factura Venta",
+                  Name = "Facturas",
                   Description = "Facturas Cliente",
                   Action = "Facturados",
                   Controller = "FacturaClientes",
@@ -256,6 +256,16 @@ namespace LaTuerca.Migrations
                   Action = "InformeMovimientos",
                   Controller = "Cajas",
                   Active = true
+              },
+              new Models.Menu
+              {
+                  //24
+                  ParentId = 5,
+                  Name = "Baja existencia",
+                  Description = "Repuestos con Baja existencia",
+                  Action = "BajaExistencia",
+                  Controller = "Repuestos",
+                  Active = true
               }
             );
 
@@ -264,32 +274,32 @@ namespace LaTuerca.Migrations
                 new Models.Marca
                 {
                     Nombre = "GENÉRICO",
-                    Imagen = "Default.jpg"
+                    Imagen = "Generico.jpg"
                 },
                 new Models.Marca
                 {
                     Nombre = "TOYOTA",
-                    Imagen = "Default.jpg"
+                    Imagen = "Toyota.jpg"
                 },
                 new Models.Marca
                 {
                     Nombre = "MERCEDEZ BENZ",
-                    Imagen = "Default.jpg"
+                    Imagen = "Mercedez-benz.jpg"
                 },
                 new Models.Marca
                 {
                     Nombre = "HONDA",
-                    Imagen = "Default.jpg"
+                    Imagen = "Honda.jpg"
                 },
                 new Models.Marca
                 {
                     Nombre = "CHEVROLET",
-                    Imagen = "Default.jpg"
+                    Imagen = "Chevrolet.jpg"
                 },
                 new Models.Marca
                 {
                     Nombre = "SUZUKI",
-                    Imagen = "Default.jpg"
+                    Imagen = "Suzuki.jpg"
                 }
             );
 
@@ -411,7 +421,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 912000,
                     PrecioVenta2 = 1026000,
                     PrecioVenta3 = 1064000,
-                    Imagen = "Default.jpg"
+                    Imagen = "Amortiguador.jpg"
                 },
                 new Models.Repuesto
                 {
@@ -426,7 +436,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 444000,
                     PrecioVenta2 = 499500,
                     PrecioVenta3 = 518000,
-                    Imagen = "Default.jpg"
+                    Imagen = "Bujia.jpg"
                 },
                 new Models.Repuesto
                 {
@@ -441,7 +451,7 @@ namespace LaTuerca.Migrations
                     PrecioVenta1 = 540000,
                     PrecioVenta2 = 607500,
                     PrecioVenta3 = 630000,
-                    Imagen = "Default.jpg"
+                    Imagen = "Eje.jpg"
                 }
             );
             context.Users.AddOrUpdate(
@@ -449,7 +459,7 @@ namespace LaTuerca.Migrations
                 new Models.ApplicationUser
                 {
                     Id = "3dfd1c4e-2ba1-47c8-83a8-1ee3019c6b30",
-                    Email = "rmacielb3@gmail.com",
+                    Email = "mundotuerca@gmail.com",
                     EmailConfirmed = false,
                     PasswordHash = "AGgI66nvc6RQweHG2a6HE8c0qCamjXOZgcGjV+x5ClqhxH4F5W6jz7Djs5VLJIbmDQ==",
                     SecurityStamp = "5bba54eb-d535-4e3e-b77a-7fca50bf7ed8",
@@ -459,7 +469,7 @@ namespace LaTuerca.Migrations
                     LockoutEndDateUtc = null,
                     LockoutEnabled = true,
                     AccessFailedCount = 0,
-                    UserName = "rmacielb3@gmail.com"
+                    UserName = "mundotuerca@gmail.com"
                 }
             );
         }

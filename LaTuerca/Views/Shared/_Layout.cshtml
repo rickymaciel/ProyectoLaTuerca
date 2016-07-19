@@ -11,7 +11,6 @@
     string NewUse = "";
     if (Request.IsAuthenticated)
     {
-
         EmpresasController empresa = new EmpresasController();
         ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
         ViewBag.NombreCortoEmpresa = empresa.getNombreCortoEmpresa();
@@ -98,13 +97,53 @@
         @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-        $(document).ajaxStart(function () { Pace.restart(); });
         $(function () {
+
+            $('#from').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                },
+                locale: 'es',
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+            $('#to').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                },
+                locale: 'es',
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+            $('#abrir').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                },
+                locale: 'es',
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+
+            $('#Fecha_Apertura').attr("readonly", true);
+            $('#abrir').attr("readonly", true);
+            $('#Cierre').attr("readonly", true);
+            $('#Operaciones').attr("readonly", true);
+
+            //$("#Estado").attr('readonly', true);
+            //$("#Estado").prop('disabled', true);
+
             $("#Imagen").fileinput({
-                theme: "fa",
+                theme: "gly",
                 allowedFileExtensions: ["jpg", "png", "gif"],
                 maxFileCount: 1
             });
+
             load_marcas();
             function load_marcas() {
                 var codigoArticulo = {
@@ -338,11 +377,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">
-                        <span class="fa fa-folder-open"></span>
-                        Abrir Caja
-                    </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><span class="fa fa-folder-open"></span> Abrir Caja</h4>
+                        <p class="help-block">
+                            Una vez abierta la caja, ningún otro usuario podrá usarlo.
+                        </p>
                 </div>
                 <div class="modal-body">
                     @Html.Hidden("action", HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString())
@@ -355,7 +394,7 @@
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
-                                    <input class="form-control text-box single-line" data-val="false" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' />
+                                    <input class="form-control text-box single-line" data-val="false" data-val-date="The field Fecha de Apertura:  must be a date." data-val-required="La Fecha de Apertura es requerida" id="abrir" name="Fecha_Apertura" type="datetime" value='@TempData["Fecha_Apertura"]' readonly />
                                     <span class="field-validation-valid text-danger" data-valmsg-for="Fecha_Apertura" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
@@ -364,7 +403,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2" for="Inicial">Monto Inicial</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Monto Inicial must be a number." data-val-range="El monto inicial debe ser un número entre -100.000.000.000.000.000 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="1" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="" placeholder="¿Cuanto dinero hay en la caja?" autofocus />
+                                <input class="form-control text-box single-line" data-val="true" data-val-number="El monto inicial debe ser un número." data-val-range="El monto inicial debe ser un número entre 0 y 100.000.000.000.000.000" data-val-range-max="1E+17" data-val-range-min="0" data-val-required="Debe ingresar el monto inicial" id="Inicial" name="Inicial" type="number" value="" placeholder="¿Cuanto dinero hay en la caja?" autofocus />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Inicial" data-valmsg-replace="true"></span>
                             </div>
                         </div>
@@ -412,7 +451,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2" for="Usuario">Usuario: </label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe indicar un usuario" id="Usuario" name="Usuario" type="text" value=@NewUse />
+                                <input class="form-control text-box single-line" data-val="true" data-val-required="Debe indicar un usuario" id="Usuario" name="Usuario" type="text" value=@NewUse readonly/>
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Usuario" data-valmsg-replace="true"></span>
                             </div>
                         </div>

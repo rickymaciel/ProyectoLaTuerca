@@ -49,55 +49,25 @@
 }
 <section class="content">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa-calendar fa"></i></span>
+                <span class="info-box-icon bg-blue-gradient"><i class="fa-calendar fa"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Apertura)</span>
                     <span class="info-box-number">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", Model.Fecha_Apertura)</span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
-                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", Model.Fecha_Cierre)</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="ion ion-cash"></i></span>
+                <span class="info-box-icon bg-green-gradient"><i class="ion ion-cash"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Inicial)</span>
                     <span class="info-box-number">@String.Format("{0:C}", Model.Inicial)</span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div>
-        <div class="col-lg-3">
-            <div class="info-box @bgcolor">
-                <span class="info-box-icon"><i class="ion ion-cash"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Cierre)</span>
-                    <span class="info-box-number">@String.Format("{0:C}", Model.Cierre)</span>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                </div><!-- /.info-box-content -->
-            </div><!-- /.info-box -->
-        </div>
-        <div class="col-lg-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="ion ion-ribbon-b"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Operaciones)</span>
-                    <span class="info-box-number">@Html.DisplayFor(model => model.Operaciones)</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="info-box bg-green">
                 <span class="info-box-icon"><i class="fa fa-cloud-download"></i></span>
                 <div class="info-box-content">
@@ -112,8 +82,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="info-box bg-yellow">
+        <div class="col-lg-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-blue-gradient"><i class="fa fa-calendar"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Fecha_Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:dd/MM/yyyy HH:mm:ss}", Model.Fecha_Cierre)</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-green-gradient"><i class="ion ion-cash"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@Html.DisplayNameFor(model => model.Cierre)</span>
+                    <span class="info-box-number">@String.Format("{0:C}", Model.Cierre)</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
+        <div class="col-lg-4">
+            <div class="info-box bg-red-gradient">
                 <span class="info-box-icon"><i class="fa fa-cloud-upload"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">@Html.DisplayNameFor(model => model.Salida)</span>
@@ -126,24 +114,6 @@
                     </span>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3">
-            <a href="@Url.Action("Edit", "Cajas", new { id = Model.Id })" class="info-box bg-red tip" title="Cerrar Caja">
-                <span class="info-box-icon"><i class="@cerrar"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Cerrar Caja</span>
-                    <span class="info-box-number">
-                        @saldo
-                    </span>
-
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                    <span class="progress-description">
-                        @estado
-                    </span>
-                </div>
-            </a>
         </div>
         <div class="col-lg-12">
             <div class="box box-primary">
@@ -166,6 +136,13 @@
                                     <i class="fa fa-download-alt"></i> <b>Exportar</b>
                                 </a>
                                 <button type="button" class="btn btn-default btn-sm visible-lg " id="informe" title="Informe de movimientos" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Generando"><i class="fa fa-filter"></i> Generar informe</button>
+
+                                <a href="@Url.Action("Edit", "Cajas", new { id = Model.Id })" id="open" class="btn btn-danger text-uppercase btn-sm tip pagar pull-right visible-lg" title="Cerrar" type="submit" name="close" value="Cerrar Caja">
+                                    <i class="fa fa-lock"></i>  <b>Cerrar Caja</b>
+                                </a>
+                                <a href="@Url.Action("Edit", "Cajas", new { id = Model.Id })" id="open" class="btn btn-danger hidden-lg btn-sm tip pagar pull-right" title="Cerrar" type="submit" name="close" value="Cerrar Caja">
+                                    <i class="fa fa-lock"></i>
+                                </a>
                             </div>
                         </div>
                         <div class="box-body">

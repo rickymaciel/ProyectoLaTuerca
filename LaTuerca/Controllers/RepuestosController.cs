@@ -7,8 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaTuerca.Models;
-using LaTuerca.ViewModels;
 using System.IO;
+using RazorPDF;
 
 namespace LaTuerca.Controllers
 {
@@ -20,6 +20,13 @@ namespace LaTuerca.Controllers
         public ActionResult Index()
         {
             return View(db.Repuestoes.ToList());
+        }
+
+
+        public ActionResult BajaExistencia()
+        {
+            var bajaexistencia = db.Repuestoes.Where(x => x.Stock >= 0).Where(x => x.Stock <= x.StockMinimo).ToList().OrderBy(c => c.Id);
+            return View(bajaexistencia);
         }
 
         // GET: Repuestos/Details/5
@@ -63,19 +70,20 @@ namespace LaTuerca.Controllers
 
                 if (Imagen != null)
                 {
-                    var fileName = Path.GetFileName(repuesto.Nombre + Imagen.FileName);
+                    string fecha = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var fileName = Path.GetFileName(repuesto.Nombre + fecha + Imagen.FileName);
                     var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Repuestos/"), fileName);
                     Imagen.SaveAs(path);
                     repuesto.Imagen = fileName;
                 }
                 else
                 {
-                    var fileName = Path.GetFileName("Default.jpg");
+                    var fileName = Path.GetFileName("Repuestos/Default.jpg");
                     repuesto.Imagen = fileName;
                 }
                 db.Repuestoes.Add(repuesto);
                 db.SaveChanges();
-                TempData["notice"] = "El producto ha sido guardado!";
+                TempData["notice"] = "El producto " + repuesto.Nombre + " ha sido guardado!";
                 return RedirectToAction("Create", "Repuestos");
             }
             else
@@ -94,7 +102,6 @@ namespace LaTuerca.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Repuesto repuesto = db.Repuestoes.Find(id);
-            var repuestoModelView = new RepuestoViewModel(repuesto);
             if (repuesto == null)
             {
                 return HttpNotFound();
@@ -129,19 +136,20 @@ namespace LaTuerca.Controllers
 
                 if (Imagen != null)
                 {
-                    var fileName = Path.GetFileName(repuesto.Nombre + Imagen.FileName);
+                    string fecha = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var fileName = Path.GetFileName(repuesto.Nombre + fecha + Imagen.FileName);
                     var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Repuestos/"), fileName);
                     Imagen.SaveAs(path);
                     r.Imagen = fileName;
                 }
                 else
                 {
-                    var fileName = Path.GetFileName("Default.jpg");
+                    var fileName = Path.GetFileName("Repuestos/Default.jpg");
                     r.Imagen = fileName;
                 }
                 db.Entry(r).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["notice"] = "El producto ha sido modificado!";
+                TempData["notice"] = "El producto " + repuesto.Nombre + " ha sido modificado!";
                 return RedirectToAction("Index");
             }
             return View(repuesto);

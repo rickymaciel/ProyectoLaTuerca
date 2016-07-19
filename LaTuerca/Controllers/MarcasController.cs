@@ -54,22 +54,25 @@ namespace LaTuerca.Controllers
 
                 if (Imagen != null)
                 {
-                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    string fecha = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var fileName = Path.GetFileName(marca.Nombre + fecha + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Marcas/"), fileName);
                     Imagen.SaveAs(path);
                     marca.Imagen = fileName;
                 }
                 else
                 {
-                    var fileName = Path.GetFileName("Default.jpg");
+                    var fileName = Path.GetFileName("Marcas/Default.jpg");
                     marca.Imagen = fileName;
                 }
 
                 db.Marcas.Add(marca);
 
                 db.SaveChanges();
+                TempData["notice"] = "La Marca " + marca.Nombre + " fue creada con éxito!";
                 return RedirectToAction("Index");
             }
+            TempData["notice"] = "La Marca " + marca.Nombre + " no pudo ser creada!";
             return View(marca);
         }
 
@@ -81,20 +84,24 @@ namespace LaTuerca.Controllers
 
                 if (Imagen != null)
                 {
-                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    string fecha = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var fileName = Path.GetFileName(marca.Nombre + fecha + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Marcas/"), fileName);
                     Imagen.SaveAs(path);
                     marca.Imagen = fileName;
                 }
                 else
                 {
-                    var fileName = Path.GetFileName("Default.jpg");
+                    var fileName = Path.GetFileName("Marcas/Default.jpg");
                     marca.Imagen = fileName;
                 }
 
                 db.Marcas.Add(marca);
                 db.SaveChanges();
+                TempData["notice"] = "La Marca " + marca.Nombre + " fue creada con éxito!";
+                return RedirectToAction("Create", "Repuestos");
             }
+            TempData["notice"] = "La Marca " + marca.Nombre + " no pudo ser creada!";
             return RedirectToAction("Create", "Repuestos");
         }
         // GET: Marcas/Edit/5
@@ -105,6 +112,7 @@ namespace LaTuerca.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Marca marca = db.Marcas.Find(id);
+            marca.Imagen = marca.Imagen;
             if (marca == null)
             {
                 return HttpNotFound();
@@ -123,21 +131,24 @@ namespace LaTuerca.Controllers
             {
                 if (Imagen != null)
                 {
-                    var fileName = Path.GetFileName(marca.Nombre + Imagen.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/"), fileName);
+                    string fecha = DateTime.Now.ToString("ddMMyyyyhhmmss");
+                    var fileName = Path.GetFileName(marca.Nombre + fecha + Imagen.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/img/Uploads/Marcas/"), fileName);
                     Imagen.SaveAs(path);
                     marca.Imagen = fileName;
                 }
                 else
                 {
-                    var fileName = Path.GetFileName("Default.jpg");
+                    var fileName = Path.GetFileName("Marcas/Default.jpg");
                     marca.Imagen = fileName;
                 }
 
+                TempData["notice"] = "La Marca " + marca.Nombre + " fue modificada con éxito!";
                 db.Entry(marca).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            TempData["notice"] = "La Marca " + marca.Nombre + " no pudo ser modificada!";
             return View(marca);
         }
 
