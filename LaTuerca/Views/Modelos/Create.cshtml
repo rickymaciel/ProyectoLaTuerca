@@ -6,52 +6,41 @@
 }
 
 @{
-    ViewBag.Title = "Nuevo Modelo";
+    ViewBag.Title = "Crear Modelo";
 }
-
-<section class="content-header">
-    <h1>
-        <i class="im-menu"></i> @ViewBag.Title
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
-    </ol>
-</section>
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <span class="btn-group">
-                            <a href="@Url.Action("Index", "Modelos")" class="btn btn-default btn-flat">
-                                <i class="im-menu"></i> Ver todo
-                            </a>
-                        </span>
-                        <span id="mensaje"></span>
-                    </h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearMarca"><i class="im-plus"></i> Crear Marca</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearModelo"><i class="im-plus"></i> Crear Modelo</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearCategoria"><i class="im-plus"></i> Crear Categoria</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#" class="" data-toggle="modal" data-target="#crearProveedor"><i class="im-plus"></i> Crear Proveedor</a></li>
-                                <li class="divider"></li>
-                            </ul>
-                        </div>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <div class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
+                        <span class='description'>@ViewBag.Title</span>
                     </div>
-                </div>
+                    <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Index", "Proveedores")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Proveedor">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                        <a href="@Url.Action("Index", "Proveedores")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Proveedor">
+                            <i class="fa fa-user-plus"></i> <b>Ver Proveedor</b>
+                        </a>
+                        <!-- <button href="" id="" class="btn btn-success btn-sm tip pull-right visible-lg" title="Guardar" type="submit" name="" value="Guardar">
+                            <i class="br-floppy"></i>  <b>Guardar</b>
+                        </button>
+                        <button href="" id="" class="btn btn-success hidden-lg btn-sm tip pagar pull-right" title="Guardar" type="submit" name="" value="Guardar">
+                            <i class="br-floppy"></i>
+                        </button> -->
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
