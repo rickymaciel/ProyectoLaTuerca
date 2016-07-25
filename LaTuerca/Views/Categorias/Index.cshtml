@@ -1,55 +1,41 @@
 ﻿@model IEnumerable<LaTuerca.Models.Categoria>
+@using LaTuerca.Controllers
+@{
+    EmpresasController empresa = new EmpresasController();
+    ViewBag.NombreEmpresa = empresa.getNombreEmpresa();
+}
 
 @{
     ViewBag.Title = "Categoria";
 }
-
-<section class="content-header">
-    <h1>
-        <i class="im-menu"></i> @ViewBag.Title
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"> <i class="im-menu"></i> @ViewBag.Title</a></li>
-    </ol>
-</section>
-
+@if (TempData["notice"] != null)
+{
+    <div class="pad margin no-print" id="mensaje">
+        <div class="callout callout-success" style="margin-bottom: 0!important;">
+            <i class="fa fa-check"></i>   @TempData["notice"]
+        </div>
+    </div>
+}
 <section class="content">
     <div class="row">
-        @if (!Html.ViewData.ModelState.IsValid)
-        {
-            <div class="col-lg-12" id="mensaje">
-                <div class="callout callout-success">
-                    @Html.ValidationSummary()
-                </div>
-            </div>
-        }
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">
-                        <a href="@Url.Action("Create", "Categorias")" class="btn btn-primary">
-                            <i class="im-plus"></i> Nuevo
-                        </a>
-                    </h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <div class="user-block">
+                        <img class="img-circle tip" src="~/Content/img/mundo.jpeg" width="50" title="@ViewBag.NombreEmpresa" alt="@ViewBag.NombreEmpresa">
+                        <span class="username text-capitalize text-light-blue text-blue">@ViewBag.NombreEmpresa</span>
+                        <span class='description'>@ViewBag.Title</span>
                     </div>
-                </div><!-- /.box-header -->
+                    <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Create", "Categorias")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nuevo Categoria">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                        <a href="@Url.Action("Create", "Categorias")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nuevo Categoria">
+                            <i class="fa fa-user-plus"></i> <b>Nuevo Categoria</b>
+                        </a>
+                    </div><!-- /.box-tools -->
+                </div>
+              </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
                         <div class="col-lg-12">
