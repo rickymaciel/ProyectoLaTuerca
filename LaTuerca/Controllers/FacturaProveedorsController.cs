@@ -66,12 +66,9 @@ namespace LaTuerca.Controllers
         public ActionResult Factura()
         {
             var facturaProveedor = new FacturaProveedor();
-
-            //string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            //DateTime Fecha = DateTime.ParseExact(fecha, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             DateTime Fecha = DateTime.Now;
             facturaProveedor.Fecha = Fecha;
-            facturaProveedor.FechaPago = DateTime.Now.AddDays(30); //30 dias
+            facturaProveedor.FechaPago = DateTime.Now.AddDays(30); //se le suman 30 dias
             var proximo = (from inv in db.FacturaProveedors orderby inv.NumeroFactura descending select inv).FirstOrDefault();
             if (proximo != null)
             {
@@ -79,7 +76,7 @@ namespace LaTuerca.Controllers
             }
             else
             {
-                facturaProveedor.NumeroFactura = 1000000;
+                facturaProveedor.NumeroFactura = 10000000;
             }
             return View(facturaProveedor);
         }
@@ -97,14 +94,24 @@ namespace LaTuerca.Controllers
                 {
                     try
                     {
-                        GuardarFactura(facturaProveedor);
-                        GuardarFacturaDetalles(facturaProveedor);
-                        ActualizarStock(facturaProveedor);
-                        ActualizarCaja(facturaProveedor);
-                        GuardarMovimiento(facturaProveedor);
+                        Caja c = db.Cajas.Find(ObtenerUltimoCajaAbierto());
+                        int cierre = (int)c.Cierre;
+                        if (cierre >= facturaProveedor.TotalPagado)
+                        {
+                            GuardarFactura(facturaProveedor);
+                            GuardarFacturaDetalles(facturaProveedor);
+                            ActualizarStock(facturaProveedor);
+                            ActualizarCaja(facturaProveedor);
+                            GuardarMovimiento(facturaProveedor);
 
-                        dbTran.Commit();
-                        TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente!";
+                            dbTran.Commit();
+                            TempData["notice"] = "La Factura Número: " + facturaProveedor.NumeroFactura + " fue guardada correctamente!";
+                        }
+                        else
+                        {
+                            TempData["notice"] = "No hay fondo suficiente para realizar la compra";
+                            return RedirectToAction("Factura");
+                        }
                     }
                     catch (Exception ex)
                     {

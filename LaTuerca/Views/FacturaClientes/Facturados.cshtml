@@ -53,6 +53,7 @@
                                     <table class="table table-condensed table-hover table-striped" id="tablaMenu">
                                         <thead>
                                             <tr>
+                                                <th class="col-lg-1"></th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.Cliente.RazonSocial)
                                                 </th>
@@ -77,21 +78,34 @@
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.Pagado)
                                                 </th>
-                                                <th class="col-lg-1"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model)
                                         {
                                                 <tr>
+                                                    <td class="col-lg-1">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle tip" title="Acción" data-toggle="dropdown"><i class="fa fa-cog"></i> </button>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                @{
+                                                                    <li>
+                                                                        <a href='@Url.Action("Details", "FacturaClientes", new { id = item.Id })'>
+                                                                            <i class="st-file"></i>  Ver Factura
+                                                                        </a>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Cliente.RazonSocial)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Fecha)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.Fecha)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.FechaPago)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.FechaPago)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.NumeroFactura)
@@ -107,11 +121,6 @@
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Pagado)
-                                                    </td>
-                                                    <td class="col-lg-1">
-                                                        <div class="btn-group btn-group-justified">
-                                                            @Html.ActionLink("Ver Factura", "Pagar", new { id = item.Id }, new { @class = "btn btn-primary btn-xs", @data_original_title = "Ver" })
-                                                        </div>
                                                     </td>
                                                 </tr>
                                         }

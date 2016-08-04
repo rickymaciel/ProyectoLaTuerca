@@ -43,6 +43,7 @@
                                 <table class="table table-condensed table-hover table-striped" id="tablaMenu">
                                     <thead>
                                         <tr>
+                                            <th class="col-lg-1"></th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Nombre)
                                             </th>
@@ -52,13 +53,13 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Ruc)
                                             </th>
-                                            <th>
+                                            <th class="hidden">
                                                 @Html.DisplayNameFor(model => model.Departamento)
                                             </th>
-                                            <th>
+                                            <th class="hidden">
                                                 @Html.DisplayNameFor(model => model.Ciudad)
                                             </th>
-                                            <th>
+                                            <th class="hidden">
                                                 @Html.DisplayNameFor(model => model.Pais)
                                             </th>
                                             <th>
@@ -78,13 +79,37 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Estado)
                                             </th>
-                                            <th class="col-lg-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
                                             <tr>
+                                                <td class="col-lg-1">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle tip" title="Acción" data-toggle="dropdown"><i class="fa fa-cog"></i> </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            @{
+                                                                <li>
+                                                                    <a href='@Url.Action("Edit", "Empresas", new { id = item.Id })'>
+                                                                        <i class="fa fa-edit"></i> Editar
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href='@Url.Action("Details", "Empresas", new { id = item.Id })'>
+                                                                        <i class="glyphicon glyphicon-eye-open"></i> Detalles
+                                                                    </a>
+                                                                </li>
+                                                                <li class="divider"></li>
+                                                                <li>
+                                                                    <a href='@Url.Action("Delete", "Empresas", new { id = item.Id })'>
+                                                                        <i class="glyphicon glyphicon-trash"></i> Eliminar
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Nombre)
                                                 </td>
@@ -94,13 +119,13 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Ruc)
                                                 </td>
-                                                <td>
+                                                <td class="hidden">
                                                     @Html.DisplayFor(modelItem => item.Departamento)
                                                 </td>
-                                                <td>
+                                                <td class="hidden">
                                                     @Html.DisplayFor(modelItem => item.Ciudad)
                                                 </td>
-                                                <td>
+                                                <td class="hidden">
                                                     @Html.DisplayFor(modelItem => item.Pais)
                                                 </td>
                                                 <td>
@@ -119,13 +144,6 @@
                                                 -->
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Estado)
-                                                </td>
-                                                <td class="col-lg-1">
-                                                    <div class="btn-group btn-group-justified">
-                                                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "ion-edit btn btn-warning btn-xs", @data_original_title = "Editar" })
-                                                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "ion-eye btn btn-primary btn-xs", @data_original_title = "Ver" })
-                                                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "ion-android-delete btn btn-danger btn-xs", @data_original_title = "Eliminar" })
-                                                    </div>
                                                 </td>
                                             </tr>
                                         }

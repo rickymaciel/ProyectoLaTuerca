@@ -32,6 +32,12 @@
                         <span class='description'>@ViewBag.Title</span>
                     </div>
                     <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Index", "Empresas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Lista">
+                            <i class="im-office"></i>
+                        </a>
+                        <a href="@Url.Action("Index", "Empresas")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Lista">
+                            <i class="im-office"></i> <b>Ver Lista</b>
+                        </a>
                         <a href="@Url.Action("Create", "Empresas")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Empresa">
                             <i class="fa fa-files-o"></i>
                         </a>

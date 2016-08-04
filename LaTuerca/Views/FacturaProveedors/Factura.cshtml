@@ -46,19 +46,17 @@
                             <span class='description'>@ViewBag.Title</span>
                         </div>
                         <div class='box-tools btn-group'>
-                            <!--
-                            <a href="" id="" class="btn btn-link btn-sm hidden-lg tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor">
-                                <i class="fa fa-user-plus"></i>
-                            </a>
-                            <a href="" id="" class="btn btn-link btn-sm visible-lg tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor">
-                                <i class="fa fa-user-plus"></i> <b>Nuevo Proveedor</b>
-                            </a>
-                            -->
-                            <a href="@Url.Action("Facturados", "FacturaProveedors")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Facturas">
-                                <i class="fa fa-files-o"></i>
+                            <a href="@Url.Action("Facturados", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Facturas">
+                                <i class="st-file"></i>
                             </a>
                             <a href="@Url.Action("Facturados", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Facturas">
-                                <i class="fa fa-files-o"></i> <b>Ver Facturas</b>
+                                <i class="st-file"></i> <b>Ver Facturas</b>
+                            </a>
+                            <a href="@Url.Action("Presupuestos", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Presupuestos">
+                                <i class="st-file"></i>
+                            </a>
+                            <a href="@Url.Action("Presupuestos", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Presupuestos">
+                                <i class="st-file"></i> <b>Ver Presupuestos</b>
                             </a>
                             <button href="" id="saveInvoiceBtn" class="btn btn-success btn-sm tip pagar pull-right visible-lg" title="Guardar Factura" type="submit" name="saveInvoice" value="Guardar">
                                 <i class="br-floppy"></i>  <b>Guardar Factura</b>
@@ -79,8 +77,8 @@
                                     </div>
                                     <div class="col-lg-10 has-feedback ">
                                         <div class="">
-                                            <input type="text" class="form-control RazonSocial input-sm" id="RazonSocial" placeholder="Buscar proveedor...">
-                                            <span class="tip glyphicon glyphicon-search form-control-feedback text-muted tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor"></span>
+                                            <input type="text" class="form-control RazonSocial input-sm text-center" id="RazonSocial" placeholder="Buscar proveedor...">
+                                            <span class="tip glyphicon glyphicon-search form-control-feedback  text-center text-muted tip" data-toggle="modal" data-target="#crearProveedor" title="Crear nuevo proveedor"></span>
                                             @Html.EditorFor(model => model.ProveedorId, new { htmlAttributes = new { @id = "ProveedorId", @values = "", @required = "true", aria_required = "true", type = "hidden" } })
                                             @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
                                         </div>
@@ -103,7 +101,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-lg-3" })
                                     <div class="col-lg-9 has-feedback input-daterange" data-provide="datepicker">
-                                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control text-center input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true", @readonly = "true" } })
                                         <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
                                         @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                                     </div>
@@ -111,7 +109,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.FechaPago, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9 has-feedback input-daterange" data-provide="datepicker">
-                                        @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true" } })
+                                        @Html.EditorFor(model => model.FechaPago, new { htmlAttributes = new { @class = "form-control text-center input-sm", @id = "fechacompra", placeholder = "Fecha", @required = "true", aria_required = "true", @readonly = "true" } })
                                         <span class="glyphicon glyphicon-calendar form-control-feedback text-muted"></span>
                                         @Html.ValidationMessageFor(model => model.FechaPago, "", new { @class = "text-danger" })
                                     </div>
@@ -119,7 +117,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Metodo, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9">
-                                        @Html.DropDownList("Metodo", new SelectList(Enum.GetValues(typeof(LaTuerca.Controllers.FacturaProveedorsController.Metodo))), "Método de pago", new { @class = "form-control input-sm" })
+                                        @Html.DropDownList("Metodo", new SelectList(Enum.GetValues(typeof(LaTuerca.Controllers.FacturaProveedorsController.Metodo))), "Método de pago", new { @class = "form-control text-center input-sm" })
                                         @Html.ValidationMessageFor(model => model.Metodo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -129,7 +127,7 @@
                                     <div class="has-feedback">
                                         @Html.LabelFor(model => model.NumeroFactura, htmlAttributes: new { @class = "control-label col-md-3" })
                                         <div class="col-md-9">
-                                            @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm text-danger", placeholder = "Nº de Factura", @required = "true", aria_required = "true" } })
+                                            @Html.EditorFor(model => model.NumeroFactura, new { htmlAttributes = new { @class = "form-control input-sm  text-red text-center", placeholder = "Nº de Factura", @required = "true", aria_required = "true", @readonly = "true" } })
                                             <span class="glyphicon glyphicon-inbox form-control-feedback text-muted"></span>
                                             @Html.ValidationMessageFor(model => model.NumeroFactura, "", new { @class = "text-danger" })
                                         </div>
@@ -138,14 +136,14 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9">
-                                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @type ="text", @class = "form-control input-sm", placeholder = "Total", @required = "true", aria_required = "true" } })
+                                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @type = "text", @class = "form-control text-center input-sm", placeholder = "Total", @required = "true", aria_required = "true", @readonly = "true" } })
                                         @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.TotalPagado, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-9">
-                                        @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @type ="text", @class = "form-control input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", aria_required = "true" } })
+                                        @Html.EditorFor(model => model.TotalPagado, new { htmlAttributes = new { @type = "text", @class = "form-control text-center input-sm tip", title = "Ingresar monto a pagar", placeholder = "Total Pagado", @required = "true", @readonly = "true", aria_required = "true" } })
                                         @Html.ValidationMessageFor(model => model.TotalPagado, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -362,28 +360,6 @@
             //$("div").text(str);
         }).change();
 
-
-        var serviceURL = 'Cajas/ObtenerUltimoCajaAbierto';
-
-        $.ajax({
-            type: "POST",
-            url: serviceURL,
-            data: param = "",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: successFunc,
-            error: errorFunc
-        });
-
-        function successFunc(data, status) {
-            //alert(data);
-            if (data == 0) {
-                window.location.href = "http://localhost:53172/Cajas/Index";
-            }
-        }
-        function errorFunc() {
-            alert('error');
-        }
     });
     </script>
 }

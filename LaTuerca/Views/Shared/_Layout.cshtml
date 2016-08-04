@@ -3,7 +3,7 @@
 
 @if (!Request.IsAuthenticated)
 {
-    Response.Redirect("Account/Login");
+    Response.Redirect("http://localhost:53172/Account/Login");
 }
 @{
     string Use = "";
@@ -98,7 +98,6 @@
     @RenderSection("scripts", required: false)
     <script>
         $(function () {
-
             $('#from').datetimepicker({
                 icons: {
                     time: "fa fa-clock-o",
@@ -234,104 +233,7 @@
             $(".tipR").tooltip({ placement: 'right' });
             $(".tipB").tooltip({ placement: 'bottom' });
             $(".tipL").tooltip({ placement: 'left' });
-            //$('#preciocosto').val('');
-            $("#nombre").removeClass('has-error');
-            $("#guardar").click(function () {
-                var nombre = $('#nombre').val();
-                var modelo = $('#select-modelo').val();
-                var marca = $('#select-marca').val();
-                var categoria = $('#select-categoria').val();
-                var proveedor = $('#select-proveedor').val();
-                var costo = parseInt($('#preciocosto').val());
-                if (costo < 1) {
-                    //$("#mensaje").html('<div class="label label-warning">Debe ingresar el precio de costo</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>Debe ingresar el precio de costo<strong>.',
-                        type: "warning",
-                    });
-                    $("#preciocoste").addClass('has-error');
-                } else {
-                    $("#preciocoste").removeClass('has-error');
-                };
-                if (proveedor == "") {
-                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un proveedor</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>Debe seleccionar un proveedor<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-select-proveedor").addClass('has-error');
-                } else {
-                    $("#div-select-proveedor").removeClass('has-error');
-                };
-                if (categoria == "") {
-                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar una categoria</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>Debe seleccionar una categoria<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-select-categoria").addClass('has-error');
-                } else {
-                    $("#div-select-categoria").removeClass('has-error');
-                };
-                if (modelo == "") {
-                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar un modelo</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>Debe seleccionar una modelo<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-select-modelo").addClass('has-error');
-                } else {
-                    $("#div-select-modelo").removeClass('has-error');
-                };
-                if (marca == "") {
-                    //$("#mensaje").html('<div class="label label-warning">Debe seleccionar una marca</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>Debe seleccionar una marca<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-select-marca").addClass('has-error');
-                } else {
-                    $("#div-select-marca").removeClass('has-error');
-                };
-                if (nombre.length < 3) {
-                    $("#nombre").focus();
-                    //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-nombre").addClass('has-error');
-                };
-                if (nombre == "") {
-                    $("#nombre").focus();
-                    //$("#mensaje").html('<div class="label label-warning">El nombre es requerido</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>El nombre es requerido<strong>.',
-                        type: "warning",
-                    });
-                } else if (nombre.length < 3) {
-                    $("#nombre").focus();
-                    //$("#mensaje").html('<div class="label label-warning">El nombre debe tener al menos 3 caracteres</div>');
-                    swal({
-                        title: "Requerido <small>(*)</small>",
-                        text: '<strong>El nombre debe tener al menos 3 caracteres<strong>.',
-                        type: "warning",
-                    });
-                    $("#div-nombre").addClass('has-error');
-                }
 
-                else if (nombre != "") {
-                    $("#div-nombre").removeClass('has-error');
-                    $("#div-nombre").addClass('has-success');
-                }
-            });
             function calcularPrecios() {
                 var incremento1 = 10 / 100;
                 var incremento2 = 15 / 100;

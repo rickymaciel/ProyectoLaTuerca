@@ -384,6 +384,11 @@ namespace LaTuerca.Controllers
             }
         }
 
+        public int ObtenerStock(int? id)
+        {
+            var stock = db.Repuestoes.Where(r => r.Id == id).Select(r => r.Stock).FirstOrDefault();
+            return stock;
+        }
 
 
         public void ActualizarCaja(FacturaCliente facturaCliente)

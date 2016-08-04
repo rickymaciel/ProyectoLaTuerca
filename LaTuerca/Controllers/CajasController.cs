@@ -60,10 +60,13 @@ namespace LaTuerca.Controllers
         {
             var fromDate = from;
             var toDate = to;
-            var movimientos = db.MovimientoCajas.Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+            var movimientos = db.MovimientoCajas.Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderByDescending(c => c.Fecha);
 
-            //ViewData["fechas"] = "Desde: " + from + " - Hasta: " + to;
-            return new PdfResult(movimientos, "MovimientoCaja");
+            var pdf = new RazorPDF.PdfResult(movimientos, "MovimientoCaja");
+            pdf.ViewBag.Title = "Movimiento de Cajas";
+            pdf.ViewBag.Desde = from;
+            pdf.ViewBag.Hasta = to;
+            return pdf;
         }
 
 
@@ -83,11 +86,13 @@ namespace LaTuerca.Controllers
             IndexNick = Nick.IndexOf("@");
             NewNick = Nick.Substring(0, IndexNick);
 
-            var movimientos = db.MovimientoCajas.Where(x => x.Caja.Usuario == NewNick).Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderBy(c => c.Fecha);
+            var movimientos = db.MovimientoCajas.Where(x => x.Caja.Usuario == NewNick).Where(x => x.Fecha >= fromDate).Where(x => x.Fecha <= toDate).ToList().OrderByDescending(c => c.Fecha);
 
-            ViewBag.Usuarios = new SelectList(db.Users, "Email", "Email");
-            //ViewData["fechas"] = "Desde: " + from + " - Hasta: " + to;
-            return new PdfResult(movimientos, "MovimientoUsuario");
+            var pdf = new RazorPDF.PdfResult(movimientos, "MovimientoUsuario");
+            pdf.ViewBag.Title = "Movimiento de Cajas";
+            pdf.ViewBag.Desde = from;
+            pdf.ViewBag.Hasta = to;
+            return pdf;
         }
 
 

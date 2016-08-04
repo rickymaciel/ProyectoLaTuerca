@@ -33,6 +33,23 @@ namespace LaTuerca.Controllers
             return View(bajaexistencia);
         }
 
+
+        public int ObtenerStock(int? id)
+        {
+            var stock = db.Repuestoes.Where(r => r.Id == id).Select(r =>r.Stock ).FirstOrDefault();
+            return stock;
+        }
+
+
+
+        public ActionResult Stock(int? id)
+        {
+            var stock = db.Repuestoes.Where(r => r.Id == id).Take(1)
+                    .Select(r => new { r.Stock });
+            return Json(stock, JsonRequestBehavior.AllowGet);
+        }
+
+
         // GET: Repuestos/Details/5
         public ActionResult Details(int? id)
         {

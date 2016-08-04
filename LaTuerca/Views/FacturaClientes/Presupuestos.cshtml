@@ -99,10 +99,10 @@
                                                         @Html.DisplayFor(modelItem => item.Cliente.RazonSocial)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Fecha)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.Fecha)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.FechaPago)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.FechaPago)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.NumeroFactura)

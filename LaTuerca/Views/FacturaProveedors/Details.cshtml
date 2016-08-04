@@ -29,11 +29,17 @@
                         <span class='description'>@ViewBag.Title</span>
                     </small>
                     <span class='box-tools btn-group'>
-                        <a href="@Url.Action("Factura", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Nueva Factura">
-                            <i class="fa fa-file-alt"></i>
+                        <a href="@Url.Action("Facturados", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Facturas">
+                            <i class="st-file"></i>
                         </a>
-                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Nueva Factura">
-                            <i class="fa fa-file-alt"></i> <b>Nueva Factura</b>
+                        <a href="@Url.Action("Facturados", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Facturas">
+                            <i class="st-file"></i> <b>Ver Facturas</b>
+                        </a>
+                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm hidden-lg" title="Nueva Factura">
+                            <i class="fa fa-file-o"></i>
+                        </a>
+                        <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg" title="Nueva Factura">
+                            <i class="fa fa-file-o"></i> <b>Nueva Factura</b>
                         </a>
                     </span>
                 </h2>
@@ -41,7 +47,6 @@
         </div>
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
-                @Html.DisplayNameFor(model => model.Proveedor)
                 <address>
                     <strong>@Html.DisplayFor(model => model.Proveedor.RazonSocial)</strong><br>
                     @Html.DisplayNameFor(model => model.Proveedor.Direccion): @Html.DisplayFor(model => model.Proveedor.Direccion)<br>
@@ -51,13 +56,11 @@
             </div>
             <div class="col-sm-4 invoice-col">
                 <b>@Html.DisplayNameFor(model => model.Metodo)</b> @Html.DisplayFor(model => model.Metodo)<br>
-                <br>
                 <b>@Html.DisplayNameFor(model => model.Total)</b> @Html.DisplayFor(model => model.Total)<br>
                 <b>@Html.DisplayNameFor(model => model.TotalPagado)</b> @Html.DisplayFor(model => model.TotalPagado)<br>
             </div>
             <div class="col-sm-4 invoice-col">
-                <b>@Html.DisplayNameFor(model => model.NumeroFactura) @Html.DisplayFor(model => model.NumeroFactura)</b><br>
-                <br>
+                <b><strong>@Html.DisplayNameFor(model => model.NumeroFactura) @Html.DisplayFor(model => model.NumeroFactura)</strong></b><br>
                 <b>@Html.DisplayNameFor(model => model.Fecha)</b> @Html.DisplayFor(model => model.Fecha)<br>
                 <b>@Html.DisplayNameFor(model => model.FechaPago)</b> @Html.DisplayFor(model => model.FechaPago)<br>
             </div>

@@ -30,6 +30,7 @@ var mioInvoice = {
                     $itemRow.find('#PrecioVenta1').val(ui.item.PrecioVenta1);
                     $itemRow.find('#Stock').val(ui.item.Stock);
                     $itemRow.find('#Cantidad').focus();
+                    $itemRow.find('#Cantidad').attr("max", ui.item.Stock);
                     return false;
                 }
                 else {
@@ -49,6 +50,11 @@ var mioInvoice = {
         var $itemRow = $($this).closest('tr');
         // Calculate the price of the row.  Remove any $ so the calculation doesn't break
         var price = $itemRow.find('#PrecioVenta1').val() * $itemRow.find('#Cantidad').val();
+        var cantidad = $itemRow.find('#Cantidad').val();
+        var stock = $itemRow.find('#Stock').val();
+        if (stock >=  cantidad) {
+            alert("Stock insuficiente");
+        }
         //price = this.roundNumber(price, 0);
         isNaN(price) ? $itemRow.find('#TotalLinea').val("N/A") : $itemRow.find('#TotalLinea').val(price);
 

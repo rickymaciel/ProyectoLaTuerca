@@ -27,6 +27,12 @@
                         <span class='description'>@ViewBag.Title</span>
                     </div>
                     <div class='box-tools btn-group'>
+                        <a href="@Url.Action("Facturados", "FacturaProveedors")" class="btn btn-link btn-sm hidden-lg tip" title="Ver Facturas">
+                            <i class="st-file"></i>
+                        </a>
+                        <a href="@Url.Action("Facturados", "FacturaProveedors")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Facturas">
+                            <i class="st-file"></i> <b>Ver Facturas</b>
+                        </a>
                         <a href="@Url.Action("Factura", "FacturaProveedors")" id="" class="btn btn-link btn-sm hidden-lg" title="Nueva Factura">
                             <i class="fa fa-file-o"></i>
                         </a>
@@ -42,6 +48,7 @@
                                 <table class="table table-condensed table-hover table-striped" id="tablaMenu">
                                     <thead>
                                         <tr>
+                                            <th class="col-lg-1"></th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Proveedor.RazonSocial)
                                             </th>
@@ -66,20 +73,33 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Pagado)
                                             </th>
-                                            <th class="col-lg-1"></th>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
                                             <tr>
+                                                <td class="col-lg-1">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle tip" title="Acción" data-toggle="dropdown"><i class="fa fa-cog"></i> </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            @{
+                                                                <li>
+                                                                    <a href='@Url.Action("Details", "FacturaProveedors", new { id = item.Id })'>
+                                                                        <i class="st-file"></i>  Ver Factura
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Proveedor.RazonSocial)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Fecha)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.Fecha)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.FechaPago)
+                                                    @String.Format("{0:dd/MM/yyyy}", item.FechaPago)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.NumeroFactura)
@@ -95,11 +115,6 @@
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Pagado)
-                                                </td>
-                                                <td class="col-lg-1">
-                                                    <div class="btn-group btn-group-justified">
-                                                        @Html.ActionLink("Ver Factura", "Pagar", new { id = item.Id }, new { @class = "btn btn-primary btn-xs", @data_original_title = "Ver" })
-                                                    </div>
                                                 </td>
                                             </tr>
                                         }

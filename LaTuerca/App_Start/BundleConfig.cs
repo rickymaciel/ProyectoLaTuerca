@@ -9,7 +9,6 @@ namespace LaTuerca
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                      "~/Scripts/jquery.number.js",
                       "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,7 +29,6 @@ namespace LaTuerca
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/app.js",
-                      "~/Scripts/jquery.number.js",
                       "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/Moment.js",
                       "~/Scripts/moment-with-locales.js",
@@ -58,12 +56,11 @@ namespace LaTuerca
                       "~/Scripts/datatablesbuttons/jquery-1.12.3.js",
 
                       "~/Content/iCheck/icheck.js",
-                      "~/Scripts/sweetalert2.min.js",
-                      "~/Scripts/jquery.easy-autocomplete.js",
                       "~/Scripts/jquery.easy-autocomplete.min.js",
                       "~/Scripts/jquery-ui.min.js",
                       "~/Scripts/selectize.js",
-                      "~/Scripts/fileinput.js",
+                      "~/Scripts/fileinput.min.js",
+                      "~/Scripts/jquery.number.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -81,16 +78,13 @@ namespace LaTuerca
                       "~/Content/icons.css",
                       "~/Content/iCheck/all.css",
                       "~/Content/selectize.bootstrap2.css",
-                      "~/Content/sweetalert2.css",
                       "~/Content/ionicons.min.css",
                       "~/Content/jquery-ui-1.10.3.custom.css",
                       "~/Content/jquery-ui.css",
                       "~/Content/jquery-ui.theme.css",
                       "~/Content/print.css",
-                      "~/Content/jquery-ui-1.10.3.custom.css",
                       "~/Content/bootstrap-fileinput/css/fileinput.css",
                       "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/fa/theme.js",
-                      "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/gly/theme.js",
                       "~/Content/bootstrap-fileinput/bootstrap-fileinput/themes/gly/theme.js",
                       "~/Content/font-awesome.min.css"));
         }

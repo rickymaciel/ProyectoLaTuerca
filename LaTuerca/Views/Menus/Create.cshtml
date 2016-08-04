@@ -31,10 +31,10 @@
                         </div>
                         <div class='box-tools btn-group'>
                             <a href="@Url.Action("Index", "Menus")" id="" class="btn btn-link btn-sm hidden-lg tip" title="Ver Menus">
-                                <i class="fa fa-files-o"></i>
+                                <i class="im-menu2"></i>
                             </a>
                             <a href="@Url.Action("Index", "Menus")" id="" class="btn btn-link btn-sm visible-lg tip" title="Ver Menus">
-                                <i class="fa fa-files-o"></i> <b>Ver Menus</b>
+                                <i class="im-menu2"></i> <b>Ver Menus</b>
                             </a>
                             <button href="" id="" class="btn btn-success btn-sm tip pull-right visible-lg" title="Guardar" type="submit" name="" value="Guardar">
                                 <i class="br-floppy"></i>  <b>Guardar</b>
@@ -45,33 +45,33 @@
                         </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
                     <div class='box-body'>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.ParentId, new { htmlAttributes = new { @class = "form-control", placeholder = "Id" } })
                             @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripcion" } })
                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             @Html.LabelFor(model => model.Action, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.Action, new { htmlAttributes = new { @class = "form-control", placeholder = "Action" } })
                             @Html.ValidationMessageFor(model => model.Action, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
                             @Html.LabelFor(model => model.Controller, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.Controller, new { htmlAttributes = new { @class = "form-control", placeholder = "Controlador" } })
                             @Html.ValidationMessageFor(model => model.Controller, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group col-lg-12">
-                            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label" })
+                        <div class="form-group col-lg-3">
+                            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label" })<br />
                             @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "", placeholder = "Active" } })
                             @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                         </div>
